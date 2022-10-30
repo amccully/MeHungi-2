@@ -7,7 +7,11 @@
 
 import Foundation
 
-class Restaurant: Identifiable, ObservableObject {
+class Restaurant: Decodable, Identifiable, ObservableObject {
+    enum CodingKeys: CodingKey {
+        case name, waitTime
+    }
+    
     let id: UUID = UUID()
     let name: String
     @Published var waitTime: Int
@@ -15,5 +19,12 @@ class Restaurant: Identifiable, ObservableObject {
     init(name: String, waitTime: Int) {
         self.name = name
         self.waitTime = waitTime
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        name = try container.decode(String.self, forKey: .name)
+        waitTime = try container.decode(Int.self, forKey: .waitTime)
     }
 }

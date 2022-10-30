@@ -9,12 +9,10 @@ import SwiftUI
 
 @main
 struct MeHungiApp: App {
-    @StateObject var model: ModelData = ModelData()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(model)
         }
     }
 }

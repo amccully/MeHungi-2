@@ -13,6 +13,7 @@
 		9309CB28290AFEF800FA93E7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9309CB27290AFEF800FA93E7 /* Preview Assets.xcassets */; };
 		9309CB31290AFFA600FA93E7 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9309CB30290AFFA600FA93E7 /* ModelData.swift */; };
 		9309CB33290AFFD700FA93E7 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9309CB32290AFFD700FA93E7 /* Restaurant.swift */; };
+		93F142E7290EFB7600BCB6BE /* RestaurantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F142E6290EFB7600BCB6BE /* RestaurantDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		9309CB27290AFEF800FA93E7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9309CB30290AFFA600FA93E7 /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		9309CB32290AFFD700FA93E7 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
+		93F142E6290EFB7600BCB6BE /* RestaurantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				9309CB22290AFEF600FA93E7 /* ContentView.swift */,
+				93F142E6290EFB7600BCB6BE /* RestaurantDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -160,6 +163,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9309CB33290AFFD700FA93E7 /* Restaurant.swift in Sources */,
+				93F142E7290EFB7600BCB6BE /* RestaurantDetailView.swift in Sources */,
 				9309CB23290AFEF600FA93E7 /* ContentView.swift in Sources */,
 				9309CB21290AFEF600FA93E7 /* MeHungiApp.swift in Sources */,
 				9309CB31290AFFA600FA93E7 /* ModelData.swift in Sources */,

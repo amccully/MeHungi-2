@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var model: ModelData
+    @StateObject var model: ModelData = ModelData()
     
     var body: some View {
         NavigationView {
             List(model.restaurants) { restaurant in
-                NavigationLink(destination: EmptyView()) {
+                NavigationLink(destination: RestaurantDetailView(restaurant: restaurant)) {
                     HStack {
                         Text(restaurant.name)
                         Spacer()
@@ -22,13 +22,48 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("MeHungi")
+            .task {
+                await loadData()
+            }
+            .refreshable {
+                Task {
+                    await loadData()
+                }
+            }
         }
+    }
+    
+    func loadData() async {
+        
+        model.restaurants = [
+            Restaurant(name: "Subway", waitTime: 30),
+            Restaurant(name: "Panda", waitTime: 5),
+            Restaurant(name: "Burger King", waitTime: 0),
+            Restaurant(name: "Santorini's", waitTime: 3)
+        ]
+        
+        /*
+             guard let url = URL(string: "https://myurlhere.com") else {
+                 print("Invalid URL")
+                 return
+             }
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
+
+                if let decodedResponse = try? JSONDecoder().decode(???.self, from: data) {
+                    ??? = decodedResponse.???
+                }
+            } catch {
+                print("Invalid data")
+            }
+        */
+        
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .environmentObject(ModelData())
+
     }
 }
