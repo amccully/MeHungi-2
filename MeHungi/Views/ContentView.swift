@@ -36,10 +36,10 @@ struct ContentView: View {
     func loadData() async {
         
         model.restaurants = [
-            Restaurant(name: "Subway", waitTime: 30),
-            Restaurant(name: "Panda", waitTime: 5),
-            Restaurant(name: "Burger King", waitTime: 0),
-            Restaurant(name: "Santorini's", waitTime: 3)
+            Restaurant(name: "Subway", description: "", operatingHours: "", isOpen: true, waitTime: 15),
+            Restaurant(name: "Panda", description: "", operatingHours: "", isOpen: true, waitTime: 3),
+            Restaurant(name: "Burger King", description: "", operatingHours: "", isOpen: true, waitTime: 0),
+            Restaurant(name: "Triton Grill", description: "", operatingHours: "", isOpen: true, waitTime: 35)
         ]
         
         /*
