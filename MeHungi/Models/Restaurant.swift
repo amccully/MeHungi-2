@@ -7,34 +7,43 @@
 
 import Foundation
 
-class Restaurant: Decodable, Identifiable, ObservableObject {
+class Restaurant: Decodable, Identifiable {
     
-    enum CodingKeys: CodingKey {
-        case name, waitTime, description, operatingHours, isOpen
-    }
-    
-    let id: UUID = UUID()
+    let id: UUID
     let name: String
     let description: String
-    let operatingHours: String
-    @Published var isOpen: Bool
-    @Published var waitTime: Int
+    let openHour: Int
+    let openMinute: Int
+    let closeHour: Int
+    let closeMinute: Int
+    let latitude: Double
+    let longitude: Double
+    var waitTime: Int
     
-    init(name: String, description: String, operatingHours: String, isOpen: Bool, waitTime: Int) {
-        self.name = name
-        self.description = description
-        self.operatingHours = operatingHours
-        self.isOpen = isOpen
-        self.waitTime = waitTime
+    var isOpen: Bool {
+        let now = Date()
+        // ! means optional: promises program that the values will be valid (not nil)
+        // ?? means nil-coelescing: can act as fail-safe
+        let open = Calendar.current.date(bySettingHour: openHour, minute: openMinute, second: 0, of: now)!
+        let close = Calendar.current.date(bySettingHour: closeHour, minute: closeMinute, second: 0, of: now)!
+        let interval = DateInterval(start: open, end: close)
+        return interval.contains(now)
     }
     
-    required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        name = try container.decode(String.self, forKey: .name)
-        waitTime = try container.decode(Int.self, forKey: .waitTime)
-        description = try container.decode(String.self, forKey: .description)
-        operatingHours = try container.decode(String.self, forKey: .operatingHours)
-        isOpen = try container.decode(Bool.self, forKey: .isOpen)
+    var openIntervalString: String {
+        "\(openHour % 12):\(String(format: "%02d", openMinute)) \(openHour > 12 ? "PM" : "AM") - \(closeHour % 12):\(String(format: "%02d", closeMinute)) \(closeHour > 12 ? "PM" : "AM")"
+    }
+    
+    init(id: UUID, name: String, description: String, openHour: Int, openMinute: Int, closeHour: Int, closeMinute: Int, latitude: Double, longitude: Double, waitTime: Int) {
+        self.id = id
+        self.name = name
+        self.description = description
+        self.openHour = openHour
+        self.openMinute = openMinute
+        self.closeHour = closeHour
+        self.closeMinute = closeMinute
+        self.latitude = latitude
+        self.longitude = longitude
+        self.waitTime = waitTime
     }
 }
