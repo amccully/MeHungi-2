@@ -9,7 +9,7 @@ import SwiftUI
 import MapKit
 
 struct MapView: View {
-    @StateObject var model: ModelData = ModelData()
+    @EnvironmentObject var model: ModelData
     
     @State private var mapRegion = MKCoordinateRegion(
         center: CLLocationCoordinate2D(
@@ -23,6 +23,7 @@ struct MapView: View {
     var body: some View {
 //        Map(coordinateRegion: $mapRegion)
 //            .edgesIgnoringSafeArea(.top)
+        // create navigation stack here!
         Map(coordinateRegion: $mapRegion, annotationItems: model.restaurants) { restaurantObj in
             // here, change mapmarker to a map annotation that shows basic info and allows the user to transition to the restaurant detail view
             MapMarker(coordinate: CLLocationCoordinate2D(latitude: restaurantObj.latitude, longitude: restaurantObj.longitude))

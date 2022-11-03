@@ -26,6 +26,8 @@ class Restaurant: Decodable, Identifiable {
         // ?? means nil-coelescing: can act as fail-safe
         let open = Calendar.current.date(bySettingHour: openHour, minute: openMinute, second: 0, of: now)!
         let close = Calendar.current.date(bySettingHour: closeHour, minute: closeMinute, second: 0, of: now)!
+        // fix interval, for hour 0, we are saying that we are in the next day now, not the current day
+        // find out how to make an interval across two days?
         let interval = DateInterval(start: open, end: close)
         return interval.contains(now)
     }

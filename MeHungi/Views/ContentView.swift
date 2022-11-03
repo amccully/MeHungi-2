@@ -36,6 +36,7 @@ struct ContentView: View {
             }
             
             MapView()
+                .environmentObject(model)
                 .tabItem {
                     Label("Map", systemImage: "map")
                 }
@@ -45,7 +46,7 @@ struct ContentView: View {
     func loadData() async {
         
         model.restaurants = [
-            Restaurant(id: UUID(), name: "Subway", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 0, closeHour: 22, closeMinute: 30, latitude: 32.879224, longitude: -117.235913, waitTime: 12),
+            Restaurant(id: UUID(), name: "Subway", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 0, closeHour: 0, closeMinute: 30, latitude: 32.879224, longitude: -117.235913, waitTime: 12),
             Restaurant(id: UUID(), name: "Panda", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 0, closeHour: 22, closeMinute: 30, latitude: 32.879224, longitude: -117.235913, waitTime: 3),
             Restaurant(id: UUID(), name: "Burger King", description: "This is a test for the view. *Insert name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 30, closeHour: 23, closeMinute: 0, latitude: 32.879224, longitude: -117.235913, waitTime: 0),
             Restaurant(id: UUID(), name: "Triton Grill", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 0, closeHour: 23, closeMinute: 0, latitude: 32.879224, longitude: -117.235913, waitTime: 26)
@@ -73,6 +74,5 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-
     }
 }
