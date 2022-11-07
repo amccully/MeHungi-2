@@ -11,16 +11,16 @@ struct RestaurantDetailView: View {
     var restaurant: Restaurant
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(spacing: 20) {
             HStack {
                 Text(restaurant.openIntervalString)
-                    .padding(.trailing)
+                    .padding(.trailing, 5)
                     
                 if(restaurant.isOpen) {
                     Text("Open")
                         .foregroundColor(Color.green)
                     Image(systemName: "timer")
-                        .padding(.leading)
+                        .padding(.leading, 5)
                     Text("\(restaurant.waitTime) mins")
                 }
                 else {
@@ -28,7 +28,12 @@ struct RestaurantDetailView: View {
                         .foregroundColor(Color.red)
                 }
             }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 10)
+            .background(Color.orange.opacity(0.8))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
             Text(restaurant.description)
+                .padding(.horizontal, 10)
             Spacer()
         }
         .navigationTitle(restaurant.name)

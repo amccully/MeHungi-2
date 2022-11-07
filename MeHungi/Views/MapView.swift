@@ -24,16 +24,61 @@ struct MapView: View {
 //        Map(coordinateRegion: $mapRegion)
 //            .edgesIgnoringSafeArea(.top)
         // create navigation stack here!
-        Map(coordinateRegion: $mapRegion, annotationItems: model.restaurants) { restaurantObj in
-            // here, change mapmarker to a map annotation that shows basic info and allows the user to transition to the restaurant detail view
-            MapMarker(coordinate: CLLocationCoordinate2D(latitude: restaurantObj.latitude, longitude: restaurantObj.longitude))
+        NavigationView {
+            Map(coordinateRegion: $mapRegion, annotationItems: model.restaurants) { restaurantObj in
+                // here, change mapmarker to a map annotation that shows basic info and allows the user to transition to the restaurant detail view
+                MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: restaurantObj.latitude, longitude: restaurantObj.longitude)) {
+                    // how do I make navigationTitle larger on destination?
+                    NavigationLink {
+                        RestaurantDetailView(restaurant: restaurantObj)
+                    } label: {
+                        //PlaceAnnotationView(restaurant: restaurantObj)
+                    }
+                }
+            }
+            .edgesIgnoringSafeArea(.top)
         }
-        .edgesIgnoringSafeArea(.top)
+        
+    }
+    
+    struct PlaceAnnotationView: View {
+      @State private var showTitle = true
+      
+      let restaurant: Restaurant
+      
+      var body: some View {
+        VStack(spacing: 0) {
+            VStack {
+                Text(restaurant.name)
+                    .foregroundColor(Color(.black))
+                Text("\(restaurant.waitTime) mins")
+                    .foregroundColor(Color(.black))
+            }
+            .padding()
+            .background(Color(.white))
+            .cornerRadius(20)
+            .opacity(showTitle ? 0 : 1)
+
+          Image(systemName: "mappin.circle.fill")
+            .font(.title)
+            .foregroundColor(.red)
+          
+          Image(systemName: "arrowtriangle.down.fill")
+            .font(.caption)
+            .foregroundColor(.red)
+            .offset(x: 0, y: -5)
+        }
+        .onTapGesture {
+          withAnimation(.easeInOut) {
+            showTitle.toggle()
+          }
+        }
+      }
     }
 }
 
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {
-        MapView()
+        MapView().environmentObject(ModelData())
     }
 }
