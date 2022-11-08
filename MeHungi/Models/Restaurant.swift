@@ -18,6 +18,9 @@ class Restaurant: Decodable, Identifiable {
     let closeMinute: Int
     let latitude: Double
     let longitude: Double
+    
+    // congestion
+    
     var waitTime: Int
     
     var isOpen: Bool {

@@ -9,7 +9,9 @@ import SwiftUI
 import MapKit
 
 struct MapView: View {
-    @EnvironmentObject var model: ModelData
+    let model: ModelData
+    
+    @State var search: String = ""
     
     @State private var mapRegion = MKCoordinateRegion(
         center: CLLocationCoordinate2D(
@@ -24,19 +26,34 @@ struct MapView: View {
 //        Map(coordinateRegion: $mapRegion)
 //            .edgesIgnoringSafeArea(.top)
         // create navigation stack here!
-        NavigationView {
-            Map(coordinateRegion: $mapRegion, annotationItems: model.restaurants) { restaurantObj in
-                // here, change mapmarker to a map annotation that shows basic info and allows the user to transition to the restaurant detail view
-                MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: restaurantObj.latitude, longitude: restaurantObj.longitude)) {
-                    // how do I make navigationTitle larger on destination?
-                    NavigationLink {
-                        RestaurantDetailView(restaurant: restaurantObj)
-                    } label: {
-                        PlaceAnnotationView(restaurant: restaurantObj)
+        ZStack {
+            NavigationView {
+                Map(coordinateRegion: $mapRegion, annotationItems: search != "" ? model.restaurants.filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants) { restaurant in
+                    // here, change mapmarker to a map annotation that shows basic info and allows the user to transition to the restaurant detail view
+                    MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: restaurant.latitude, longitude: restaurant.longitude)) {
+                        // how do I make navigationTitle larger on destination?
+                        NavigationLink {
+                            RestaurantDetailView(restaurant: restaurant)
+                        } label: {
+                            PlaceAnnotationView(restaurant: restaurant)
+                        }
                     }
                 }
+                .edgesIgnoringSafeArea(.top)
             }
-            .edgesIgnoringSafeArea(.top)
+            
+            VStack {
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(.secondary)
+                    
+                    TextField("Search...", text: $search)
+                }
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 8).fill(.thinMaterial).padding(8))
+                
+                Spacer()
+            }
         }
         
     }
@@ -120,6 +137,6 @@ struct MapView: View {
 
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {
-        MapView().environmentObject(ModelData())
+        MapView(model: ModelData())
     }
 }

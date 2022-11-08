@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RestaurantDetailView: View {
-    var restaurant: Restaurant
+    let restaurant: Restaurant
     
     var body: some View {
         VStack(spacing: 10) {
@@ -16,25 +16,33 @@ struct RestaurantDetailView: View {
                 .font(.system(size: 40))
                 .bold()
             HStack {
+                
                 Text(restaurant.openIntervalString)
-                    .padding(.trailing, 5)
-                    
-                if(restaurant.isOpen) {
-                    Text("Open")
-                        .foregroundColor(Color.green)
-                    Image(systemName: "timer")
-                        .padding(.leading, 5)
-                    Text("\(restaurant.waitTime) mins")
-                }
-                else {
-                    Text("Closed")
-                        .foregroundColor(Color.red)
+                    .padding(8)
+                    .background(RoundedRectangle(cornerRadius: 8).fill(.thinMaterial))
+                
+                Text(restaurant.isOpen ? "Open" : "Closed")
+                    .foregroundColor(restaurant.isOpen ? .green : .red)
+                    .bold()
+                    .padding(8)
+                    .background(RoundedRectangle(cornerRadius: 8).fill(.thinMaterial))
+                
+                if restaurant.isOpen {
+                    HStack {
+                        Image(systemName: "timer")
+                            .padding(.leading, 5)
+                        Text("\(restaurant.waitTime) mins")
+                    }
+                    .padding(8)
+                    .background(RoundedRectangle(cornerRadius: 8).fill(.thinMaterial))
+                    .foregroundColor(restaurant.waitTime <= 10 ? .green : restaurant.waitTime <= 30 ? .orange : .red)
                 }
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 10)
-            .background(Color.orange.opacity(0.8))
-            .clipShape(RoundedRectangle(cornerRadius: 10))
+            
+            Divider()
+            
             Text(restaurant.description)
                 .padding(.horizontal, 10)
             Spacer()

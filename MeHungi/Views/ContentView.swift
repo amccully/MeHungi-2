@@ -50,8 +50,7 @@ struct ContentView: View {
                 Label("List", systemImage: "list.bullet")
             }
             
-            MapView()
-                .environmentObject(model)
+            MapView(model: model)
                 .tabItem {
                     Label("Map", systemImage: "map")
                 }
