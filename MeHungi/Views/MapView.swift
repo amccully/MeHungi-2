@@ -99,7 +99,7 @@ struct MapView: View {
             }
             .sheet(isPresented: $showingSheet) {
                 // change this to drag gesture later?
-                VStack(alignment: .leading){
+                VStack(alignment: .leading) {
                     Button(action: {
                         showingSheet.toggle()
                     }, label: {
@@ -108,8 +108,10 @@ struct MapView: View {
                             .font(.largeTitle)
                             .padding(20)
                     })
-                    RestaurantDetailView(restaurant: restaurant).foregroundColor(.black)
+                    RestaurantDetailView(restaurant: restaurant)
+                        .foregroundColor(.primary)
                 }
+                .presentationDetents([.fraction(0.25), .medium, .large])
             }
         }
     }

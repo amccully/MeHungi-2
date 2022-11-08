@@ -10,18 +10,33 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var model: ModelData = ModelData()
     
+    @State var search: String = ""
+    
     var body: some View {
         TabView {
             NavigationView {
-                List(model.restaurants) { restaurant in
-                    NavigationLink(destination: RestaurantDetailView(restaurant: restaurant)) {
+                List {
+                    Section {
                         HStack {
-                            Text(restaurant.name)
-                            Spacer()
-                            Text("\(restaurant.waitTime) mins")
+                            Image(systemName: "magnifyingglass")
+                                .foregroundColor(.secondary)
+                            
+                            TextField("Search...", text: $search)
+                        }
+                    }
+                    Section {
+                        ForEach(search != "" ? model.restaurants.filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants) { restaurant in
+                            NavigationLink(destination: RestaurantDetailView(restaurant: restaurant)) {
+                                HStack {
+                                    Text(restaurant.name)
+                                    Spacer()
+                                    Text("\(restaurant.waitTime) mins")
+                                }
+                            }
                         }
                     }
                 }
+                .animation(.default, value: search)
                 .navigationTitle("MeHungi")
                 .task {
                     await loadData()
