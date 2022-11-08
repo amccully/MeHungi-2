@@ -11,7 +11,10 @@ struct RestaurantDetailView: View {
     var restaurant: Restaurant
     
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 10) {
+            Text(restaurant.name)
+                .font(.system(size: 40))
+                .bold()
             HStack {
                 Text(restaurant.openIntervalString)
                     .padding(.trailing, 5)
@@ -36,7 +39,7 @@ struct RestaurantDetailView: View {
                 .padding(.horizontal, 10)
             Spacer()
         }
-        .navigationTitle(restaurant.name)
+        //.navigationTitle(restaurant.name)
     }
 }
 

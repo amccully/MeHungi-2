@@ -32,7 +32,7 @@ struct MapView: View {
                     NavigationLink {
                         RestaurantDetailView(restaurant: restaurantObj)
                     } label: {
-                        //PlaceAnnotationView(restaurant: restaurantObj)
+                        PlaceAnnotationView(restaurant: restaurantObj)
                     }
                 }
             }
@@ -41,40 +41,79 @@ struct MapView: View {
         
     }
     
+//    struct PlaceAnnotationView: View {
+//      @State private var showTitle = true
+//
+//      let restaurant: Restaurant
+//
+//      var body: some View {
+//        VStack(spacing: 0) {
+//            VStack {
+//                Text(restaurant.name)
+//                    .foregroundColor(Color(.black))
+//                Text("\(restaurant.waitTime) mins")
+//                    .foregroundColor(Color(.black))
+//            }
+//            .padding()
+//            .background(Color(.white))
+//            .cornerRadius(20)
+//            .opacity(showTitle ? 0 : 1)
+//
+//          Image(systemName: "mappin.circle.fill")
+//            .font(.title)
+//            .foregroundColor(.red)
+//
+//          Image(systemName: "arrowtriangle.down.fill")
+//            .font(.caption)
+//            .foregroundColor(.red)
+//            .offset(x: 0, y: -5)
+//        }
+//        .onTapGesture {
+//          withAnimation(.easeInOut) {
+//            showTitle.toggle()
+//          }
+//        }
+//      }
+//    }
+    
     struct PlaceAnnotationView: View {
-      @State private var showTitle = true
-      
-      let restaurant: Restaurant
-      
-      var body: some View {
-        VStack(spacing: 0) {
-            VStack {
-                Text(restaurant.name)
-                    .foregroundColor(Color(.black))
-                Text("\(restaurant.waitTime) mins")
-                    .foregroundColor(Color(.black))
-            }
-            .padding()
-            .background(Color(.white))
-            .cornerRadius(20)
-            .opacity(showTitle ? 0 : 1)
+        @State private var showingSheet = false
 
-          Image(systemName: "mappin.circle.fill")
-            .font(.title)
-            .foregroundColor(.red)
-          
-          Image(systemName: "arrowtriangle.down.fill")
-            .font(.caption)
-            .foregroundColor(.red)
-            .offset(x: 0, y: -5)
+        let restaurant: Restaurant
+
+        var body: some View {
+            VStack(spacing: 0) {
+                Text(restaurant.name)
+                    .foregroundColor(.red)
+                Image(systemName: "mappin.circle.fill")
+                    .font(.title)
+                    .foregroundColor(.red)
+                
+//                Image(systemName: "arrowtriangle.down.fill")
+//                    .font(.caption)
+//                    .foregroundColor(.red)
+//                    .offset(x: 0, y: -5)
+            }
+            .onTapGesture {
+                showingSheet.toggle()
+            }
+            .sheet(isPresented: $showingSheet) {
+                // change this to drag gesture later?
+                VStack(alignment: .leading){
+                    Button(action: {
+                        showingSheet.toggle()
+                    }, label: {
+                        Image(systemName: "xmark")
+                            .foregroundColor(.gray)
+                            .font(.largeTitle)
+                            .padding(20)
+                    })
+                    RestaurantDetailView(restaurant: restaurant).foregroundColor(.black)
+                }
+            }
         }
-        .onTapGesture {
-          withAnimation(.easeInOut) {
-            showTitle.toggle()
-          }
-        }
-      }
     }
+    
 }
 
 struct MapView_Previews: PreviewProvider {

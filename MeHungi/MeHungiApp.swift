@@ -9,6 +9,7 @@
 //  keep things simple for json files, so 4 simple ints is better than 1 string that you need to extract info from
 //  SwiftOnTap: guide for swiftui
 //  fuck optimization! keep it simple
+//  use plus button in top right to access sf symbol library
 
 import SwiftUI
 
