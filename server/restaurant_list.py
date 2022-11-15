@@ -13,4 +13,4 @@ restaurant_dict = {}
 # Use list of restaurants to populate dictionary
 
 for restaurant in restaurant_list:
-  restaurant_dict[restaurant.id] = restaurant
+  restaurant_dict[restaurant.id] = restaurant.to_dic
