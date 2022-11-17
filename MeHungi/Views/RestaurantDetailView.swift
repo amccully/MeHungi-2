@@ -42,6 +42,7 @@ struct RestaurantDetailView: View {
             .padding(.vertical, 10)
             
             Divider()
+            // make this pop more
             
             Text(restaurant.description)
                 .padding(.horizontal, 10)
