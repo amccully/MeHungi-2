@@ -9,8 +9,14 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var model: ModelData = ModelData()
-    
+    @State private var showingSheet = false
+    @State var byFoot = true
     @State var search: String = ""
+    
+    @State private var searchType = "Name"
+    var searchTypes = ["Name", "Wait Time", "Finish Time"]
+    
+    
     
     var body: some View {
         TabView {
@@ -20,8 +26,39 @@ struct ContentView: View {
                         HStack {
                             Image(systemName: "magnifyingglass")
                                 .foregroundColor(.secondary)
-                            
+                            // change to allow user to choose what they search by (name, wait time, finish by, etc)
                             TextField("Search...", text: $search)
+                            Button(action: {
+                                showingSheet.toggle()
+                            }, label: {
+                                Image(systemName: "gearshape.fill")
+                                    .foregroundColor(.gray)
+                                    .font(.title)
+                            })
+                            .sheet(isPresented: $showingSheet) {
+                                List {
+                                    Section {
+                                        Picker("Search by...", selection: $searchType) {
+                                            ForEach(searchTypes, id: \.self) {
+                                                Text($0)
+                                            }
+                                        }
+                                        .pickerStyle(.menu)
+                                    }
+                                    Section {
+                                        HStack {
+                                            Text("Mode of Transportation:")
+                                            Spacer()
+                                            Image(systemName: "bicycle")
+                                                .font(.largeTitle)
+                                            Toggle("Mode of Transport", isOn: $byFoot)
+                                                .labelsHidden()
+                                            Image(systemName: "figure.walk")
+                                                .font(.largeTitle)
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                     Section {

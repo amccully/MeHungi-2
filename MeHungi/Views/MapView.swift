@@ -11,9 +11,10 @@ import MapKit
 struct MapView: View {
     let model: ModelData
     
+    // view will respond when changes are made to @State vars
     @State var search: String = ""
     
-    @State private var mapRegion = MKCoordinateRegion(
+    var mapRegion = MKCoordinateRegion(
         center: CLLocationCoordinate2D(
             latitude: 32.879687,
             longitude: -117.233627),
@@ -28,8 +29,8 @@ struct MapView: View {
         // create navigation stack here!
         ZStack {
             NavigationView {
-                Map(coordinateRegion: $mapRegion, annotationItems: search != "" ? model.restaurants.filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants) { restaurant in
-                    // here, change mapmarker to a map annotation that shows basic info and allows the user to transition to the restaurant detail view
+                // anotationItems with search feature: search != "" ? model.restaurants.filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants
+                Map(coordinateRegion: Binding(get: { self.mapRegion }, set: { newValue in }), annotationItems: model.restaurants) { restaurant in
                     MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: restaurant.latitude, longitude: restaurant.longitude)) {
                         // how do I make navigationTitle larger on destination?
                         NavigationLink {
@@ -58,43 +59,9 @@ struct MapView: View {
         
     }
     
-//    struct PlaceAnnotationView: View {
-//      @State private var showTitle = true
-//
-//      let restaurant: Restaurant
-//
-//      var body: some View {
-//        VStack(spacing: 0) {
-//            VStack {
-//                Text(restaurant.name)
-//                    .foregroundColor(Color(.black))
-//                Text("\(restaurant.waitTime) mins")
-//                    .foregroundColor(Color(.black))
-//            }
-//            .padding()
-//            .background(Color(.white))
-//            .cornerRadius(20)
-//            .opacity(showTitle ? 0 : 1)
-//
-//          Image(systemName: "mappin.circle.fill")
-//            .font(.title)
-//            .foregroundColor(.red)
-//
-//          Image(systemName: "arrowtriangle.down.fill")
-//            .font(.caption)
-//            .foregroundColor(.red)
-//            .offset(x: 0, y: -5)
-//        }
-//        .onTapGesture {
-//          withAnimation(.easeInOut) {
-//            showTitle.toggle()
-//          }
-//        }
-//      }
-//    }
-    
     struct PlaceAnnotationView: View {
         @State private var showingSheet = false
+        @State var selectedDetent: PresentationDetent = .fraction(0.25)
 
         let restaurant: Restaurant
 
@@ -115,20 +82,25 @@ struct MapView: View {
                 showingSheet.toggle()
             }
             .sheet(isPresented: $showingSheet) {
-                // change this to drag gesture later?
                 VStack(alignment: .leading) {
                     Button(action: {
                         showingSheet.toggle()
                     }, label: {
-                        Image(systemName: "xmark")
-                            .foregroundColor(.gray)
-                            .font(.largeTitle)
-                            .padding(20)
+                        if selectedDetent != .fraction(0.25) {
+                            Image(systemName: "xmark")
+                                .foregroundColor(.gray)
+                                .font(.largeTitle)
+                                .padding(30)
+                        }
+                        else {
+                            Spacer()
+                        }
                     })
                     RestaurantDetailView(restaurant: restaurant)
                         .foregroundColor(.primary)
                 }
-                .presentationDetents([.fraction(0.25), .medium, .large])
+                // removed .middle
+                .presentationDetents([.fraction(0.25), .large], selection: $selectedDetent)
             }
         }
     }
