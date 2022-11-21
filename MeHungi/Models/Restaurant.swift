@@ -9,7 +9,7 @@ import Foundation
 
 class Restaurant: Decodable, Identifiable {
     
-    let id: UUID
+    let id: String
     let name: String
     let description: String
     let openHour: Int
@@ -58,43 +58,43 @@ class Restaurant: Decodable, Identifiable {
         self.waitTime = waitTime
     }
 
-    init(id: String) {
-        self.id = id
-    }
+//    init(id: String) {
+//        self.id = id
+//    }
 
-    func reload()  async {
-        url = URL(string: "http://127.0.0.1:5000//restaurant/" + id)
-
-        let task = URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in 
-   
-
-        if let error = error {
-            print("Error accessing url: \(error)")
-            return
-        }
-
-        /* if response var is a valid HTTTPURL response, go into guard, if response is a success,
-         continue to rest of code, else throw error and return
-        */
-        guard let httpResponse = response as? HTTPURLResponse,
-            (200...299).contains(httpResponse.statusCode) else {
-            print("Error with the response, unexpected status code: \(response)")
-            return
-         }
-
-        // try to decode JSON file, if error print "whoops"
-        do {
-            let restaurants = try JSONDecoder().decode(restaurants.self, from: data)
-        }
-        catch {
-            print("Whoops!")
-        }
-    
-
-    })
-
-    task.resume()
-
-    }
+//    func reload()  async {
+//        url = URL(string: "http://127.0.0.1:5000//restaurant/" + id)
+//
+//        let task = URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
+//
+//
+//        if let error = error {
+//            print("Error accessing url: \(error)")
+//            return
+//        }
+//
+//        /* if response var is a valid HTTTPURL response, go into guard, if response is a success,
+//         continue to rest of code, else throw error and return
+//        */
+//        guard let httpResponse = response as? HTTPURLResponse,
+//            (200...299).contains(httpResponse.statusCode) else {
+//            print("Error with the response, unexpected status code: \(response)")
+//            return
+//         }
+//
+//        // try to decode JSON file, if error print "whoops"
+//        do {
+//            let restaurants = try JSONDecoder().decode(restaurants.self, from: data)
+//        }
+//        catch {
+//            print("Whoops!")
+//        }
+//
+//
+//    })
+//
+//    task.resume()
+//
+//    }
 
 }

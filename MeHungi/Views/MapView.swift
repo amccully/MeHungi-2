@@ -14,7 +14,7 @@ struct MapView: View {
     // view will respond when changes are made to @State vars
     @State var search: String = ""
     
-    var mapRegion = MKCoordinateRegion(
+    @State private var mapRegion = MKCoordinateRegion(
         center: CLLocationCoordinate2D(
             latitude: 32.879687,
             longitude: -117.233627),
@@ -29,15 +29,17 @@ struct MapView: View {
         // create navigation stack here!
         ZStack {
             // anotationItems with search feature: search != "" ? model.restaurants.filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants
-            Map(coordinateRegion: Binding(get: { self.mapRegion }, set: { newValue in }), annotationItems: search != "" ? model.restaurants.filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants) { restaurant in
+            Map(coordinateRegion: $mapRegion, showsUserLocation: true, annotationItems: search != "" ? model.restaurants.filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants) { restaurant in
                 MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: restaurant.latitude, longitude: restaurant.longitude)) {
-                    // how do I make navigationTitle larger on destination?
 
                     PlaceAnnotationView(restaurant: restaurant)
-
                 }
             }
             .edgesIgnoringSafeArea(.top)
+            //.accentColor(Color(.systemPurple))
+            .onAppear {
+                locationManager.checkIfLocationServicesIsEnabled()
+            }
             
             VStack {
                 HStack {

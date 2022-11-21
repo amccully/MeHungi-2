@@ -54,6 +54,6 @@ struct RestaurantDetailView: View {
 
 struct RestaurantDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        RestaurantDetailView(restaurant: Restaurant(id: UUID(), name: "McDonalds", description: "This is a test for the view. Mcdonalds makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 0, closeHour: 23, closeMinute: 30, latitude: 32.879224, longitude: -117.235913, waitTime: 12))
+        RestaurantDetailView(restaurant: Restaurant(id: "005", name: "McDonalds", description: "This is a test for the view. Mcdonalds makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 0, closeHour: 23, closeMinute: 30, latitude: 32.879224, longitude: -117.235913, waitTime: 12))
     }
 }
