@@ -7,9 +7,9 @@
 
 import Foundation
 
-class Restaurant: Decodable, Identifiable {
+class Restaurant: Decodable, Identifiable, Comparable {
     
-    let id: UUID
+   /* let id: String
     let name: String
     let description: String
     let openHour: Int
@@ -18,11 +18,12 @@ class Restaurant: Decodable, Identifiable {
     let closeMinute: Int
     let latitude: Double
     let longitude: Double
-    
+    */
     // congestion
     
-    var waitTime: Int
-
+    var waitTime = 0
+    var distance = 0.0
+    
     var isOpen: Bool {
         if(openHour == closeHour && openMinute == closeMinute) {
             return true
@@ -58,12 +59,51 @@ class Restaurant: Decodable, Identifiable {
         self.waitTime = waitTime
     }
 
-    init(id: String) {
+   /* init(id: String) {
         self.id = id
     }
-
+*/
+    static func ==(lhs: Restaurant, rhs: Restaurant) -> Bool{
+        // all member variables the same or just id?
+        return lhs.id == rhs.id /*&&
+        lhs.name == rhs.name &&
+        lhs.description == rhs.description &&
+        lhs.openHour == rhs.openHour &&
+        lhs.openMinute == rhs.openMinute &&
+        lhs.closeHour == rhs.closeHour &&
+        lhs.closeMinute == rhs.closeMinute &&
+        lhs.latitude == rhs.latitude &&
+        lhs.longitude == rhs.longitude &&
+        lhs.waitTime == rhs.waitTime
+        */
+    }
+    
+    static func <(lhs: Restaurant, rhs: Restaurant) -> Bool {
+        var leftDist = lhs.distance
+        var rightDist = lhs.distance
+        
+        //if same distance, wait time matters
+        if (leftDist == rightDist) {
+            return lhs.waitTime < rhs.waitTime
+        }
+        // if one is loser than 0.1, return that one
+        if ((leftDist <= 0.1 && rightDist > 0.1) || (rightDist <= 0.1 && leftDist > 0.1)) {
+            return leftDist < rightDist;
+        }
+        leftDist = floor(leftDist*4)
+        rightDist = floor(4*rightDist)
+        
+        // if one is more than .25 away, return smaller one
+        if (leftDist != rightDist){
+            return leftDist < rightDist;
+        }
+        // return smaller wait time
+        return lhs.waitTime < rhs.waitTime;
+        
+    }
+    /*
     func reload()  async {
-        url = URL(string: "http://127.0.0.1:5000//restaurant/" + id)
+        let url = URL(string: "http://127.0.0.1:5000//restaurant/" + id)
 
         let task = URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in 
    
@@ -97,4 +137,6 @@ class Restaurant: Decodable, Identifiable {
 
     }
 
+    */
+    
 }
