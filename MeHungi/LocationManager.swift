@@ -7,13 +7,20 @@
 //  32.881977
 // -117.235209
 
-import CoreLocation
-
-let locationManager = LocationManager()
+import MapKit
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     var locationManager: CLLocationManager?
+    
+    @Published var mapRegion = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(
+            latitude: 32.879765,
+            longitude: -117.236202),
+        span: MKCoordinateSpan(
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01)
+    )
     
     func checkIfLocationServicesIsEnabled() {
         if CLLocationManager.locationServicesEnabled() {
@@ -39,8 +46,8 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         case .denied:
             print("You have denied this app from location permissions.")
         case .authorizedAlways, .authorizedWhenInUse:
-            // temporary
-            break
+            mapRegion = MKCoordinateRegion(center: locationManager.location!.coordinate,
+                                           span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
         @unknown default:
             break
         }
@@ -50,30 +57,3 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         checkLocationAuthorization()
     }
 }
-
-//class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
-//
-//    let manager = CLLocationManager()
-//    static let shared = LocationManager()
-//
-//    @Published var location: CLLocationCoordinate2D?
-//
-//    override init() {
-//        super.init()
-//        manager.delegate = self
-//    }
-//
-//    func requestLocation() {
-//        //manager.requestLocation()
-//        manager.startUpdatingLocation()
-//    }
-//
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        location = locations.first?.coordinate
-//    }
-//
-//    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-//        print("Whoops!")
-//    }
-//
-//}

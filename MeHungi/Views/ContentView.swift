@@ -12,6 +12,7 @@ import CoreLocation
 struct ContentView: View {
     
     @StateObject var model: ModelData = ModelData()
+    @StateObject var locationManager = LocationManager()
     
     @State private var showingSheet = false
     @State var byFoot = true
