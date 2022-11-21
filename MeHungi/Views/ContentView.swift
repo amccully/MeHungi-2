@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreLocationUI
+import CoreLocation
 
 struct ContentView: View {
     
@@ -107,20 +108,22 @@ struct ContentView: View {
                             }
                         }
                     }
-                    if let location = LocationManager.shared.location {
-                        Text("Your location: \(location.latitude), \(location.longitude)")
-                    }
-                    LocationButton {
-                        LocationManager.shared.requestLocation()
-                    }
+//                    if let location = LocationManager.shared.location {
+//                        Text("Your location: \(location.latitude), \(location.longitude)")
+//                    }
+//                    LocationButton {
+//                        LocationManager.shared.requestLocation()
+//                    }
                 }
                 .animation(.default, value: search)
                 .navigationTitle("MeHungi")
                 .task {
+                    locationManager.checkIfLocationServicesIsEnabled()
                     await loadData()
                 }
                 .refreshable {
                     Task {
+                        locationManager.checkIfLocationServicesIsEnabled()
                         await loadData()
                     }
                 }
@@ -138,10 +141,10 @@ struct ContentView: View {
     func loadData() async {
         
         model.restaurants = [
-            Restaurant(id: UUID(), name: "Subway", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 0, closeHour: 2, closeMinute: 00, latitude: 32.879224, longitude: -117.235913, waitTime: 12),
-            Restaurant(id: UUID(), name: "Panda", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 9, openMinute: 50, closeHour: 12, closeMinute: 30, latitude: 32.884638, longitude: -117.239104, waitTime: 3),
-            Restaurant(id: UUID(), name: "Burger King", description: "This is a test for the view. *Insert name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 30, closeHour: 0, closeMinute: 0, latitude: 32.879224, longitude: -117.235913, waitTime: 16),
-            Restaurant(id: UUID(), name: "Triton Grill", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 1, openMinute: 26, closeHour: 1, closeMinute: 25, latitude: 32.879224, longitude: -117.235913, waitTime: 26)
+            Restaurant(id: "001", name: "Subway", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 0, closeHour: 2, closeMinute: 00, latitude: 32.881398208652115, longitude: -117.23520934672317, waitTime: 12),
+            Restaurant(id: "002", name: "Panda", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 9, openMinute: 50, closeHour: 12, closeMinute: 30, latitude: 32.884638, longitude: -117.239104, waitTime: 3),
+            Restaurant(id: "003", name: "Burger King", description: "This is a test for the view. *Insert name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 30, closeHour: 0, closeMinute: 0, latitude: 32.8809679784332, longitude: -117.23547474701675, waitTime: 16),
+            Restaurant(id: "004", name: "Triton Grill", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 1, openMinute: 26, closeHour: 1, closeMinute: 25, latitude: 32.88076184401626, longitude: -117.2430254489795, waitTime: 26)
         ]
         
         /*
