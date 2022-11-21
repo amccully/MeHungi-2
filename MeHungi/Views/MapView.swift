@@ -28,20 +28,16 @@ struct MapView: View {
 //            .edgesIgnoringSafeArea(.top)
         // create navigation stack here!
         ZStack {
-            NavigationView {
-                // anotationItems with search feature: search != "" ? model.restaurants.filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants
-                Map(coordinateRegion: Binding(get: { self.mapRegion }, set: { newValue in }), annotationItems: model.restaurants) { restaurant in
-                    MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: restaurant.latitude, longitude: restaurant.longitude)) {
-                        // how do I make navigationTitle larger on destination?
-                        NavigationLink {
-                            RestaurantDetailView(restaurant: restaurant)
-                        } label: {
-                            PlaceAnnotationView(restaurant: restaurant)
-                        }
-                    }
+            // anotationItems with search feature: search != "" ? model.restaurants.filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants
+            Map(coordinateRegion: Binding(get: { self.mapRegion }, set: { newValue in }), annotationItems: search != "" ? model.restaurants.filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants) { restaurant in
+                MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: restaurant.latitude, longitude: restaurant.longitude)) {
+                    // how do I make navigationTitle larger on destination?
+
+                    PlaceAnnotationView(restaurant: restaurant)
+
                 }
-                .edgesIgnoringSafeArea(.top)
             }
+            .edgesIgnoringSafeArea(.top)
             
             VStack {
                 HStack {
