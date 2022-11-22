@@ -9,7 +9,8 @@ import Foundation
 
 class ModelData: ObservableObject {
         
-    @Published var restaurants: [Restaurant] = []
+    @Published var restaurants: [String: Restaurant] = [:]
+    @Published var locationManager = LocationManager()
 
 }
 

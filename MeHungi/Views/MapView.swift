@@ -9,8 +9,7 @@ import SwiftUI
 import MapKit
 
 struct MapView: View {
-    let model: ModelData
-    @StateObject var locationManager = LocationManager()
+    @EnvironmentObject var model: ModelData
     
     // view will respond when changes are made to @State vars
     @State var search: String = ""
@@ -19,16 +18,17 @@ struct MapView: View {
         // create navigation stack here!
         ZStack {
             // anotationItems with search feature: search != "" ? model.restaurants.filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants
-            Map(coordinateRegion: $locationManager.mapRegion, showsUserLocation: true, annotationItems: search != "" ? model.restaurants.filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants) { restaurant in
+            Map(coordinateRegion: Binding(get: { model.locationManager.mapRegion }, set: { _ in }), showsUserLocation: true, annotationItems: search != "" ? model.restaurants.values.sorted().filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants.values.sorted()) { restaurant in
                 MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: restaurant.latitude, longitude: restaurant.longitude)) {
 
                     PlaceAnnotationView(restaurant: restaurant)
+                        .environmentObject(model)
                 }
             }
             .edgesIgnoringSafeArea(.top)
             //.accentColor(Color(.systemPurple))
             .onAppear {
-                locationManager.checkIfLocationServicesIsEnabled()
+                model.locationManager.checkIfLocationServicesIsEnabled()
             }
             
             VStack {
@@ -48,6 +48,8 @@ struct MapView: View {
     }
     
     struct PlaceAnnotationView: View {
+        @EnvironmentObject var model: ModelData
+        
         @State private var showingSheet = false
         @State var selectedDetent: PresentationDetent = .fraction(0.25)
 
@@ -79,7 +81,8 @@ struct MapView: View {
                             Spacer()
                         }
                     })
-                    RestaurantDetailView(restaurant: restaurant)
+                    RestaurantDetailView(id: restaurant.id)
+                        .environmentObject(model)
                         .foregroundColor(.primary)
                 }
                 // removed .middle
@@ -92,6 +95,7 @@ struct MapView: View {
 
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {
-        MapView(model: ModelData())
+        MapView()
+            .environmentObject(ModelData())
     }
 }

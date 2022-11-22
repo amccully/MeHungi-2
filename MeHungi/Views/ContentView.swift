@@ -4,15 +4,17 @@
 //
 //  Created by Aaron McCully on 10/27/22.
 //
-
 import SwiftUI
 import CoreLocationUI
 import CoreLocation
 
+enum HTTPErrors: Error {
+    case HTTPRequestError
+}
+
 struct ContentView: View {
     
     @StateObject var model: ModelData = ModelData()
-    @StateObject var locationManager = LocationManager()
     
     @State private var showingSheet = false
     @State var byFoot = true
@@ -94,12 +96,12 @@ struct ContentView: View {
                         }
                     }
                     Section {
-                        let filtered = search != "" ? model.restaurants.filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants
+                        let filtered = search != "" ? model.restaurants.values.sorted().filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants.values.sorted()
                         let sortWaitTime = filtered.sorted(by: { $0.waitTime < $1.waitTime })
                         // just a test for now
                         let sortDistanceAway = filtered.sorted(by: { $0.name < $1.name })
                         ForEach(searchType == "Wait Time" ? sortWaitTime : sortDistanceAway) { restaurant in
-                            NavigationLink(destination: RestaurantDetailView(restaurant: restaurant)) {
+                            NavigationLink(destination: RestaurantDetailView(id: restaurant.id).environmentObject(model)) {
                                 
                                 HStack {
                                     Text(restaurant.name)
@@ -119,12 +121,12 @@ struct ContentView: View {
                 .animation(.default, value: search)
                 .navigationTitle("MeHungi")
                 .task {
-                    locationManager.checkIfLocationServicesIsEnabled()
+                    model.locationManager.checkIfLocationServicesIsEnabled()
                     await loadData()
                 }
                 .refreshable {
                     Task {
-                        locationManager.checkIfLocationServicesIsEnabled()
+                        model.locationManager.checkIfLocationServicesIsEnabled()
                         await loadData()
                     }
                 }
@@ -132,7 +134,8 @@ struct ContentView: View {
                 Label("List", systemImage: "list.bullet")
             }
             
-            MapView(model: model)
+            MapView()
+                .environmentObject(model)
                 .tabItem {
                     Label("Map", systemImage: "map")
                 }
@@ -142,11 +145,45 @@ struct ContentView: View {
     func loadData() async {
         
         model.restaurants = [
-            Restaurant(id: "001", name: "Subway", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 0, closeHour: 2, closeMinute: 00, latitude: 32.881398208652115, longitude: -117.23520934672317, waitTime: 12),
-            Restaurant(id: "002", name: "Panda", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 9, openMinute: 50, closeHour: 12, closeMinute: 30, latitude: 32.884638, longitude: -117.239104, waitTime: 3),
-            Restaurant(id: "003", name: "Burger King", description: "This is a test for the view. *Insert name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 30, closeHour: 0, closeMinute: 0, latitude: 32.8809679784332, longitude: -117.23547474701675, waitTime: 16),
-            Restaurant(id: "004", name: "Triton Grill", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 1, openMinute: 26, closeHour: 1, closeMinute: 25, latitude: 32.88076184401626, longitude: -117.2430254489795, waitTime: 26)
+            "001": Restaurant(id: "001", name: "Subway", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 0, closeHour: 2, closeMinute: 00, latitude: 32.881398208652115, longitude: -117.23520934672317, waitTime: 12),
+            "002": Restaurant(id: "002", name: "Panda", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 9, openMinute: 50, closeHour: 12, closeMinute: 30, latitude: 32.884638, longitude: -117.239104, waitTime: 3),
+            "003": Restaurant(id: "003", name: "Burger King", description: "This is a test for the view. *Insert name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 30, closeHour: 0, closeMinute: 0, latitude: 32.8809679784332, longitude: -117.23547474701675, waitTime: 16),
+            "004": Restaurant(id: "004", name: "Triton Grill", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 1, openMinute: 26, closeHour: 1, closeMinute: 25, latitude: 32.88076184401626, longitude: -117.2430254489795, waitTime: 26)
         ]
+        
+        // start point of possibly fucked code
+//        let url: URL = URL(string: "http://127.0.0.1:5000/IDs")!
+//
+//        do {
+//            let (data, response) = try await URLSession.shared.data(from: url)
+//
+//            guard let httpResponse = response as? HTTPURLResponse,
+//                  httpResponse.statusCode == 200 else {
+//                throw HTTPErrors.HTTPRequestError
+//
+//            }
+//
+//            let ids = try JSONDecoder().decode([String].self, from: data)
+//            model.restaurants = [:]
+//
+//            for id in ids {
+//                model.restaurants[id] = try? await Restaurant.reload(id: id)
+//            }
+//
+//        }
+//        catch {
+//            print("WHOOOPS")
+//        }
+        // end point
+        
+        // getting user coordinates as a CLLocation
+        let userCoords = CLLocation(latitude: model.locationManager.location!.latitude,
+                                    longitude: model.locationManager.location!.longitude)
+        // settings restaurant distances
+        model.restaurants.values.sorted().forEach { restaurant in
+            let distance = (userCoords.distance(from: CLLocation(latitude: restaurant.latitude, longitude: restaurant.longitude)) / 1000) * 0.621371
+            restaurant.setDistanceAway(_distanceAway: distance)
+        }
         
         /*
              guard let url = URL(string: "https://myurlhere.com") else {
@@ -155,7 +192,6 @@ struct ContentView: View {
              }
             do {
                 let (data, _) = try await URLSession.shared.data(from: url)
-
                 if let decodedResponse = try? JSONDecoder().decode(???.self, from: data) {
                     ??? = decodedResponse.???
                 }

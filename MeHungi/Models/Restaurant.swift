@@ -4,20 +4,23 @@
 //
 //  Created by Aaron McCully on 10/27/22.
 //
-
 import Foundation
 
-class Restaurant: Decodable, Identifiable {
-    
-    let id: String
-    let name: String
-    let description: String
-    let openHour: Int
-    let openMinute: Int
-    let closeHour: Int
-    let closeMinute: Int
-    let latitude: Double
-    let longitude: Double
+enum RestaurantError: Error {
+    case HTTPRequestError
+}
+
+class Restaurant: Decodable, Identifiable, Comparable {
+    var id: String
+    var name: String
+    var description: String
+    var openHour: Int
+    var openMinute: Int
+    var closeHour: Int
+    var closeMinute: Int
+    var latitude: Double
+    var longitude: Double
+    var distanceAway: Double
     
     // congestion
     
@@ -56,45 +59,46 @@ class Restaurant: Decodable, Identifiable {
         self.latitude = latitude
         self.longitude = longitude
         self.waitTime = waitTime
+        self.distanceAway = 0.0
     }
+    
+    enum CodingKeys: CodingKey {
+        case id
+        case name
+        case description
+        case openHour
+        case openMinute
+        case closeHour
+        case closeMinute
+        case latitude
+        case longitude
+        case waitTime
+        case distanceAway
+    }
+    
+    static func reload(id: String) async throws -> Restaurant {
+        let url: URL = URL(string: "http://127.0.0.1:5000//restaurant/\(id)")!
 
-//    init(id: String) {
-//        self.id = id
-//    }
+        let (data, response) = try await URLSession.shared.data(from: url)
 
-//    func reload()  async {
-//        url = URL(string: "http://127.0.0.1:5000//restaurant/" + id)
-//
-//        let task = URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
-//
-//
-//        if let error = error {
-//            print("Error accessing url: \(error)")
-//            return
-//        }
-//
-//        /* if response var is a valid HTTTPURL response, go into guard, if response is a success,
-//         continue to rest of code, else throw error and return
-//        */
-//        guard let httpResponse = response as? HTTPURLResponse,
-//            (200...299).contains(httpResponse.statusCode) else {
-//            print("Error with the response, unexpected status code: \(response)")
-//            return
-//         }
-//
-//        // try to decode JSON file, if error print "whoops"
-//        do {
-//            let restaurants = try JSONDecoder().decode(restaurants.self, from: data)
-//        }
-//        catch {
-//            print("Whoops!")
-//        }
-//
-//
-//    })
-//
-//    task.resume()
-//
-//    }
+        guard let httpResponse = response as? HTTPURLResponse,
+              httpResponse.statusCode == 200 else {
+            throw RestaurantError.HTTPRequestError
+        }
 
+        return try JSONDecoder().decode(Restaurant.self, from: data)
+    }
+    
+    static func == (lhs: Restaurant, rhs: Restaurant) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    static func < (lhs: Restaurant, rhs: Restaurant) -> Bool {
+        lhs.id < rhs.id
+    }
+    
+    func setDistanceAway(_distanceAway: Double) {
+        self.distanceAway = _distanceAway
+    }
+    
 }

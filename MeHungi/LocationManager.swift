@@ -12,6 +12,7 @@ import MapKit
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     var locationManager: CLLocationManager?
+    var authorized: Bool = false
     
     @Published var mapRegion = MKCoordinateRegion(
         center: CLLocationCoordinate2D(
@@ -23,6 +24,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     )
     
     func checkIfLocationServicesIsEnabled() {
+        // wtf lol
         if CLLocationManager.locationServicesEnabled() {
             locationManager = CLLocationManager()
             // locationManager.activityType for adjusting what the users transport mode is?
@@ -34,7 +36,16 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     
+    var location: CLLocationCoordinate2D? {
+        checkLocationAuthorization()
+        if authorized {
+            return locationManager?.location?.coordinate
+        }
+        return nil
+    }
+    
     private func checkLocationAuthorization() {
+        authorized = false
         guard let locationManager = locationManager else { return }
         
         switch locationManager.authorizationStatus {
@@ -46,8 +57,11 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         case .denied:
             print("You have denied this app from location permissions.")
         case .authorizedAlways, .authorizedWhenInUse:
+            authorized = true
+            // move later
             mapRegion = MKCoordinateRegion(center: locationManager.location!.coordinate,
                                            span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+
         @unknown default:
             break
         }
