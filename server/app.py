@@ -15,10 +15,10 @@ class IDs(Resource):
 
 class Restaurant(Resource):
     def get(self, id):
-        return {restaurant_dict[id]}
+        return {id : restaurant_dict.get(id, "Uhoh")}
 
 
-api.add_resource(Restaurant, "/restaurant/<int:id>")
+api.add_resource(Restaurant, "/restaurant/<string:id>")
 
 api.add_resource(IDs, "/IDs")
 

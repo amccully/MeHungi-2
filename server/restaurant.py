@@ -19,6 +19,7 @@ class Restaurant:
     def to_dic(self):
         return {"restaurant": {"id": self.id, "name": self.name, "description": self.description,
          "open hour": self.openHour, "open minute": self.openMinute, "close hour": self.closeHour,
-         "close minute": self.closeMinute, "latitude": self.latitude, "longitude": self.longitude}}
+         "close minute": self.closeMinute, "latitude": self.latitude, "longitude": self.longitude,
+         "wait time" : self.wait_time}}
 
     
