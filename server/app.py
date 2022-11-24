@@ -15,7 +15,7 @@ class IDs(Resource):
 
 class Restaurant(Resource):
     def get(self, id):
-        return {id : restaurant_dict.get(id, "Uhoh")}
+        return restaurant_dict.get(id, {"Whoops":"Uhoh"})
 
 
 api.add_resource(Restaurant, "/restaurant/<string:id>")
