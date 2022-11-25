@@ -1,8 +1,8 @@
 import uuid
+import random
 
 class Restaurant:
 
-    wait_time = 0
 
     def __init__(self, name: str, description: str, openHour: int, openMinute: int,
     closeHour: int, closeMinute: int, latitude: float, longitude: float):
@@ -15,11 +15,12 @@ class Restaurant:
         self.closeMinute = closeMinute
         self.latitude = latitude
         self.longitude = longitude
+        self.wait_time = random.randrange(1,100)
 
     def to_dic(self):
-        return {"restaurant": {"id": self.id, "name": self.name, "description": self.description,
-         "open hour": self.openHour, "open minute": self.openMinute, "close hour": self.closeHour,
-         "close minute": self.closeMinute, "latitude": self.latitude, "longitude": self.longitude,
-         "wait time" : self.wait_time}}
+        return {"id": self.id, "name": self.name, "description": self.description,
+         "openHour": self.openHour, "openMinute": self.openMinute, "closeHour": self.closeHour,
+         "closeMinute": self.closeMinute, "latitude": self.latitude, "longitude": self.longitude,
+         "waitTime" : self.wait_time}
 
     

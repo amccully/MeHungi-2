@@ -5,9 +5,23 @@
 //  Created by Aaron McCully on 10/27/22.
 //
 import Foundation
+import CoreLocation
 
 enum RestaurantError: Error {
     case HTTPRequestError
+}
+
+struct RestStruct: Decodable {
+    var id: String
+    var name: String
+    var description: String
+    var openHour: Int
+    var openMinute: Int
+    var closeHour: Int
+    var closeMinute: Int
+    var latitude: Double
+    var longitude: Double
+    var waitTime: Int
 }
 
 class Restaurant: Decodable, Identifiable, Comparable {
@@ -76,19 +90,59 @@ class Restaurant: Decodable, Identifiable, Comparable {
         case distanceAway
     }
     
-    static func reload(id: String) async throws -> Restaurant {
-        let url: URL = URL(string: "http://127.0.0.1:5000//restaurant/\(id)")!
+//    init(id: String) async {
+//        self.id = id
+//        do { try await reqInit(id: id)}
+//        catch {
+//            print("Whoops")
+//            print(error)
+//        }
+//    }
+    
+    init(id: String, model: ModelData) async throws {
+            self.id = id
+            let url: URL = URL(string: "http://127.0.0.1:5000//restaurant/\(id)")!
+        
+                let (data, response) = try await URLSession.shared.data(from: url)
+        
+                guard let httpResponse = response as? HTTPURLResponse,
+                      httpResponse.statusCode == 200 else {
+                    throw RestaurantError.HTTPRequestError
+                }
+        
+                let psuedoRest = try JSONDecoder().decode(RestStruct.self, from: data)
+            
+            self.id = psuedoRest.id
+            self.name = psuedoRest.name
+            self.description = psuedoRest.description
+            self.openHour = psuedoRest.openHour
+            self.openMinute = psuedoRest.openMinute
+            self.closeHour = psuedoRest.closeHour
+            self.closeMinute = psuedoRest.closeMinute
+            self.latitude = psuedoRest.latitude
+            self.longitude = psuedoRest.longitude
+            self.waitTime = psuedoRest.waitTime
+            let userCoords = CLLocation(latitude: model.locationManager.location!.latitude,
+                                        longitude: model.locationManager.location!.longitude)
+            self.distanceAway = (userCoords.distance(from: CLLocation(latitude: self.latitude, longitude: self.longitude)) / 1000) * 0.621371
 
-        let (data, response) = try await URLSession.shared.data(from: url)
-
-        guard let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200 else {
-            throw RestaurantError.HTTPRequestError
-        }
-
-        return try JSONDecoder().decode(Restaurant.self, from: data)
     }
     
+//    static func reload(id: String) async throws -> Restaurant {
+//        let url: URL = URL(string: "http://127.0.0.1:5000//restaurant/\(id)")!
+//
+//        let (data, response) = try await URLSession.shared.data(from: url)
+//
+//        guard let httpResponse = response as? HTTPURLResponse,
+//              httpResponse.statusCode == 200 else {
+//            throw RestaurantError.HTTPRequestError
+//        }
+//
+//        let psuedoRest =
+//
+//        return try JSONDecoder().decode(Restaurant.self, from: data)
+//    }
+//
     static func == (lhs: Restaurant, rhs: Restaurant) -> Bool {
         lhs.id == rhs.id
     }

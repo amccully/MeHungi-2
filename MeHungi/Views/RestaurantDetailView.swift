@@ -69,7 +69,7 @@ struct RestaurantDetailView: View {
         .refreshable {
             Task {
                 do {
-                    model.restaurants[id] = try await Restaurant.reload(id: id)
+                    model.restaurants[id] = try await Restaurant(id: id, model: model)
                 } catch {
                     self.error = true
                 }
