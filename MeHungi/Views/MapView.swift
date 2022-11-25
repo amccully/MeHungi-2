@@ -11,18 +11,21 @@ import MapKit
 struct MapView: View {
     @EnvironmentObject var model: ModelData
     
+    // Added shared coords
+    @ObservedObject var coordinates = Coordinates.sharedCoords
+    
     // view will respond when changes are made to @State vars
     @State var search: String = ""
     
     // Vars for moving between map annotations
     // used for keeping track of which map annotation item to transition to
-    var counter: Int = 0
+    @State var counter: Int = -1
     
     var body: some View {
         // create navigation stack here!
         ZStack {
             // Binding(get: { model.locationManager.mapRegion }, set: { _ in })
-            Map(coordinateRegion: $model.locationManager.mapRegion, showsUserLocation: true, annotationItems: search != "" ? model.restaurants.values.sorted().filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants.values.sorted()) { restaurant in
+            Map(coordinateRegion: $coordinates.region, showsUserLocation: true, annotationItems: search != "" ? model.restaurants.values.sorted().filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants.values.sorted()) { restaurant in
                 MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: restaurant.latitude, longitude: restaurant.longitude)) {
 
                     PlaceAnnotationView(restaurant: restaurant)
@@ -50,9 +53,12 @@ struct MapView: View {
                 HStack {
                     Button(action: {
                         withAnimation {
-//                            model.locationManager.mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 32.88076184401626, longitude: -117.2430254489795), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-//                            model.locationManager.objectWillChange.send()
-                            //model.restaurants.values.sorted()[0]
+                            if counter > 0 {
+                                counter-=1
+                                let restaurantLatitude = model.restaurants.values.sorted()[counter].latitude
+                                let restaurantLongitude = model.restaurants.values.sorted()[counter].longitude
+                                coordinates.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: restaurantLatitude, longitude: restaurantLongitude), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+                            }
                         }
                     }, label: {
                         Image(systemName: "arrow.backward")
@@ -66,12 +72,19 @@ struct MapView: View {
                     .background(
                         RoundedRectangle(cornerRadius: 10)
                             .foregroundColor(.pink)
-                            .shadow(color: .pink, radius: 2)
+                            .shadow(color: .black, radius: 2)
                     )
                     Spacer()
                     HStack {
                         Button(action: {
-                            
+                            withAnimation {
+                                if counter < model.restaurants.values.sorted().count-1 {
+                                    counter+=1
+                                    let restaurantLatitude = model.restaurants.values.sorted()[counter].latitude
+                                    let restaurantLongitude = model.restaurants.values.sorted()[counter].longitude
+                                    coordinates.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: restaurantLatitude, longitude: restaurantLongitude), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+                                }
+                            }
                         }, label: {
                             Text("Next")
                                 .font(.title)
@@ -85,7 +98,7 @@ struct MapView: View {
                     .background(
                         RoundedRectangle(cornerRadius: 10)
                             .foregroundColor(.pink)
-                            .shadow(color: .pink, radius: 2)
+                            .shadow(color: .black, radius: 2)
                     )
                 }
                 .padding(20)

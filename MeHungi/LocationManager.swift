@@ -14,14 +14,17 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     var locationManager: CLLocationManager?
     var authorized: Bool = false
     
-    @Published var mapRegion = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(
-            latitude: 32.879765,
-            longitude: -117.236202),
-        span: MKCoordinateSpan(
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01)
-    )
+    // Added shared coords
+    var coordinates = Coordinates.sharedCoords
+    
+//    @Published var mapRegion = MKCoordinateRegion(
+//        center: CLLocationCoordinate2D(
+//            latitude: 32.879765,
+//            longitude: -117.236202),
+//        span: MKCoordinateSpan(
+//            latitudeDelta: 0.01,
+//            longitudeDelta: 0.01)
+//    )
     
     // use model.locationManager var instead?
     func checkIfLocationServicesIsEnabled() {
@@ -59,8 +62,8 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             print("You have denied this app from location permissions.")
         case .authorizedAlways, .authorizedWhenInUse:
             authorized = true
-            // move later
-            mapRegion = MKCoordinateRegion(center: locationManager.location!.coordinate,
+            // move later?
+            coordinates.region = MKCoordinateRegion(center: locationManager.location!.coordinate,
                                            span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
 
         @unknown default:
