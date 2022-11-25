@@ -13,12 +13,16 @@ struct MapView: View {
     
     // view will respond when changes are made to @State vars
     @State var search: String = ""
-
+    
+    // Vars for moving between map annotations
+    // used for keeping track of which map annotation item to transition to
+    var counter: Int = 0
+    
     var body: some View {
         // create navigation stack here!
         ZStack {
-            // anotationItems with search feature: search != "" ? model.restaurants.filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants
-            Map(coordinateRegion: Binding(get: { model.locationManager.mapRegion }, set: { _ in }), showsUserLocation: true, annotationItems: search != "" ? model.restaurants.values.sorted().filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants.values.sorted()) { restaurant in
+            // Binding(get: { model.locationManager.mapRegion }, set: { _ in })
+            Map(coordinateRegion: $model.locationManager.mapRegion, showsUserLocation: true, annotationItems: search != "" ? model.restaurants.values.sorted().filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants.values.sorted()) { restaurant in
                 MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: restaurant.latitude, longitude: restaurant.longitude)) {
 
                     PlaceAnnotationView(restaurant: restaurant)
@@ -42,6 +46,49 @@ struct MapView: View {
                 .background(RoundedRectangle(cornerRadius: 8).fill(.thinMaterial).padding(8))
                 
                 Spacer()
+                
+                HStack {
+                    Button(action: {
+                        withAnimation {
+//                            model.locationManager.mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 32.88076184401626, longitude: -117.2430254489795), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+//                            model.locationManager.objectWillChange.send()
+                            //model.restaurants.values.sorted()[0]
+                        }
+                    }, label: {
+                        Image(systemName: "arrow.backward")
+                            .foregroundColor(Color.white)
+                            .font(.title)
+                        Text("Prev")
+                            .foregroundColor(Color.white)
+                            .font(.title)
+                    })
+                    .padding(5)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .foregroundColor(.pink)
+                            .shadow(color: .pink, radius: 2)
+                    )
+                    Spacer()
+                    HStack {
+                        Button(action: {
+                            
+                        }, label: {
+                            Text("Next")
+                                .font(.title)
+                                .foregroundColor(Color.white)
+                            Image(systemName: "arrow.forward")
+                                .foregroundColor(Color.white)
+                                .font(.title)
+                        })
+                    }
+                    .padding(5)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .foregroundColor(.pink)
+                            .shadow(color: .pink, radius: 2)
+                    )
+                }
+                .padding(20)
             }
         }
         

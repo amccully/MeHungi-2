@@ -80,14 +80,6 @@ struct ContentView: View {
                                             }
                                         }
                                         .pickerStyle(.segmented)
-//                                                Text("Mode of Transportation:")
-//                                                Spacer()
-//                                                Image(systemName: "bicycle")
-//                                                    .font(.largeTitle)
-//                                                Toggle("Mode of Transport", isOn: $byFoot)
-//                                                    .labelsHidden()
-//                                                Image(systemName: "figure.walk")
-//                                                    .font(.largeTitle)
                                     }
                                     
                                 }
@@ -177,12 +169,14 @@ struct ContentView: View {
         // end point
         
         // getting user coordinates as a CLLocation
-        let userCoords = CLLocation(latitude: model.locationManager.location!.latitude,
-                                    longitude: model.locationManager.location!.longitude)
-        // settings restaurant distances
-        model.restaurants.values.sorted().forEach { restaurant in
-            let distance = (userCoords.distance(from: CLLocation(latitude: restaurant.latitude, longitude: restaurant.longitude)) / 1000) * 0.621371
-            restaurant.setDistanceAway(_distanceAway: distance)
+        if let unwrappedLocation = model.locationManager.location {
+            let userCoords = CLLocation(latitude: unwrappedLocation.latitude,
+                                        longitude: unwrappedLocation.longitude)
+            // settings restaurant distances
+            model.restaurants.values.sorted().forEach { restaurant in
+                let distance = (userCoords.distance(from: CLLocation(latitude: restaurant.latitude, longitude: restaurant.longitude)) / 1000) * 0.621371
+                restaurant.setDistanceAway(_distanceAway: distance)
+            }
         }
         
         /*

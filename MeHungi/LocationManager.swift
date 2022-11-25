@@ -23,6 +23,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             longitudeDelta: 0.01)
     )
     
+    // use model.locationManager var instead?
     func checkIfLocationServicesIsEnabled() {
         // wtf lol
         if CLLocationManager.locationServicesEnabled() {

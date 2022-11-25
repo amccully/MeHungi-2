@@ -11,6 +11,5 @@ class ModelData: ObservableObject {
         
     @Published var restaurants: [String: Restaurant] = [:]
     @Published var locationManager = LocationManager()
-
 }
 

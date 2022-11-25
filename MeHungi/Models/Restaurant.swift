@@ -94,7 +94,21 @@ class Restaurant: Decodable, Identifiable, Comparable {
     }
     
     static func < (lhs: Restaurant, rhs: Restaurant) -> Bool {
-        lhs.id < rhs.id
+        var leftDist = lhs.distanceAway
+        var rightDist = rhs.distanceAway
+
+        if (leftDist <= 0.1) {
+            return (rightDist <= 0.1) ? lhs.waitTime < rhs.waitTime : leftDist < rightDist
+        }
+
+        leftDist *= 4
+        rightDist *= 4
+
+        leftDist = floor(leftDist)
+        rightDist = floor(rightDist)
+
+        return leftDist != rightDist ? leftDist < rightDist : lhs.waitTime < rhs.waitTime
+
     }
     
     func setDistanceAway(_distanceAway: Double) {
