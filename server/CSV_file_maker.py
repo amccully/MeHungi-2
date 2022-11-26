@@ -1,5 +1,5 @@
 from csv_create import create_row
-from restaurant_list import restaurant_list
+from restaurant import restaurant_list
 import numpy as np
 import pandas as pd
 import random

@@ -1,5 +1,4 @@
-from restaurant import Restaurant
-from restaurant_list import restaurant_list
+from restaurant import Restaurant, restaurant_list
 import pandas as pd
 import random
 import math

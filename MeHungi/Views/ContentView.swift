@@ -135,39 +135,39 @@ struct ContentView: View {
     }
     
     func loadData() async {
-
-        model.restaurants = [
-            "001": Restaurant(id: "001", name: "Subway", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 0, closeHour: 2, closeMinute: 00, latitude: 32.881398208652115, longitude: -117.23520934672317, waitTime: 12),
-            "002": Restaurant(id: "002", name: "Panda", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 9, openMinute: 50, closeHour: 12, closeMinute: 30, latitude: 32.884638, longitude: -117.239104, waitTime: 3),
-            "003": Restaurant(id: "003", name: "Burger King", description: "This is a test for the view. *Insert name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 30, closeHour: 0, closeMinute: 0, latitude: 32.8809679784332, longitude: -117.23547474701675, waitTime: 16),
-            "004": Restaurant(id: "004", name: "Triton Grill", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 1, openMinute: 26, closeHour: 1, closeMinute: 25, latitude: 32.88076184401626, longitude: -117.2430254489795, waitTime: 26)
-        ]
+//
+//        model.restaurants = [
+//            "001": Restaurant(id: "001", name: "Subway", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 0, closeHour: 2, closeMinute: 00, latitude: 32.881398208652115, longitude: -117.23520934672317, waitTime: 12),
+//            "002": Restaurant(id: "002", name: "Panda", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 9, openMinute: 50, closeHour: 12, closeMinute: 30, latitude: 32.884638, longitude: -117.239104, waitTime: 3),
+//            "003": Restaurant(id: "003", name: "Burger King", description: "This is a test for the view. *Insert name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 30, closeHour: 0, closeMinute: 0, latitude: 32.8809679784332, longitude: -117.23547474701675, waitTime: 16),
+//            "004": Restaurant(id: "004", name: "Triton Grill", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 1, openMinute: 26, closeHour: 1, closeMinute: 25, latitude: 32.88076184401626, longitude: -117.2430254489795, waitTime: 26)
+//        ]
 
         // start point of possibly fucked code
-//        let url: URL = URL(string: "http://127.0.0.1:5000/IDs")!
-//
-//        var list_ids: [String] = []
-//        do {
-//            let (data, response) = try await URLSession.shared.data(from: url)
-//
-//            guard let httpResponse = response as? HTTPURLResponse,
-//                  httpResponse.statusCode == 200 else {
-//                throw RestaurantError.HTTPRequestError
-//
-//            }
-//
-//            let dic_ids = try JSONDecoder().decode([String:[String]].self, from: data)
-//            list_ids = dic_ids["ids"]!
-//            for id in list_ids {
-//                model.restaurants[id] = try await Restaurant(id: id, model: model)
-//            }
-//
-//        }
-//        catch {
-//            print("WHOOOPS")
-//            print("Error is \(error)")
-//            model.restaurants = [:]
-//        }
+        let url: URL = URL(string: "http://127.0.0.1:5000/IDs")!
+
+        var list_ids: [String] = []
+        do {
+            let (data, response) = try await URLSession.shared.data(from: url)
+
+            guard let httpResponse = response as? HTTPURLResponse,
+                  httpResponse.statusCode == 200 else {
+                throw RestaurantError.HTTPRequestError
+
+            }
+
+            let dic_ids = try JSONDecoder().decode([String:[String]].self, from: data)
+            list_ids = dic_ids["ids"]!
+            for id in list_ids {
+                model.restaurants[id] = try await Restaurant(id: id, model: model)
+            }
+
+        }
+        catch {
+            print("WHOOOPS")
+            print("Error is \(error)")
+            model.restaurants = [:]
+        }
         // end point
         
         // getting user coordinates as a CLLocation

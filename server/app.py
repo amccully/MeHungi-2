@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restful import Api, Resource, reqparse
 from restaurant_list import restaurant_dict, ids_list
-from flask_app_wrapper import FlaskAppWrapper
+# from flask_app_wrapper import FlaskAppWrapper
 
 #flask_app = Flask(__name__)
 
@@ -15,7 +15,7 @@ class IDs(Resource):
 
 class Restaurant(Resource):
     def get(self, id):
-        return {restaurant_dict[id].to_dict()}
+        return restaurant_dict[id].to_dic()
 
 order_put_args = reqparse.RequestParser()
 
