@@ -7,25 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E7E07BA292EB56400EC6796 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7E07B9292EB56400EC6796 /* Restaurant.swift */; };
 		9309CB21290AFEF600FA93E7 /* MeHungiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9309CB20290AFEF600FA93E7 /* MeHungiApp.swift */; };
 		9309CB23290AFEF600FA93E7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9309CB22290AFEF600FA93E7 /* ContentView.swift */; };
 		9309CB25290AFEF800FA93E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9309CB24290AFEF800FA93E7 /* Assets.xcassets */; };
 		9309CB28290AFEF800FA93E7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9309CB27290AFEF800FA93E7 /* Preview Assets.xcassets */; };
 		9309CB31290AFFA600FA93E7 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9309CB30290AFFA600FA93E7 /* ModelData.swift */; };
-		9309CB33290AFFD700FA93E7 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9309CB32290AFFD700FA93E7 /* Restaurant.swift */; };
+		931E392E29305FE000C33E1A /* Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931E392D29305FE000C33E1A /* Coordinates.swift */; };
 		934064852926D34800AD4E7C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934064842926D34800AD4E7C /* LocationManager.swift */; };
 		93C2F7A429142B0300F1934D /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C2F7A329142B0300F1934D /* MapView.swift */; };
 		93F142E7290EFB7600BCB6BE /* RestaurantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F142E6290EFB7600BCB6BE /* RestaurantDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7E7E07B9292EB56400EC6796 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		9309CB1D290AFEF600FA93E7 /* MeHungi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeHungi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9309CB20290AFEF600FA93E7 /* MeHungiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeHungiApp.swift; sourceTree = "<group>"; };
 		9309CB22290AFEF600FA93E7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9309CB24290AFEF800FA93E7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9309CB27290AFEF800FA93E7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9309CB30290AFFA600FA93E7 /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
-		9309CB32290AFFD700FA93E7 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
+		931E392D29305FE000C33E1A /* Coordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinates.swift; sourceTree = "<group>"; };
 		934064842926D34800AD4E7C /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		93C2F7A329142B0300F1934D /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		93F142E6290EFB7600BCB6BE /* RestaurantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailView.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 		9309CB1F290AFEF600FA93E7 /* MeHungi */ = {
 			isa = PBXGroup;
 			children = (
+				931E392D29305FE000C33E1A /* Coordinates.swift */,
 				9309CB20290AFEF600FA93E7 /* MeHungiApp.swift */,
 				934064842926D34800AD4E7C /* LocationManager.swift */,
 				9309CB2E290AFF3600FA93E7 /* Views */,
@@ -93,7 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				9309CB30290AFFA600FA93E7 /* ModelData.swift */,
-				9309CB32290AFFD700FA93E7 /* Restaurant.swift */,
+				7E7E07B9292EB56400EC6796 /* Restaurant.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -168,13 +171,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9309CB33290AFFD700FA93E7 /* Restaurant.swift in Sources */,
 				93C2F7A429142B0300F1934D /* MapView.swift in Sources */,
 				93F142E7290EFB7600BCB6BE /* RestaurantDetailView.swift in Sources */,
 				934064852926D34800AD4E7C /* LocationManager.swift in Sources */,
+				7E7E07BA292EB56400EC6796 /* Restaurant.swift in Sources */,
 				9309CB23290AFEF600FA93E7 /* ContentView.swift in Sources */,
 				9309CB21290AFEF600FA93E7 /* MeHungiApp.swift in Sources */,
 				9309CB31290AFFA600FA93E7 /* ModelData.swift in Sources */,
+				931E392E29305FE000C33E1A /* Coordinates.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -2,6 +2,7 @@ from restaurant import Restaurant
 
 
 # Initialize Restaurants and group them in a list
+# 32.881398208652115, longitude: -117.23520934672317
 
 restaurant_list = [ Restaurant("Burger King", "trash fastfood burger place", 7, 0, 23, 59, 32.880010937246595, -117.23584745233543),
                    Restaurant("Panda Express","human trough", 9, 0, 17, 0, 32.87974893295122, -117.23639722612094),

@@ -4,20 +4,37 @@
 //
 //  Created by Aaron McCully on 10/27/22.
 //
-
 import Foundation
+import CoreLocation
 
-class Restaurant: Decodable, Identifiable {
-    
-    let id: String
-    let name: String
-    let description: String
-    let openHour: Int
-    let openMinute: Int
-    let closeHour: Int
-    let closeMinute: Int
-    let latitude: Double
-    let longitude: Double
+enum RestaurantError: Error {
+    case HTTPRequestError
+}
+
+struct RestStruct: Decodable {
+    var id: String
+    var name: String
+    var description: String
+    var openHour: Int
+    var openMinute: Int
+    var closeHour: Int
+    var closeMinute: Int
+    var latitude: Double
+    var longitude: Double
+    var waitTime: Int
+}
+
+class Restaurant: Decodable, Identifiable, Comparable {
+    var id: String
+    var name: String
+    var description: String
+    var openHour: Int
+    var openMinute: Int
+    var closeHour: Int
+    var closeMinute: Int
+    var latitude: Double
+    var longitude: Double
+    var distanceAway: Double
     
     // congestion
     
@@ -56,45 +73,100 @@ class Restaurant: Decodable, Identifiable {
         self.latitude = latitude
         self.longitude = longitude
         self.waitTime = waitTime
+        self.distanceAway = 0.0
     }
-
-//    init(id: String) {
+    
+    enum CodingKeys: CodingKey {
+        case id
+        case name
+        case description
+        case openHour
+        case openMinute
+        case closeHour
+        case closeMinute
+        case latitude
+        case longitude
+        case waitTime
+        case distanceAway
+    }
+    
+//    init(id: String) async {
 //        self.id = id
-//    }
-
-//    func reload()  async {
-//        url = URL(string: "http://127.0.0.1:5000//restaurant/" + id)
-//
-//        let task = URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
-//
-//
-//        if let error = error {
-//            print("Error accessing url: \(error)")
-//            return
-//        }
-//
-//        /* if response var is a valid HTTTPURL response, go into guard, if response is a success,
-//         continue to rest of code, else throw error and return
-//        */
-//        guard let httpResponse = response as? HTTPURLResponse,
-//            (200...299).contains(httpResponse.statusCode) else {
-//            print("Error with the response, unexpected status code: \(response)")
-//            return
-//         }
-//
-//        // try to decode JSON file, if error print "whoops"
-//        do {
-//            let restaurants = try JSONDecoder().decode(restaurants.self, from: data)
-//        }
+//        do { try await reqInit(id: id)}
 //        catch {
-//            print("Whoops!")
+//            print("Whoops")
+//            print(error)
+//        }
+//    }
+    
+    init(id: String, model: ModelData) async throws {
+            self.id = id
+            let url: URL = URL(string: "http://127.0.0.1:5000//restaurant/\(id)")!
+        
+                let (data, response) = try await URLSession.shared.data(from: url)
+        
+                guard let httpResponse = response as? HTTPURLResponse,
+                      httpResponse.statusCode == 200 else {
+                    throw RestaurantError.HTTPRequestError
+                }
+        
+                let psuedoRest = try JSONDecoder().decode(RestStruct.self, from: data)
+            
+            self.id = psuedoRest.id
+            self.name = psuedoRest.name
+            self.description = psuedoRest.description
+            self.openHour = psuedoRest.openHour
+            self.openMinute = psuedoRest.openMinute
+            self.closeHour = psuedoRest.closeHour
+            self.closeMinute = psuedoRest.closeMinute
+            self.latitude = psuedoRest.latitude
+            self.longitude = psuedoRest.longitude
+            self.waitTime = psuedoRest.waitTime
+            let userCoords = CLLocation(latitude: model.locationManager.location!.latitude,
+                                        longitude: model.locationManager.location!.longitude)
+            self.distanceAway = (userCoords.distance(from: CLLocation(latitude: self.latitude, longitude: self.longitude)) / 1000) * 0.621371
+
+    }
+    
+//    static func reload(id: String) async throws -> Restaurant {
+//        let url: URL = URL(string: "http://127.0.0.1:5000//restaurant/\(id)")!
+//
+//        let (data, response) = try await URLSession.shared.data(from: url)
+//
+//        guard let httpResponse = response as? HTTPURLResponse,
+//              httpResponse.statusCode == 200 else {
+//            throw RestaurantError.HTTPRequestError
 //        }
 //
+//        let psuedoRest =
 //
-//    })
-//
-//    task.resume()
-//
+//        return try JSONDecoder().decode(Restaurant.self, from: data)
 //    }
+//
+    static func == (lhs: Restaurant, rhs: Restaurant) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    static func < (lhs: Restaurant, rhs: Restaurant) -> Bool {
+        var leftDist = lhs.distanceAway
+        var rightDist = rhs.distanceAway
 
+        if (leftDist <= 0.1) {
+            return (rightDist <= 0.1) ? lhs.waitTime < rhs.waitTime : leftDist < rightDist
+        }
+
+        leftDist *= 4
+        rightDist *= 4
+
+        leftDist = floor(leftDist)
+        rightDist = floor(rightDist)
+
+        return leftDist != rightDist ? leftDist < rightDist : lhs.waitTime < rhs.waitTime
+
+    }
+    
+    func setDistanceAway(_distanceAway: Double) {
+        self.distanceAway = _distanceAway
+    }
+    
 }

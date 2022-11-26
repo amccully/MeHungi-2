@@ -34,7 +34,7 @@ class Restaurant:
             count += order.completion_time
         return count
         
-    def find_wait():
+    def find_wait(self):
         model = joblib.load('Wait_Time_Calculator')
         curr_time = datetime.datetime.now()
         curr_day = curr_time.weekday()

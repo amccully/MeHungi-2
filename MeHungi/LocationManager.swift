@@ -12,17 +12,23 @@ import MapKit
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     var locationManager: CLLocationManager?
+    var authorized: Bool = false
     
-    @Published var mapRegion = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(
-            latitude: 32.879765,
-            longitude: -117.236202),
-        span: MKCoordinateSpan(
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01)
-    )
+    // Added shared coords
+    var coordinates = Coordinates.sharedCoords
     
+//    @Published var mapRegion = MKCoordinateRegion(
+//        center: CLLocationCoordinate2D(
+//            latitude: 32.879765,
+//            longitude: -117.236202),
+//        span: MKCoordinateSpan(
+//            latitudeDelta: 0.01,
+//            longitudeDelta: 0.01)
+//    )
+    
+    // use model.locationManager var instead?
     func checkIfLocationServicesIsEnabled() {
+        // wtf lol
         if CLLocationManager.locationServicesEnabled() {
             locationManager = CLLocationManager()
             // locationManager.activityType for adjusting what the users transport mode is?
@@ -34,7 +40,16 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     
+    var location: CLLocationCoordinate2D? {
+        checkLocationAuthorization()
+        if authorized {
+            return locationManager?.location?.coordinate
+        }
+        return nil
+    }
+    
     private func checkLocationAuthorization() {
+        authorized = false
         guard let locationManager = locationManager else { return }
         
         switch locationManager.authorizationStatus {
@@ -46,8 +61,11 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         case .denied:
             print("You have denied this app from location permissions.")
         case .authorizedAlways, .authorizedWhenInUse:
-            mapRegion = MKCoordinateRegion(center: locationManager.location!.coordinate,
+            authorized = true
+            // move later?
+            coordinates.region = MKCoordinateRegion(center: locationManager.location!.coordinate,
                                            span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+
         @unknown default:
             break
         }
