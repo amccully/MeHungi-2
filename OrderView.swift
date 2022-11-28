@@ -123,6 +123,11 @@ struct OrderView : View {
     func sendOrder() {
         // this will be a list containing all items of the order, use this in with api request
         // userOrderList
+        
+        // Add your code here:
+        
+        //
+        clearOrder()
     }
 }
 

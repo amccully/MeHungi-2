@@ -79,6 +79,23 @@ struct RestaurantDetailView: View {
                         .foregroundColor(.orange)
                         .shadow(color: .black, radius: 1)
                 )
+                Button {
+                    let mapUrl = URL(string: "maps://?saddr=&daddr=\(restaurant.latitude),\(restaurant.longitude)")
+                    if UIApplication.shared.canOpenURL(mapUrl!) {
+                        UIApplication.shared.open(mapUrl!, options: [:], completionHandler: nil)
+                    }
+                } label: {
+                    Text("Get Directions")
+                        .foregroundColor(Color.white)
+                        .font(.title2)
+                        .bold()
+                }
+                .padding(5)
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .foregroundColor(.blue)
+                        .shadow(color: .black, radius: 1)
+                )
                 
                 Spacer()
                 
