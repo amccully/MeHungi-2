@@ -20,6 +20,6 @@ class Coordinates: ObservableObject {
         span: MKCoordinateSpan(
             latitudeDelta: 0.01,
             longitudeDelta: 0.01)
-    )
+        )
     }
 }

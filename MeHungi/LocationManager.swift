@@ -17,15 +17,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     // Added shared coords
     var coordinates = Coordinates.sharedCoords
     
-//    @Published var mapRegion = MKCoordinateRegion(
-//        center: CLLocationCoordinate2D(
-//            latitude: 32.879765,
-//            longitude: -117.236202),
-//        span: MKCoordinateSpan(
-//            latitudeDelta: 0.01,
-//            longitudeDelta: 0.01)
-//    )
-    
     // use model.locationManager var instead?
     func checkIfLocationServicesIsEnabled() {
         // wtf lol
