@@ -59,10 +59,29 @@ struct RestaurantDetailView: View {
                 
                 Divider()
                 // make this pop more
-                
+
                 Text(restaurant.description)
                     .padding(.horizontal, 10)
+                
+                Divider()
+                
+                NavigationLink {
+                    OrderView(id: restaurant.id).environmentObject(model)
+                } label: {
+                    Text("Order Form")
+                        .foregroundColor(Color.white)
+                        .font(.title2)
+                        .bold()
+                }
+                .padding(5)
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .foregroundColor(.orange)
+                        .shadow(color: .black, radius: 1)
+                )
+                
                 Spacer()
+                
             }
             //.navigationTitle(restaurant.name)
         }
@@ -81,8 +100,9 @@ struct RestaurantDetailView: View {
     }
 }
 
+// ???
 //struct RestaurantDetailView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        RestaurantDetailView(restaurant: Restaurant(id: "005", name: "McDonalds", description: "This is a test for the view. Mcdonalds makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 0, closeHour: 23, closeMinute: 30, latitude: 32.879224, longitude: -117.235913, waitTime: 12))
+//        RestaurantDetailView(restaurant: Restaurant(id: "001", name: "Subway", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 0, closeHour: 2, closeMinute: 00, latitude: 32.881398208652115, longitude: -117.23520934672317, waitTime: 12), id: "001")
 //    }
 //}

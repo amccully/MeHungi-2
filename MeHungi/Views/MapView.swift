@@ -17,7 +17,7 @@ struct MapView: View {
     // view will respond when changes are made to @State vars
     @State var search: String = ""
     
-    // Vars for moving between map annotations
+    // Var for moving between map annotations
     // used for keeping track of which map annotation item to transition to
     @State var counter: Int = -1
     
@@ -27,15 +27,17 @@ struct MapView: View {
             // Binding(get: { model.locationManager.mapRegion }, set: { _ in })
             Map(coordinateRegion: $coordinates.region, showsUserLocation: true, annotationItems: search != "" ? model.restaurants.values.sorted().filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants.values.sorted()) { restaurant in
                 MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: restaurant.latitude, longitude: restaurant.longitude)) {
-
+                    
                     PlaceAnnotationView(restaurant: restaurant)
                         .environmentObject(model)
+                    
                 }
             }
             .edgesIgnoringSafeArea(.top)
             //.accentColor(Color(.systemPurple))
             .onAppear {
                 model.locationManager.checkIfLocationServicesIsEnabled()
+                counter = -1
             }
             
             VStack {
@@ -109,7 +111,7 @@ struct MapView: View {
     
     struct PlaceAnnotationView: View {
         @EnvironmentObject var model: ModelData
-        
+
         @State private var showingSheet = false
         @State var selectedDetent: PresentationDetent = .fraction(0.25)
 
@@ -117,6 +119,10 @@ struct MapView: View {
 
         var body: some View {
             VStack(spacing: 0) {
+//                Text("Testing!")
+//                    .padding(8)
+//                    .background(RoundedRectangle(cornerRadius: 8).fill(.thinMaterial))
+//                    .withAnimation(Animation.easeIn(duration: 0.5))
                 Text(restaurant.name)
                     .foregroundColor(.red)
                 Image(systemName: "mappin.circle.fill")
@@ -128,22 +134,25 @@ struct MapView: View {
             }
             .sheet(isPresented: $showingSheet) {
                 VStack(alignment: .leading) {
-                    Button(action: {
-                        showingSheet.toggle()
-                    }, label: {
-                        if selectedDetent != .fraction(0.25) {
-                            Image(systemName: "xmark")
-                                .foregroundColor(.gray)
-                                .font(.largeTitle)
-                                .padding(30)
-                        }
-                        else {
-                            Spacer()
-                        }
-                    })
-                    RestaurantDetailView(id: restaurant.id)
-                        .environmentObject(model)
-                        .foregroundColor(.primary)
+//                    Button(action: {
+//                        showingSheet.toggle()
+//                    }, label: {
+//                        if selectedDetent != .fraction(0.25) {
+//                            Image(systemName: "xmark")
+//                                .foregroundColor(.gray)
+//                                .font(.largeTitle)
+//                                .padding(30)
+//                        }
+//                        else {
+//                            Spacer()
+//                        }
+//                    })
+                    NavigationView {
+                        RestaurantDetailView(id: restaurant.id)
+                            .environmentObject(model)
+                            .foregroundColor(.primary)
+                            .padding(.top, 25)
+                    }
                 }
                 // removed .middle
                 .presentationDetents([.fraction(0.25), .large], selection: $selectedDetent)
