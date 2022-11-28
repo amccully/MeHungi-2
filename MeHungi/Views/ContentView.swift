@@ -144,30 +144,30 @@ struct ContentView: View {
         ]
 
         // start point of possibly fucked code
-        let url: URL = URL(string: "http://127.0.0.1:5000/IDs")!
-
-        var list_ids: [String] = []
-        do {
-            let (data, response) = try await URLSession.shared.data(from: url)
-
-            guard let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200 else {
-                throw RestaurantError.HTTPRequestError
-
-            }
-
-            let dic_ids = try JSONDecoder().decode([String:[String]].self, from: data)
-            list_ids = dic_ids["ids"]!
-            for id in list_ids {
-                model.restaurants[id] = try await Restaurant(id: id, model: model)
-            }
-
-        }
-        catch {
-            print("WHOOOPS")
-            print("Error is \(error)")
-            model.restaurants = [:]
-        }
+//        let url: URL = URL(string: "http://127.0.0.1:5000/IDs")!
+//
+//        var list_ids: [String] = []
+//        do {
+//            let (data, response) = try await URLSession.shared.data(from: url)
+//
+//            guard let httpResponse = response as? HTTPURLResponse,
+//                  httpResponse.statusCode == 200 else {
+//                throw RestaurantError.HTTPRequestError
+//
+//            }
+//
+//            let dic_ids = try JSONDecoder().decode([String:[String]].self, from: data)
+//            list_ids = dic_ids["ids"]!
+//            for id in list_ids {
+//                model.restaurants[id] = try await Restaurant(id: id, model: model)
+//            }
+//
+//        }
+//        catch {
+//            print("WHOOOPS")
+//            print("Error is \(error)")
+//            model.restaurants = [:]
+//        }
         // end point
         
         // getting user coordinates as a CLLocation
@@ -180,22 +180,6 @@ struct ContentView: View {
                 restaurant.setDistanceAway(_distanceAway: distance)
             }
         }
-        
-        /*
-             guard let url = URL(string: "https://myurlhere.com") else {
-                 print("Invalid URL")
-                 return
-             }
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                if let decodedResponse = try? JSONDecoder().decode(???.self, from: data) {
-                    ??? = decodedResponse.???
-                }
-            } catch {
-                print("Invalid data")
-            }
-        */
-        
     }
 }
 

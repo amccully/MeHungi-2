@@ -10,41 +10,60 @@ import SwiftUI
 struct OrderView : View {
     
     @EnvironmentObject var model: ModelData
-    
+    @State var userOrderStr = ""
+    @State var userOrderList = [String]()
     @State var showAlert = false
-    
-    // Temporary
-    @State var qty = 0
-    //
-
     let id: String
-    
-    // Change to determine how much of a given item a person can order. As of now, this is a single value that is the same across all menu items and restaurants
-    let maxQty = 5
-
     var restaurant: Restaurant {
         model.restaurants[id]!
     }
     
-    var qtyList: [Int] {
-        [Int](repeating: 0, count: restaurant.menuItems.count)
-    }
+    // Temporary:
+    // @State var qty = 0
+    // Change to determine how much of a given item a person can order. As of now, this is a single value that is the same across all menu items and restaurants
+    // let maxQty = 5
     
     var body: some View {
         NavigationView {
             List {
                 Section {
+                    HStack {
+                        Text("Menu item:")
+                        Spacer()
+                        Text("Add to order:")
+                    }
                     ForEach(restaurant.menuItems, id: \.self) { item in
                         HStack {
                             Text(item)
                             Spacer()
-                            Text("Qty: \(qty)")
-                            Stepper("Qty", value: $qty, in: 0...maxQty)
-                                .labelsHidden()
+                            Button {
+                                addToOrder(item: item)
+                            } label: {
+                                Image(systemName: "plus.rectangle")
+                                    //.foregroundColor(.gray)
+                                    .font(.title)
+                            }
                         }
                     }
+//                    ForEach(0..<restaurant.menuItems.count, id: \.self) { index in
+//                        let item = restaurant.menuItems[index]
+//                        HStack {
+//                            Text(item)
+//                            Spacer()
+//                            Text("Qty: \(qty)")
+//                            Stepper("Qty", value: $qtyList[index], in: 0...maxQty)
+//                                .labelsHidden()
+//                        }
+//                    }
                 }
                 Section {
+                    Text("Your order: \(userOrderStr)")
+                    Button {
+                       clearOrder()
+                    } label: {
+                        Text("Clear Order")
+                            .foregroundColor(.red)
+                    }
                     Button {
                         showAlert.toggle()
                     } label: {
@@ -57,7 +76,7 @@ struct OrderView : View {
                                 title: Text("\(restaurant.name) is closed")
                             )
                         }
-                        else if qty == 0 {
+                        else if userOrderStr.isEmpty {
                             return Alert(
                                 title: Text("Please add items to your order")
                             )
@@ -80,14 +99,35 @@ struct OrderView : View {
             .navigationTitle(restaurant.name)
         }
     }
-}
+    
+    func clearOrder() {
+        userOrderList.removeAll()
+        userOrderStr = ""
+    }
 
-struct OrderView_Previews : PreviewProvider {
-    static var previews: some View {
-        OrderView(id: "001")
+    func addToOrder(item: String) {
+        userOrderList.append(item)
+        userOrderStr = orderListToString()
+    }
+    
+    // probably not a great approach but works
+    func orderListToString() -> String {
+        var userStr = ""
+        userOrderList.forEach { obj in
+            userStr += "\(obj), "
+        }
+        userStr.removeLast(2)
+        return userStr
+    }
+    
+    func sendOrder() {
+        // this will be a list containing all items of the order, use this in with api request
+        // userOrderList
     }
 }
 
-func sendOrder() {
-    
-}
+//struct OrderView_Previews : PreviewProvider {
+//    static var previews: some View {
+//        OrderView(id: "001")
+//    }
+//}
