@@ -1,9 +1,9 @@
-from restaurant import Restaurant, restaurant_list
 import pandas as pd
 import random
 import math
 
-def create_row(rest: Restaurant):
+def create_row(rest):
+    from restaurant import Restaurant,  restaurant_list
     # NAME | TIME | DAY | ORDERS | WAIT
     wait_mean: float
     wait_sd: float
@@ -66,12 +66,12 @@ def create_row(rest: Restaurant):
         wait_mean = 8
         wait_sd = 3
         order_mod = 4
-    elif rest.name == "Seed and Sprout":
+    elif rest.name == "Seed + Sprout":
         wait_mean = 11
         wait_sd = 3
         order_mod = 5
     else:
-        print("Wrong Input")
+        print(rest.name + "is Wrong Input")
         return
 
     days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
@@ -108,7 +108,6 @@ def create_row(rest: Restaurant):
     time = str(hours) + ":" +  (str(min) if min >= 10 else ("0" + str(min)))
 
     return [rest.name, restaurant_list.index(rest), time ,curr_time , curr_day, days.index(curr_day), round(orders), round(wait)]
-
 
 
 #df = pd.DataFrame()

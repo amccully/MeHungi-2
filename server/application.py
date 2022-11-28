@@ -1,13 +1,30 @@
 from flask import Flask
 from flask_restful import Api, Resource, reqparse
-from restaurant_list import restaurant_dict, ids_list
+from restaurant import rest_dict, ids_list
 # from flask_app_wrapper import FlaskAppWrapper
+from sklearn.ensemble import GradientBoostingRegressor
+
+from flask_script import Manager, Server
+
+my_gbm: GradientBoostingRegressor
+
+def custom_call():
+    from CSV_file_maker_unblocked import create_gbm
+    my_gbm = create_gbm()
+    pass
+
+class CustomServer(Server):
+    def __call__(self, app, *args, **kwargs):
+        custom_call()
+        #Hint: Here you could manipulate app
+        return Server.__call__(self, app, *args, **kwargs)
+
 
 #flask_app = Flask(__name__)
 
 #app = FlaskAppWrapper(flask_app)
-app = Flask(__name__)
-api = Api(app)
+application = Flask(__name__)
+api = Api(application)
 
 class IDs(Resource):
     def get(self):
@@ -15,7 +32,7 @@ class IDs(Resource):
 
 class Restaurant(Resource):
     def get(self, id):
-        return restaurant_dict[id].to_dic()
+        return rest_dict[id].to_dic()
 
 order_put_args = reqparse.RequestParser()
 
@@ -37,5 +54,5 @@ api.add_resource(Restaurant_Orders, "/restaurant/<string:id>/orders")
 api.add_resource(IDs, "/IDs")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    application.run(debug=True)
 

@@ -17,6 +17,11 @@ restaurant_dict = {}
 
 for restaurant in restaurant_list:
   restaurant_dict[restaurant.id] = restaurant
+
+name_dict = {}
+
+for restaurant in restaurant_list:
+  restaurant_dict[restaurant.name] = restaurant
   # temp = restaurant.id
 
 # print(restaurant_dict)
