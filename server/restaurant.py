@@ -1,6 +1,7 @@
 import uuid
 import pandas as pd
-import joblib
+# import joblib
+import pickle
 from sklearn.ensemble import GradientBoostingRegressor
 import datetime
 # from restaurant_list import restaurant_list
@@ -35,15 +36,16 @@ class Restaurant:
         return count
         
     def find_wait(self):
-        model = joblib.load('/Users/jamesshults/Documents/GitHub/MeHungi-2/server/Wait_Time_Calculator.joblib')
+        from CSV_file_maker_unblocked import my_gbm
+        
+        # model: GradientBoostingRegressor = pickle.load(open('Wait_Time_Calculator.sav', 'rb'))
         curr_time = datetime.datetime.now()
         curr_day = curr_time.weekday()
-        input_data = [restaurant_list.index(rest_dic[self.name]), curr_time.hour * 60 + curr_time.minute, curr_day, len(self.orders)]
+        input_data = [restaurant_list.index(name_dict[self.name]), curr_time.hour * 60 + curr_time.minute, curr_day, len(self.orders)]
         input_df = pd.DataFrame(columns=["Rest Num", "Time (Min)", "Day (Encoding)", "Orders"])
         input_df.loc[0] = input_data
-        wait = model.predict(input_df)
+        wait = my_gbm.predict(input_df)
         return round(wait[0])
-
 
 restaurant_list = [ Restaurant("Burger King", "trash fastfood burger place", 7, 0, 23, 59, 32.880010937246595, -117.23584745233543),
                    Restaurant("Panda Express","human trough", 9, 0, 17, 0, 32.87974893295122, -117.23639722612094),
@@ -75,7 +77,22 @@ restaurant_list = [ Restaurant("Burger King", "trash fastfood burger place", 7, 
                  8, 0, 19, 0, 32.88004010264586, -117.23591028452954)
                   ]
 
-rest_dic = {}
 
-for rest in restaurant_list:
-    rest_dic[rest.name] = rest
+rest_dict = {}
+
+# # Use list of restaurants to populate dictionary
+
+# temp = 0
+
+for restaurant in restaurant_list:
+  rest_dict[restaurant.id] = restaurant
+
+ids_list = []
+
+for restaurant in restaurant_list:
+   ids_list.append(restaurant.id)
+
+name_dict = {}
+
+for restaurant in restaurant_list:
+  name_dict[restaurant.name] = restaurant
