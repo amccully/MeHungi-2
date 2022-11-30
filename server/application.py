@@ -39,7 +39,7 @@ order_put_args.add_argument("numInLine", type=str, help="Put in the number in li
 
 class Restaurant_Orders(Resource):
     def get(self, rest_id):
-        return {"orders": rest_dict[rest_id].orders_to_string_list()}
+        return {"orders": rest_dict[rest_id].orders_to_string_list(), "ids": rest_dict[rest_id].create_order_ids_list()}
 
     def put(self, rest_id):
         print("Rest ID: " + rest_id)
@@ -60,6 +60,14 @@ class Restaurant_Orders(Resource):
   
 
 class Restaurant_Orders_Delete(Resource):
+      def get(self, rest_id, order_id):
+          print("Order Ids List: " + str(rest_dict[rest_id].create_order_ids_list()))
+          ids_list = rest_dict[rest_id].create_order_ids_list()
+          if order_id in ids_list:
+            return {"Order Exists": True}
+          else:
+              return {"Order Exists": False}
+
       def delete(self, rest_id, order_id):
         from store_order_info import store_order_info
         rest: Restaurant = rest_dict[rest_id]

@@ -24,4 +24,8 @@ class Restaurant:
         self.orders = []
         self.money = money
 
-    
+    def create_order_ids_list(self):
+      order_id_list = []
+      for order in self.orders:
+        order_id_list.append(order.orderId)
+      return order_id_list

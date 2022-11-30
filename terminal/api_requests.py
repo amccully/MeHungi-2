@@ -20,4 +20,9 @@ def delete_order(order_id: str, rest_name: str):
 
 def get_order(name: str):
     response = requests.get(BASE + "restaurant/" + name_dict[name].id + "/orders")
+    # print(response.json())
+    return response.json()
+
+def check_if_order_exists(order_id: str, rest_name: str):
+    response = requests.get(BASE + "restaurant/" + name_dict[rest_name].id + "/orders/" + order_id)
     print(response.json())
