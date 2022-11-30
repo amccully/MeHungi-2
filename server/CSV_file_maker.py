@@ -158,6 +158,11 @@ model.predict(df2)
 
 # In[ ]:
 
+order_df = pd.DataFrame(columns=["Rest Num", "Time (Min)", "Day (Encoding)", "Orders", "Wait"])
+
+order_df.to_csv('orders.csv')
+order_df
 
 
 
+# %%
