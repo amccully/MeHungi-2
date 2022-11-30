@@ -8,9 +8,11 @@ import datetime
 
 class Restaurant:
 
+    def __repr__(self):
+      return self.name
 
     def __init__(self, name: str, description: str, openHour: int, openMinute: int,
-    closeHour: int, closeMinute: int, latitude: float, longitude: float):
+    closeHour: int, closeMinute: int, latitude: float, longitude: float, money: int):
         self.id = str(uuid.uuid4())
         self.name = name
         self.description = description
@@ -21,13 +23,14 @@ class Restaurant:
         self.latitude = latitude
         self.longitude = longitude
         self.waitTime = 0 
-        self.orders = [1, 2, 3]
+        self.orders = []
+        self.money = money
 
     def to_dic(self):
         return {"id": self.id, "name": self.name, "description": self.description,
          "openHour": self.openHour, "openMinute": self.openMinute, "closeHour": self.closeHour,
          "closeMinute": self.closeMinute, "latitude": self.latitude, "longitude": self.longitude,
-         "waitTime" : self.find_wait()}
+         "waitTime" : self.find_wait(), "money": self.money}
 
     def orders_wait_time(self):
         count = 0
@@ -35,6 +38,18 @@ class Restaurant:
             count += order.completion_time
         return count
         
+    def create_order_ids_list(self):
+      order_id_list = []
+      for order in self.orders:
+        order_id_list.append(order.orderId)
+      return order_id_list
+
+    def orders_to_string_list(self):
+      orders = []
+      for order in self.orders:
+        orders.append(order.items)
+      return orders
+
     def find_wait(self):
         from CSV_file_maker_unblocked import my_gbm
         
@@ -47,34 +62,34 @@ class Restaurant:
         wait = my_gbm.predict(input_df)
         return round(wait[0])
 
-restaurant_list = [ Restaurant("Burger King", "trash fastfood burger place", 7, 0, 23, 59, 32.880010937246595, -117.23584745233543),
-                   Restaurant("Panda Express","human trough", 9, 0, 17, 0, 32.87974893295122, -117.23639722612094),
+restaurant_list = [ Restaurant("Burger King", "trash fastfood burger place", 7, 0, 23, 59, 32.880010937246595, -117.23584745233543, 1),
+                   Restaurant("Panda Express","human trough", 9, 0, 17, 0, 32.87974893295122, -117.23639722612094, 1),
                  Restaurant("Subway", "pay 10 dollars for a sandwhich you could've made better",
-                  7, 0, 19, 0, 32.87958268075439, -117.23581169641686),
+                  7, 0, 19, 0, 32.87958268075439, -117.23581169641686, 1),
                 Restaurant("Jamba Juice", "pay 10 dollars for a smoothie",
-                 9, 0, 19, 0, 32.88003219036016, -117.23682997774515),
+                 9, 0, 19, 0, 32.88003219036016, -117.23682997774515, 1),
                 Restaurant("Dirty Birds", "Frat food", 10,
-                                0, 21, 30, 32.88011776711401, -117.23672354981419),
+                                0, 21, 30, 32.88011776711401, -117.23672354981419, 2),
                 Restaurant("Curry Up Now", "who?", 10,
-                                0, 22, 0, 32.879988992613555, -117.23619591435616),
+                                0, 22, 0, 32.879988992613555, -117.23619591435616, 1),
                 Restaurant("Rubio's", "fast food but expensive", 10,
-                                0, 20, 0, 32.88067347599053, -117.23547401849824),
+                                0, 20, 0, 32.88067347599053, -117.23547401849824, 1),
                 Restaurant("Starbucks", "Milkshakes with cocoa beans in them", 7,
-                                0, 21, 0, 32.88002940880099, -117.2364259192577),
+                                0, 21, 0, 32.88002940880099, -117.2364259192577, 1),
                 Restaurant("Yogurt World", "Offers do-it-yourself frozen yogurt. Flavors from chocolate to green coconut and toppings from chocolate chips to lychee.",
-                 0, 0, 10, 0, 32.87914905478985, -117.23589951722849),
+                 0, 0, 10, 0, 32.87914905478985, -117.23589951722849, 1),
                 Restaurant("Croutons", "salad",
-                 10, 0, 15, 0, 32.87863895176272, -117.23577683841106),
+                 10, 0, 15, 0, 32.87863895176272, -117.23577683841106, 2),
                  Restaurant("Taco Villa", "An authentic taco shop serving all your favorite Mexican food dishes right on campus.",
-                 8, 0, 20, 0, 32.87699515125575, -117.24010419541086),
+                 8, 0, 20, 0, 32.87699515125575, -117.24010419541086, 2),
                  Restaurant("Caroline's Seaside Cafe", "Offers healthy and creative California-style cuisine featuring a diverse menu of hot and cold breakfast items, sandwiches, salads, soups, espresso drinks, baked goods, and desserts.",
-                 8, 0, 15, 0, 32.86462979107682, -117.25417260500511),
+                 8, 0, 15, 0, 32.86462979107682, -117.25417260500511, 2),
                  Restaurant("Lemongrass Farm Fresh Plates", "Serves natural chicken, salmon and tofu with a healthy Asian fusion flair.",
-                 9, 0, 19, 45, 32.87985600620295, -117.23605256267507),
+                 9, 0, 19, 45, 32.87985600620295, -117.23605256267507, 2),
                  Restaurant("Santorini Greek Island Grill", "Offers fare from around the Aegean, the Mediterranean, and beyond...",
-                 7, 0, 22, 0, 32.87981730820367, -117.23568992793975),
+                 7, 0, 22, 0, 32.87981730820367, -117.23568992793975, 2),
                  Restaurant("Seed + Sprout", "Brings offers fresh delicious healthy macro bowls.",
-                 8, 0, 19, 0, 32.88004010264586, -117.23591028452954)
+                 8, 0, 19, 0, 32.88004010264586, -117.23591028452954, 2)
                   ]
 
 
