@@ -39,9 +39,10 @@ struct OrderView : View {
                             Button {
                                 addToOrder(item: item)
                             } label: {
-                                Image(systemName: "plus.rectangle")
-                                    //.foregroundColor(.gray)
+                                Image(systemName: "plus.circle")
+                                    .foregroundColor(.green)
                                     .font(.title)
+                                    .frame(width: 95)
                             }
                         }
                     }

@@ -24,6 +24,7 @@ struct RestaurantDetailView: View {
                 Text(restaurant.name)
                     .font(.system(size: 40))
                     .bold()
+                Divider()
                 HStack {
                     
                     Text(restaurant.openIntervalString)
@@ -36,6 +37,12 @@ struct RestaurantDetailView: View {
                         .padding(8)
                         .background(RoundedRectangle(cornerRadius: 8).fill(.thinMaterial))
                     
+                    // wait time info was here, moved
+                }
+                //.padding(.horizontal, 20)
+                //.padding(.vertical, 8)
+                
+                HStack {
                     if restaurant.isOpen {
                         HStack {
                             Image(systemName: "timer")
@@ -46,13 +53,9 @@ struct RestaurantDetailView: View {
                         .background(RoundedRectangle(cornerRadius: 8).fill(.thinMaterial))
                         .foregroundColor(restaurant.waitTime <= 10 ? .green : restaurant.waitTime <= 30 ? .orange : .red)
                     }
-                }
-                .padding(.horizontal, 20)
-                .padding(.vertical, 10)
-                
-                HStack {
-                    let distanceAsString = (restaurant.distanceAway < 0.05) ? "< 0.1" : String(format: "%0.1f", restaurant.distanceAway)
-                    Text("\(distanceAsString) mi")
+                    
+                    //let distanceAsString = (restaurant.distanceAway < 0.05) ? "< 0.1" : String(format: "%0.1f", restaurant.distanceAway)
+                    Text("\(restaurant.distanceAsString()) mi")
                         .padding(8)
                         .background(RoundedRectangle(cornerRadius: 8).fill(.thinMaterial))
                 }
@@ -70,13 +73,14 @@ struct RestaurantDetailView: View {
                 } label: {
                     Text("Order Form")
                         .foregroundColor(Color.white)
-                        .font(.title2)
+                        .font(.title3)
                         .bold()
                 }
                 .padding(5)
                 .background(
-                    RoundedRectangle(cornerRadius: 20)
-                        .foregroundColor(.orange)
+                    RoundedRectangle(cornerRadius: 10)
+                        //.foregroundColor(.orange)
+                        .foregroundColor(Color(UIColor(red: 1.00, green: 0.68, blue: 0.32, alpha: 1.00)))
                         .shadow(color: .black, radius: 1)
                 )
                 Button {
@@ -87,13 +91,14 @@ struct RestaurantDetailView: View {
                 } label: {
                     Text("Get Directions")
                         .foregroundColor(Color.white)
-                        .font(.title2)
+                        .font(.title3)
                         .bold()
                 }
                 .padding(5)
                 .background(
-                    RoundedRectangle(cornerRadius: 20)
-                        .foregroundColor(.blue)
+                    RoundedRectangle(cornerRadius: 10)
+                        //.foregroundColor(.blue)
+                        .foregroundColor(Color(UIColor(red: 0.32, green: 0.69, blue: 1.00, alpha: 1.00)))
                         .shadow(color: .black, radius: 1)
                 )
                 

@@ -4,6 +4,9 @@
 //
 //  Created by Aaron McCully on 11/3/22.
 //
+//  Map annotations
+//  I wonder if this is a binding issue again? go back to adins implementation for binding?
+//  If permission is not giving (user location isnt registered yet) then compare only looks at wait time, this is why panda express pops up first! You need to make sure the location is loaded and then the indexes are set? Somehow
 
 import SwiftUI
 import MapKit
@@ -22,10 +25,20 @@ struct MapView: View {
     @State var counter: Int = -1
     
     var body: some View {
-        // create navigation stack here!
+        // create navigation stack here?
         ZStack {
-            // Binding(get: { model.locationManager.mapRegion }, set: { _ in })
-            Map(coordinateRegion: $coordinates.region, showsUserLocation: true, annotationItems: search != "" ? model.restaurants.values.sorted().filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants.values.sorted()) { restaurant in
+            
+            let bindingSearch = Binding<String>(get: {
+                self.search
+            }, set: {
+                self.search = $0
+                self.counter = -1
+            })
+            
+            let filtered = search != "" ? model.restaurants.values.sorted().filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants.values.sorted()
+            // Binding(get: { coordinates.region }, set: { _ in })
+            // $coordinates.region
+            Map(coordinateRegion: Binding(get: { coordinates.region }, set: { _ in }), showsUserLocation: true, annotationItems: filtered) { restaurant in
                 MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: restaurant.latitude, longitude: restaurant.longitude)) {
                     
                     PlaceAnnotationView(restaurant: restaurant)
@@ -45,7 +58,7 @@ struct MapView: View {
                     Image(systemName: "magnifyingglass")
                         .foregroundColor(.secondary)
                     
-                    TextField("Search...", text: $search)
+                    TextField("Search...", text: bindingSearch)
                 }
                 .padding()
                 .background(RoundedRectangle(cornerRadius: 8).fill(.thinMaterial).padding(8))
@@ -57,8 +70,8 @@ struct MapView: View {
                         withAnimation {
                             if counter > 0 {
                                 counter-=1
-                                let restaurantLatitude = model.restaurants.values.sorted()[counter].latitude
-                                let restaurantLongitude = model.restaurants.values.sorted()[counter].longitude
+                                let restaurantLatitude = filtered[counter].latitude
+                                let restaurantLongitude = filtered[counter].longitude
                                 coordinates.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: restaurantLatitude, longitude: restaurantLongitude), span: MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003))
                             }
                         }
@@ -80,10 +93,10 @@ struct MapView: View {
                     HStack {
                         Button(action: {
                             withAnimation {
-                                if counter < model.restaurants.values.sorted().count-1 {
+                                if counter < filtered.count-1 {
                                     counter+=1
-                                    let restaurantLatitude = model.restaurants.values.sorted()[counter].latitude
-                                    let restaurantLongitude = model.restaurants.values.sorted()[counter].longitude
+                                    let restaurantLatitude = filtered[counter].latitude
+                                    let restaurantLongitude = filtered[counter].longitude
                                     coordinates.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: restaurantLatitude, longitude: restaurantLongitude), span: MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003))
                                 }
                             }
@@ -154,7 +167,6 @@ struct MapView: View {
                             .padding(.top, 25)
                     }
                 }
-                // removed .middle
                 .presentationDetents([.fraction(0.25), .large], selection: $selectedDetent)
             }
         }

@@ -1,5 +1,5 @@
 from csv_create import create_row
-import numpy as np
+# import numpy as np
 import pandas as pd
 import random
 
@@ -10,8 +10,8 @@ from sklearn.model_selection import KFold
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import r2_score, mean_squared_error
-import joblib
-import pickle
+# import joblib
+# import pickle
 
 def create_gbm():
     from restaurant import restaurant_list
