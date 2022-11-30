@@ -21,7 +21,7 @@ def create_gbm():
     #df1.columns = ["Name", "Time", "Day", "Orders", "Wait"]
     # create_row(restaurant_list[random.randint(0, 14)])
     for i in range(0, 10000):
-        df1.loc[i] = create_row(restaurant_list[random.randint(0, 14)])
+        df1.loc[i] = create_row(restaurant_list[random.randint(0, 20)])
 
 
     X = df1.drop(columns = ['Time (Normal)', 'Wait', 'Name', 'Day'])

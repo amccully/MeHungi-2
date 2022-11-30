@@ -24,6 +24,7 @@ struct RestStruct: Decodable {
     var waitTime: Int
     var menuItems: [String]
     var numInLine: Int
+    var money: Int
 }
 
 class Restaurant: Identifiable, Comparable, Decodable {
@@ -39,6 +40,7 @@ class Restaurant: Identifiable, Comparable, Decodable {
     var distanceAway: Double
     var menuItems: [String]
     var numInLine: Int?
+    var money: Int
     // congestion
     
     var waitTime: Int
@@ -65,7 +67,7 @@ class Restaurant: Identifiable, Comparable, Decodable {
         return "\(openHour % 12 == 0 ? 12 : openHour % 12):\(String(format: "%02d", openMinute)) \(openHour > 11 ? "PM" : "AM") - \(closeHour % 12 == 0 ? 12 : closeHour % 12):\(String(format: "%02d", closeMinute)) \(closeHour > 11 ? "PM" : "AM")"
     }
     
-    init(id: String, name: String, description: String, openHour: Int, openMinute: Int, closeHour: Int, closeMinute: Int, latitude: Double, longitude: Double, waitTime: Int, menuItems: Array<String>, numInLine: Int) {
+    init(id: String, name: String, description: String, openHour: Int, openMinute: Int, closeHour: Int, closeMinute: Int, latitude: Double, longitude: Double, waitTime: Int, menuItems: Array<String>, numInLine: Int, money: Int) {
         self.id = id
         self.name = name
         self.description = description
@@ -79,6 +81,7 @@ class Restaurant: Identifiable, Comparable, Decodable {
         self.distanceAway = 0.0
         self.menuItems = menuItems
         self.numInLine = numInLine
+        self.money = money
     }
     
     enum CodingKeys: CodingKey {
@@ -131,6 +134,7 @@ class Restaurant: Identifiable, Comparable, Decodable {
             self.waitTime = psuedoRest.waitTime
             self.menuItems = psuedoRest.menuItems
             self.numInLine = psuedoRest.numInLine
+            self.money = psuedoRest.money
             let userCoords = CLLocation(latitude: model.locationManager.location!.latitude,
                                         longitude: model.locationManager.location!.longitude)
             self.distanceAway = (userCoords.distance(from: CLLocation(latitude: self.latitude, longitude: self.longitude)) / 1000) * 0.621371

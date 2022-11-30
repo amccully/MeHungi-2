@@ -70,6 +70,30 @@ def create_row(rest):
         wait_mean = 11
         wait_sd = 3
         order_mod = 5
+    elif rest.name == "Sixty-Four North":
+        wait_mean = 14
+        wait_sd = 3
+        order_mod = 2
+    elif rest.name == "Blue Pepper":
+        wait_mean = 11
+        wait_sd = 3
+        order_mod = 5
+    elif rest.name == "Izakaya Underbelly":
+        wait_mean = 15
+        wait_sd = 3
+        order_mod = 3
+    elif rest.name == "Roots":
+        wait_mean = 20
+        wait_sd = 2
+        order_mod = 2
+    elif rest.name == "Bistro":
+        wait_mean = 20
+        wait_sd = 3
+        order_mod = 3
+    elif rest.name == "Canyon Vista":
+        wait_mean = 6
+        wait_sd = 3
+        order_mod = 5
     else:
         print(rest.name + "is Wrong Input")
         return
