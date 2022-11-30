@@ -105,7 +105,7 @@ class Restaurant: Decodable, Identifiable, Comparable {
     
     init(id: String, model: ModelData) async throws {
             self.id = id
-            let url: URL = URL(string: "http://127.0.0.1:5000//restaurant/\(id)")!
+            let url: URL = URL(string: "http://127.0.0.1:5000/restaurant/" + id)!
         
                 let (data, response) = try await URLSession.shared.data(from: url)
         
@@ -153,6 +153,7 @@ class Restaurant: Decodable, Identifiable, Comparable {
     }
     
     static func < (lhs: Restaurant, rhs: Restaurant) -> Bool {
+
         var leftDist = lhs.distanceAway
         var rightDist = rhs.distanceAway
 
@@ -172,6 +173,10 @@ class Restaurant: Decodable, Identifiable, Comparable {
     
     func setDistanceAway(_distanceAway: Double) {
         self.distanceAway = _distanceAway
+    }
+    
+    func distanceAsString() -> String {
+        return (self.distanceAway < 0.05) ? "< 0.1" : String(format: "%0.1f", self.distanceAway)
     }
     
 }

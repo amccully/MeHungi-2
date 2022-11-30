@@ -22,7 +22,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         // wtf lol
         if CLLocationManager.locationServicesEnabled() {
             locationManager = CLLocationManager()
-            // locationManager.activityType for adjusting what the users transport mode is?
             locationManager?.desiredAccuracy = kCLLocationAccuracyBest
             locationManager!.delegate = self
         }

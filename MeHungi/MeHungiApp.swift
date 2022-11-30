@@ -10,6 +10,7 @@
 //  SwiftOnTap: guide for swiftui
 //  fuck optimization! keep it simple
 //  use plus button in top right to access sf symbol library
+//  some stuff is harder coded, such as frame size! adjust in the future!
 
 import SwiftUI
 
