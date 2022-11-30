@@ -15,7 +15,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     var authorized: Bool = false
     
     // Added shared coords
-    var coordinates = Coordinates.sharedCoords
+    var coordinates = UserInfo.sharedCoords
     
     // use model.locationManager var instead?
     func checkIfLocationServicesIsEnabled() {
@@ -63,5 +63,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         checkLocationAuthorization()
+        print("testing again...")
     }
 }

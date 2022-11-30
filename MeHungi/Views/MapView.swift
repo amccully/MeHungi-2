@@ -15,7 +15,7 @@ struct MapView: View {
     @EnvironmentObject var model: ModelData
     
     // Added shared coords
-    @ObservedObject var coordinates = Coordinates.sharedCoords
+    @ObservedObject var coordinates = UserInfo.sharedCoords
     
     // view will respond when changes are made to @State vars
     @State var search: String = ""

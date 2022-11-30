@@ -176,6 +176,9 @@ class Restaurant: Decodable, Identifiable, Comparable {
     }
     
     func distanceAsString() -> String {
+        if self.distanceAway == 0 {
+            return "N/A"
+        }
         return (self.distanceAway < 0.05) ? "< 0.1" : String(format: "%0.1f", self.distanceAway)
     }
     

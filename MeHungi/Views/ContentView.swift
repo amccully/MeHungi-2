@@ -46,9 +46,9 @@ struct ContentView: View {
                                     .font(.title)
                             })
                             .confirmationDialog("Sort by...", isPresented: $showingOptions, titleVisibility: .visible) {
-                                ForEach(Coordinates.searchTypes, id: \.self) { type in
+                                ForEach(UserInfo.searchTypes, id: \.self) { type in
                                     Button(type) {
-                                        Coordinates.searchType = type
+                                        UserInfo.searchType = type
                                     }
                                 }
                             }
@@ -59,7 +59,7 @@ struct ContentView: View {
                         let sortWaitTime = filtered.sorted(by: { $0.waitTime < $1.waitTime })
                         // just a test for now
                         let sortDistanceAway = filtered.sorted(by: { $0.distanceAway < $1.distanceAway })
-                    ForEach(Coordinates.searchType == "Wait Time" ? sortWaitTime : sortDistanceAway) { restaurant in
+                    ForEach(UserInfo.searchType == "Wait Time" ? sortWaitTime : sortDistanceAway) { restaurant in
                             NavigationLink(destination: RestaurantDetailView(id: restaurant.id).environmentObject(model)) {
                                 
                                 HStack {

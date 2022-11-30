@@ -1,5 +1,5 @@
 //
-//  Coordinates.swift
+//  UserInfo.swift
 //  MeHungi
 //
 //  Created by Aaron McCully on 11/24/22.
@@ -9,9 +9,9 @@
 import Foundation
 import MapKit
 
-class Coordinates: ObservableObject {
+class UserInfo: ObservableObject {
     // was let for shareCoords?
-    public static var sharedCoords = Coordinates()
+    public static var sharedCoords = UserInfo()
     public static var searchType = "Convenience"
     public static let searchTypes = ["Convenience", "Wait Time", "Distance Away"]
     
