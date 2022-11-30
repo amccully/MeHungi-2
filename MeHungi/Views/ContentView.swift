@@ -56,10 +56,8 @@ struct ContentView: View {
                     }
                     Section {
                         let filtered = search != "" ? model.restaurants.values.sorted().filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants.values.sorted()
-                        let sortWaitTime = filtered.sorted(by: { $0.waitTime < $1.waitTime })
-                        // just a test for now
-                        let sortDistanceAway = filtered.sorted(by: { $0.distanceAway < $1.distanceAway })
-                    ForEach(UserInfo.searchType == "Wait Time" ? sortWaitTime : sortDistanceAway) { restaurant in
+                        let filteredSpecial = UserInfo.searchType == UserInfo.searchTypes[1] ? filtered.sorted(by: { $0.waitTime < $1.waitTime }) : filtered.sorted(by: { $0.distanceAway < $1.distanceAway })
+                        ForEach(UserInfo.searchType == UserInfo.searchTypes[0] ? filtered : filteredSpecial) { restaurant in
                             NavigationLink(destination: RestaurantDetailView(id: restaurant.id).environmentObject(model)) {
                                 
                                 HStack {
@@ -93,7 +91,8 @@ struct ContentView: View {
                                             Image(systemName: "timer")
                                         }
                                         //.padding(.bottom, 1)
-                                        Text("\(restaurant.distanceAsString()) mi")
+                                        // changed
+                                        Text("\(restaurant.distanceAway) mi")
                                     }
                                 }
                             }

@@ -72,7 +72,7 @@ struct MapView: View {
                                 counter-=1
                                 let restaurantLatitude = filtered[counter].latitude
                                 let restaurantLongitude = filtered[counter].longitude
-                                coordinates.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: restaurantLatitude, longitude: restaurantLongitude), span: MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003))
+                                coordinates.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: restaurantLatitude, longitude: restaurantLongitude), span: MKCoordinateSpan(latitudeDelta: 0.0005, longitudeDelta: 0.0005))
                             }
                         }
                     }, label: {
@@ -97,7 +97,7 @@ struct MapView: View {
                                     counter+=1
                                     let restaurantLatitude = filtered[counter].latitude
                                     let restaurantLongitude = filtered[counter].longitude
-                                    coordinates.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: restaurantLatitude, longitude: restaurantLongitude), span: MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003))
+                                    coordinates.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: restaurantLatitude, longitude: restaurantLongitude), span: MKCoordinateSpan(latitudeDelta: 0.0005, longitudeDelta: 0.0005))
                                 }
                             }
                         }, label: {

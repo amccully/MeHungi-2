@@ -132,7 +132,7 @@ struct OrderView : View {
         let hours = Calendar.current.component(.hour, from: date)
         let mins = Calendar.current.component(.minute, from: date)
         let orderId = UUID().uuidString
-        let order = ["restName" : restaurant.name, "currTime":hours*60 + mins, "items":userOrderList, "orderID": orderId, "numInLine": restaurant.numInLine] as [String : Any]
+        let order = ["restName" : restaurant.name, "currTime":hours*60 + mins, "items":userOrderList, "orderID": orderId, "numInLine": restaurant.numInLine!] as [String : Any]
 
         let fullURL = URL(string: "http://127.0.0.1:5000/restaurant/" + restaurant.id + "/orders")!
 

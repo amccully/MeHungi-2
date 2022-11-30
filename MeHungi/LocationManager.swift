@@ -63,6 +63,5 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         checkLocationAuthorization()
-        print("testing again...")
     }
 }
