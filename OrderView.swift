@@ -126,8 +126,42 @@ struct OrderView : View {
         // userOrderList
         
         // Add your code here:
-        
+        // restName: str, orderTime: int, items: list, numInLine: int, orderId: str
         //
+        let date = Date()
+        let hours = Calendar.current.component(.hour, from: date)
+        let mins = Calendar.current.component(.minute, from: date)
+        let order = ["restName" : restaurant.name, "currTime":hours*60 + mins, "items":userOrderList, "orderID":UUID().uuidString, "numInLine": restaurant.numInLine] as [String : Any]
+
+        let fullURL = URL(string: "http://127.0.0.1:5000/restaurant/" + restaurant.id + "/orders")!
+
+        var request = URLRequest(url: fullURL)
+        request.httpMethod = "PUT"
+        request.allHTTPHeaderFields = [
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        ]
+
+        let data = try! JSONSerialization.data(withJSONObject: order, options: .prettyPrinted)
+
+        URLSession.shared.uploadTask(with: request, from: data) { (responseData, response, error) in
+            if let error = error {
+                print("Error making PUT request: \(error.localizedDescription)")
+                return
+            }
+
+            if let responseCode = (response as? HTTPURLResponse)?.statusCode, let responseData = responseData {
+                guard responseCode == 200 else {
+                    print("Invalid response code: \(responseCode)")
+                    return
+                }
+
+                if let responseJSONData = try? JSONSerialization.jsonObject(with: responseData, options: .allowFragments) {
+                    print("Response JSON data = \(responseJSONData)")
+                }
+            }
+        }.resume()
+//
         clearOrder()
     }
 }

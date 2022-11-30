@@ -10,7 +10,7 @@ def generate_items():
     return my_items
 
 
-curr_rest = "Burger King"
+curr_rest = "Seed + Sprout"
 
 # for i in range(0, 5):
 #     update_order(generate_items(), curr_rest, random.randint(0, 5))
@@ -18,7 +18,8 @@ curr_rest = "Burger King"
 # print()
 # get_order(curr_rest)
 
-delete_order("11ca4e35-269e-4114-93ba-959a22139cf2", curr_rest)
+curr_id = "59462AA3-1751-4B7C-9632-E1946C6B519"
+delete_order(curr_id, curr_rest)
 get_order(curr_rest)
 
 

@@ -22,10 +22,11 @@ struct RestStruct: Decodable {
     var latitude: Double
     var longitude: Double
     var waitTime: Int
-    var menuItems: Array<String>
+    var menuItems: [String]
+    var numInLine: Int
 }
 
-class Restaurant: Decodable, Identifiable, Comparable {
+class Restaurant: Identifiable, Comparable, Decodable {
     var id: String
     var name: String
     var description: String
@@ -36,8 +37,8 @@ class Restaurant: Decodable, Identifiable, Comparable {
     var latitude: Double
     var longitude: Double
     var distanceAway: Double
-    var menuItems: Array<String>
-    
+    var menuItems: [String]
+    var numInLine: Int?
     // congestion
     
     var waitTime: Int
@@ -64,7 +65,7 @@ class Restaurant: Decodable, Identifiable, Comparable {
         return "\(openHour % 12 == 0 ? 12 : openHour % 12):\(String(format: "%02d", openMinute)) \(openHour > 11 ? "PM" : "AM") - \(closeHour % 12 == 0 ? 12 : closeHour % 12):\(String(format: "%02d", closeMinute)) \(closeHour > 11 ? "PM" : "AM")"
     }
     
-    init(id: String, name: String, description: String, openHour: Int, openMinute: Int, closeHour: Int, closeMinute: Int, latitude: Double, longitude: Double, waitTime: Int, menuItems: Array<String>) {
+    init(id: String, name: String, description: String, openHour: Int, openMinute: Int, closeHour: Int, closeMinute: Int, latitude: Double, longitude: Double, waitTime: Int, menuItems: Array<String>, numInLine: Int) {
         self.id = id
         self.name = name
         self.description = description
@@ -77,6 +78,7 @@ class Restaurant: Decodable, Identifiable, Comparable {
         self.waitTime = waitTime
         self.distanceAway = 0.0
         self.menuItems = menuItems
+        self.numInLine = numInLine
     }
     
     enum CodingKeys: CodingKey {
@@ -107,14 +109,15 @@ class Restaurant: Decodable, Identifiable, Comparable {
             self.id = id
             let url: URL = URL(string: "http://127.0.0.1:5000/restaurant/" + id)!
         
-                let (data, response) = try await URLSession.shared.data(from: url)
         
-                guard let httpResponse = response as? HTTPURLResponse,
-                      httpResponse.statusCode == 200 else {
-                    throw RestaurantError.HTTPRequestError
-                }
+            let (data, response) = try await URLSession.shared.data(from: url)
         
-                let psuedoRest = try JSONDecoder().decode(RestStruct.self, from: data)
+            guard let httpResponse = response as? HTTPURLResponse,
+                httpResponse.statusCode == 200 else {
+                throw RestaurantError.HTTPRequestError
+            }
+        
+            let psuedoRest = try JSONDecoder().decode(RestStruct.self, from: data)
             
             self.id = psuedoRest.id
             self.name = psuedoRest.name
@@ -127,6 +130,7 @@ class Restaurant: Decodable, Identifiable, Comparable {
             self.longitude = psuedoRest.longitude
             self.waitTime = psuedoRest.waitTime
             self.menuItems = psuedoRest.menuItems
+            self.numInLine = psuedoRest.numInLine
             let userCoords = CLLocation(latitude: model.locationManager.location!.latitude,
                                         longitude: model.locationManager.location!.longitude)
             self.distanceAway = (userCoords.distance(from: CLLocation(latitude: self.latitude, longitude: self.longitude)) / 1000) * 0.621371
