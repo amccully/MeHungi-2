@@ -53,11 +53,15 @@ struct RestaurantDetailView: View {
                         .background(RoundedRectangle(cornerRadius: 8).fill(.thinMaterial))
                         .foregroundColor(restaurant.waitTime <= 10 ? .green : restaurant.waitTime <= 30 ? .orange : .red)
                     }
-                    
-                    //let distanceAsString = (restaurant.distanceAway < 0.05) ? "< 0.1" : String(format: "%0.1f", restaurant.distanceAway)
                     Text("\(restaurant.distanceAsString()) mi")
                         .padding(8)
                         .background(RoundedRectangle(cornerRadius: 8).fill(.thinMaterial))
+                    if !restaurant.costAsString().isEmpty {
+                        Text("\(restaurant.costAsString())")
+                            .foregroundColor(.yellow)
+                            .padding(8)
+                            .background(RoundedRectangle(cornerRadius: 8).fill(.thinMaterial))
+                    }
                 }
                 
                 Divider()

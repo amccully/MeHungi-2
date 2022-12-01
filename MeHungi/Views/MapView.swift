@@ -27,7 +27,6 @@ struct MapView: View {
     var body: some View {
         // create navigation stack here?
         ZStack {
-            
             let bindingSearch = Binding<String>(get: {
                 self.search
             }, set: {

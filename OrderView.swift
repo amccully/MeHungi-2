@@ -10,6 +10,8 @@ import SwiftUI
 struct OrderView : View {
     
     @EnvironmentObject var model: ModelData
+    @ObservedObject var orderData = OrderData.orderData
+    
     @State var userOrderStr = ""
     @State var userOrderList = [String]()
     @State var showAlert = false
@@ -46,16 +48,6 @@ struct OrderView : View {
                             }
                         }
                     }
-//                    ForEach(0..<restaurant.menuItems.count, id: \.self) { index in
-//                        let item = restaurant.menuItems[index]
-//                        HStack {
-//                            Text(item)
-//                            Spacer()
-//                            Text("Qty: \(qty)")
-//                            Stepper("Qty", value: $qtyList[index], in: 0...maxQty)
-//                                .labelsHidden()
-//                        }
-//                    }
                 }
                 Section {
                     Text("Your order: \(userOrderStr)")
@@ -80,6 +72,11 @@ struct OrderView : View {
                         else if userOrderStr.isEmpty {
                             return Alert(
                                 title: Text("Please add items to your order")
+                            )
+                        }
+                        else if orderData.hasOrder {
+                            return Alert(
+                                title: Text("You already have an active order!")
                             )
                         }
                         else {
@@ -129,7 +126,7 @@ struct OrderView : View {
         // restName: str, orderTime: int, items: list, numInLine: int, orderId: str
         //
         let date = Date()
-        let hours = Calendar.current.component(.hour, from: date)
+        var hours = Calendar.current.component(.hour, from: date)
         let mins = Calendar.current.component(.minute, from: date)
         let orderId = UUID().uuidString
         let order = ["restName" : restaurant.name, "currTime":hours*60 + mins, "items":userOrderList, "orderID": orderId, "numInLine": restaurant.numInLine!] as [String : Any]
@@ -163,6 +160,14 @@ struct OrderView : View {
             }
         }.resume()
 //
+        orderData.hasOrder = true
+        orderData.currentOrder = "\(restaurant.name): " + userOrderStr
+        var calc = mins + restaurant.waitTime
+        while calc >= 60 {
+            hours+=1
+            calc-=60
+        }
+        orderData.estimatedFinishTime = "\(hours % 12 == 0 ? 12 : hours % 12):\(String(format: "%02d", calc))"
         clearOrder()
     }
 }

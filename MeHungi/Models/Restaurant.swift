@@ -42,7 +42,7 @@ class Restaurant: Identifiable, Comparable, Decodable {
     var numInLine: Int?
     var money: Int
     // congestion
-    
+
     var waitTime: Int
 
     var isOpen: Bool {
@@ -97,6 +97,7 @@ class Restaurant: Identifiable, Comparable, Decodable {
         case waitTime
         case distanceAway
         case menuItems
+        case money
     }
     
 //    init(id: String) async {
@@ -188,6 +189,19 @@ class Restaurant: Identifiable, Comparable, Decodable {
             return "N/A"
         }
         return (self.distanceAway < 0.05) ? "<0.1" : String(format: "%0.1f", self.distanceAway)
+    }
+    
+    func costAsString() -> String {
+        switch self.money {
+        case 1:
+            return "$"
+        case 2:
+            return "$$"
+        case 3:
+            return "$$$"
+        default:
+            return ""
+        }
     }
     
 }
