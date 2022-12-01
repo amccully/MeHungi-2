@@ -20,8 +20,10 @@ def create_gbm():
     # NAME | TIME | DAY | ORDERS | WAIT
     #df1.columns = ["Name", "Time", "Day", "Orders", "Wait"]
     # create_row(restaurant_list[random.randint(0, 14)])
-    for i in range(0, 25000):
+    for i in range(0, 10000):
         df1.loc[i] = create_row(restaurant_list[random.randint(0, len(restaurant_list) - 1)])
+
+    print(df1)
        
 
 

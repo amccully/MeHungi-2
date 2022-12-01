@@ -115,6 +115,7 @@ func checkOrderIsReady() async -> Bool {
     }
     catch {
         print(error)
+        toReturn = true
     }
     return toReturn ? false : true
 }
