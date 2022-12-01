@@ -14,20 +14,14 @@ from sklearn.metrics import r2_score, mean_squared_error
 # import pickle
 
 def create_gbm():
-    from restaurant import restaurant_list
-
-    df1 = pd.DataFrame(columns=["Name", "Rest Num","Time (Normal)", "Time (Min)", "Day", "Day (Encoding)", "Orders", "Wait"])
-    # NAME | TIME | DAY | ORDERS | WAIT
-    #df1.columns = ["Name", "Time", "Day", "Orders", "Wait"]
-    # create_row(restaurant_list[random.randint(0, 14)])
-    for i in range(0, 10000):
-        df1.loc[i] = create_row(restaurant_list[random.randint(0, len(restaurant_list) - 1)])
+    
+    df1 = pd.read_csv('learning_data.csv')
 
     print(df1)
        
+    X = df1.drop(columns = ['Time (Normal)', 'Wait', 'Name', 'Day', 'Num'])
 
-
-    X = df1.drop(columns = ['Time (Normal)', 'Wait', 'Name', 'Day'])
+    print(X)
 
     y = df1['Wait']
 
