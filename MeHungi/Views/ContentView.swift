@@ -87,9 +87,15 @@ struct ContentView: View {
                                     Spacer()
                                     VStack(alignment: .trailing) {
                                         HStack {
-                                            Text("\(restaurant.waitTime)")
-                                            Image(systemName: "timer")
+                                            if restaurant.isOpen {
+                                                Text("\(restaurant.waitTime)")
+                                                Image(systemName: "timer")
+                                            }
+                                            else {
+                                                Text("Closed")
+                                            }
                                         }
+                                        .foregroundColor((restaurant.waitTime <= 10 && restaurant.isOpen) ? .green : (restaurant.waitTime <= 30 && restaurant.isOpen) ? .orange : .red)
                                         //.padding(.bottom, 1)
                                         // change for testing
                                         Text("\(restaurant.distanceAsString()) mi")
@@ -132,10 +138,11 @@ struct ContentView: View {
     func loadData() async {
 
         model.restaurants = [
-            "001": Restaurant(id: "001", name: "Subway", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 0, closeHour: 2, closeMinute: 00, latitude: 32.881398208652115, longitude: -117.23520934672317, waitTime: 12, menuItems: ["Food 1", "Food 2", "Food 3", "Food 4", "Food 5"], numInLine: 8, money: 1),
-            "002": Restaurant(id: "002", name: "Panda Express", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 9, openMinute: 50, closeHour: 12, closeMinute: 30, latitude: 32.884638, longitude: -117.239104, waitTime: 3, menuItems: ["Food 1", "Food 2", "Food 3", "Food 4", "Food 5"], numInLine: 8, money: 1),
-            "003": Restaurant(id: "003", name: "Burger King", description: "This is a test for the view. *Insert name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 30, closeHour: 0, closeMinute: 0, latitude: 32.8809679784332, longitude: -117.23547474701675, waitTime: 16, menuItems: ["Food 1", "Food 2", "Food 3", "Food 4", "Food 5"], numInLine: 3, money: 1),
-            "004": Restaurant(id: "004", name: "Triton Grill", description: "Located in Muir College on campus. We feature made-to-order sushi, an expansive salad and deli bar, grill and cantina specials, as well as, a decadent dessert station.", openHour: 7, openMinute: 0, closeHour: 21, closeMinute: 0, latitude: 32.88076184401626, longitude: -117.2430254489795, waitTime: 26, menuItems: ["Food 1", "Food 2", "Food 3", "Food 4", "Food 5"], numInLine: 12, money: 2)
+            "001": Restaurant(id: "001", name: "Subway", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 0, closeHour: 2, closeMinute: 00, latitude: 32.881398208652115, longitude: -117.23520934672317, waitTime: 28, menuItems: ["Food 1", "Food 2", "Food 3", "Food 4", "Food 5"], numInLine: 8, money: 1),
+            "002": Restaurant(id: "002", name: "Panda Express", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 9, openMinute: 50, closeHour: 22, closeMinute: 30, latitude: 32.884638, longitude: -117.239104, waitTime: 5, menuItems: ["Food 1", "Food 2", "Food 3", "Food 4", "Food 5"], numInLine: 8, money: 1),
+            "003": Restaurant(id: "003", name: "Burger King", description: "This is a test for the view. *Insert name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 30, closeHour: 1, closeMinute: 0, latitude: 32.8809679784332, longitude: -117.23547474701675, waitTime: 8, menuItems: ["Food 1", "Food 2", "Food 3", "Food 4", "Food 5"], numInLine: 3, money: 1),
+            "004": Restaurant(id: "004", name: "Triton Grill", description: "Located in Muir College on campus. We feature made-to-order sushi, an expansive salad and deli bar, grill and cantina specials, as well as, a decadent dessert station.", openHour: 7, openMinute: 0, closeHour: 1, closeMinute: 0, latitude: 32.88076184401626, longitude: -117.2430254489795, waitTime: 8, menuItems: ["Food 1", "Food 2", "Food 3", "Food 4", "Food 5"], numInLine: 12, money: 2),
+            "005": Restaurant(id: "005", name: "Lemongrass", description: "Located in Muir College on campus. We feature made-to-order sushi, an expansive salad and deli bar, grill and cantina specials, as well as, a decadent dessert station.", openHour: 7, openMinute: 0, closeHour: 1, closeMinute: 0, latitude: 32.8819619, longitude: -117.24311, waitTime: 5, menuItems: ["Food 1", "Food 2", "Food 3", "Food 4", "Food 5"], numInLine: 12, money: 2)
         ]
 
         // start point of possibly fucked code

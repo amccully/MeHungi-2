@@ -85,9 +85,11 @@ struct MapView: View {
                     .padding(5)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
-                            .foregroundColor(.pink)
+                            .foregroundColor(Color(UIColor.systemIndigo))
                             .shadow(color: .black, radius: 2)
                     )
+                    .padding(.bottom, 30)
+                    .padding(.leading, 20)
                     Spacer()
                     HStack {
                         Button(action: {
@@ -111,11 +113,13 @@ struct MapView: View {
                     .padding(5)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
-                            .foregroundColor(.pink)
+                            .foregroundColor(Color(UIColor.systemIndigo))
                             .shadow(color: .black, radius: 2)
                     )
+                    .padding(.bottom, 30)
+                    .padding(.trailing, 20)
                 }
-                .padding(20)
+                //.padding(20)
             }
         }
         
@@ -136,10 +140,10 @@ struct MapView: View {
 //                    .background(RoundedRectangle(cornerRadius: 8).fill(.thinMaterial))
 //                    .withAnimation(Animation.easeIn(duration: 0.5))
                 Text(restaurant.name)
-                    .foregroundColor(.red)
+                    .foregroundColor(Color(UIColor.systemIndigo))
                 Image(systemName: "mappin.circle.fill")
                     .font(.title)
-                    .foregroundColor(.red)
+                    .foregroundColor(Color(UIColor.systemIndigo))
             }
             .onTapGesture {
                 showingSheet.toggle()

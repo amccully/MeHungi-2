@@ -202,6 +202,5 @@ class Restaurant: Identifiable, Comparable, Decodable {
         default:
             return ""
         }
-    }
-    
+    }    
 }
