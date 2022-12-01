@@ -59,21 +59,26 @@ struct OrderInfoView : View {
         .onAppear {
             if orderData.hasOrder {
                 print("Seeing if order is ready...")
-                if checkOrderIsReady() {
-                    orderData.hasOrder = false
-                    orderData.currentOrder = ""
-                    orderData.estimatedFinishTime = ""
-                    showOrderReadyScreen = true
-                }
-                // currently checks every 5 seconds
-                timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true, block: { _ in
-                    print("Seeing if order is ready...")
-                    if checkOrderIsReady() {
+                Task {
+                    if (await checkOrderIsReady()) {
                         orderData.hasOrder = false
                         orderData.currentOrder = ""
                         orderData.estimatedFinishTime = ""
                         showOrderReadyScreen = true
-                        timer?.invalidate()
+                    }
+                }
+            
+                // currently checks every 5 seconds
+                timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true, block: { _ in
+                    print("Seeing if order is ready...")
+                    Task{
+                        if (await checkOrderIsReady()) {
+                            orderData.hasOrder = false
+                            orderData.currentOrder = ""
+                            orderData.estimatedFinishTime = ""
+                            showOrderReadyScreen = true
+                            timer?.invalidate()
+                        }
                     }
                 })
             }
@@ -85,10 +90,33 @@ struct OrderInfoView : View {
     }
 }
 
-func checkOrderIsReady() -> Bool {
+func checkOrderIsReady() async -> Bool {
     // code here for making request to see if order is ready
     // return TRUE when order is ready
-    return false
+    
+    let url: URL = URL(string: "http://127.0.0.1:5000/restaurant/" + OrderData.orderData.restID + "/orders/" + OrderData.orderData.orderId)!
+    
+    var toReturn: Bool = false
+    
+    do {
+        
+        let (data, response) = try await URLSession.shared.data(from: url)
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              httpResponse.statusCode == 200 else {
+            throw RestaurantError.HTTPRequestError
+        }
+        
+        let dic = try JSONDecoder().decode([String:Bool].self, from: data)
+        
+        print(dic)
+        
+        toReturn = dic["Order Exists"]!
+    }
+    catch {
+        print(error)
+    }
+    return toReturn ? false : true
 }
 
 struct OrderInfoView_Previews : PreviewProvider {
