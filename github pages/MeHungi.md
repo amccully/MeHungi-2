@@ -33,8 +33,18 @@ The App will have to request wait time and restaurant data from the server using
   <source src="video.mov" type="video/mp4">
 </video> </center>
 
+<p align="center">
+<img src="Server-Client.png" alt="Server-Client"   class="center">
+</p>
+ 
+
 <br/>
 <br/>
+
+4-6 Favorite Photos/Schematics/Drawings
+Final Presentation You Submitted
+Technical Workshop Page
+4+ Resources (be descriptive)
 
 <center> <h2> Meet the Team! </h2> </center>
 
@@ -42,3 +52,5 @@ The App will have to request wait time and restaurant data from the server using
 | ----- | ----- |
 | ![image](Gigachad.jpg) | ![image](PatrickBateman.jpg) |
 | Backend and Hardware Development | Frontend Swift Development |
+
+

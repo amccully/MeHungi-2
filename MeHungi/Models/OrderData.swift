@@ -14,5 +14,6 @@ class OrderData: ObservableObject {
     @Published var hasOrder = false
     @Published var currentOrder = ""
     @Published var estimatedFinishTime = ""
-
+    @Published var orderId = ""
+    @Published var restID = ""
 }

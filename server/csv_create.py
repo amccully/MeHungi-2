@@ -54,15 +54,15 @@ def create_row(rest):
         wait_mean = 5
         wait_sd = 3
         order_mod = 3
-    elif rest.name == "Caroline's Seaside Cafe":
+    elif rest.name == "Caroline's":
         wait_mean = 15
         wait_sd = 5
         order_mod = 2
-    elif rest.name == "Lemongrass Farm Fresh Plates":
+    elif rest.name == "Lemongrass":
         wait_mean = 18
         wait_sd = 6
         order_mod = 4
-    elif rest.name == "Santorini Greek Island Grill":
+    elif rest.name == "Santorini":
         wait_mean = 8
         wait_sd = 3
         order_mod = 4
