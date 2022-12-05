@@ -7,7 +7,7 @@ In short, lines suck. Sometimes you just don't have enough time to spare and hav
 
 UCSD has attempted to remedy this by the implentation of Triton2Go, but practically any student who has used it can tell you the innacurracy of the service. We hope to present a solution that takes the frustration out of getting your meals.
 
-![Image](LongLine.jpg)
+![Image](Pics/LongLine.jpg)
 
 <br/>
 <center> <h2> App-Server-Terminal Relationship </h2> </center>
@@ -21,7 +21,7 @@ To implement our solution, we need to create three different parts:
 The App will have to request wait time and restaurant data from the server using RESTful API requests. The Register will have to modify data in the server by supplying wait times at specific times so the server can process and update the data.
 
 <p align="center">
-<img src="Server-Client.png" alt="Server-Client"   class="center">
+<img src="Pics/Server-Client.png" alt="Server-Client"   class="center">
 </p>
  
 <br/>
@@ -30,13 +30,10 @@ The App will have to request wait time and restaurant data from the server using
 <center> <h2> Video: </h2> </center>
 
 <center> <video width="400" height="240" controls>
-  <source src="video.mov" type="video/mp4">
+  <source src="ECE196Project.mp4" type="video/mp4">
 </video> </center>
 
-<p align="center">
-<img src="Server-Client.png" alt="Server-Client"   class="center">
-</p>
- 
+
 
 <br/>
 <br/>
@@ -46,11 +43,13 @@ Final Presentation You Submitted
 Technical Workshop Page
 4+ Resources (be descriptive)
 
+<center> <h2> Explanation: </h2> </center>
+For a more in-depth explanation of the code, visit: [Image]() 
+
 <center> <h2> Meet the Team! </h2> </center>
 
 | Eric Shults | Aaron McCully |
 | ----- | ----- |
-| ![image](Gigachad.jpg) | ![image](PatrickBateman.jpg) |
-| Backend and Hardware Development | Frontend Swift Development |
-
+| ![image](Pics/Gigachad.jpg) | ![image](Pics/PatrickBateman.jpg) |
+| Backend Python Development | Frontend Swift Development |
 
