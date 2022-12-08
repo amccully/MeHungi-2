@@ -96,3 +96,15 @@ Instead, we decided to create large amounts of starting data so the machine lear
  <br/>
 
 ## Terminal Overview:
+
+The third part of our project is simulating the restaurants receiving and deleting orders once they're ready. This existence of this section of our project is in service of the ordering part of the app and server and thus didn't need to have a complex interface, it just needs to do a few variable API requests.
+
+The way we formatted the terminal was for it to ask the user for which restaurant they wanted to access, if they gave a restaurant that matched the available restaurants in our collection, we would use the uuid of that restaurant to do a GET API request and receive all of the available orders at that specific restaurant.
+
+<center> <img src="Pics/Terminal_Orders_List.png" alt="Terminal Orders List" width="200"/> </center>
+
+<br/>
+
+Next, the terminal asks which order number we want to mark as complete. If you select a valid order, it will send a delete request to the server where it stores the deleted order information to use for machine learning and then removes the specific order from the member variable of the restaurant which is a list containing all of the orders. The terminal ends by saying it's been deleted and doing another get request to show the order is gone from the server.
+
+<center> <img src="Pics/Terminal_Delete.png" alt="Terminal Delete" width="200"/> </center>

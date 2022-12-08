@@ -1,3 +1,12 @@
+<head>
+   <style>
+      body {
+         background-color: "black";
+      }
+   </style>
+   <h1>HTML Articles</h1>
+</head>
+
 <center> <h1> <b> ECE 196 Project</h1> </b> </center>
 
 <center> <h2> General Problem / Project Description </h2> </center>
@@ -7,16 +16,23 @@ In short, lines suck. Sometimes you just don't have enough time to spare and hav
 
 UCSD has attempted to remedy this by the implentation of Triton2Go, but practically any student who has used it can tell you the innacurracy of the service. We hope to present a solution that takes the frustration out of getting your meals.
 
-![Image](Pics/LongLine.jpg)
+<p align="center">
+<img src="Pics/LongLine.jpg" alt="Long Line"   class="center">
+</p>
+
 
 <br/>
 <center> <h2> App-Server-Terminal Relationship </h2> </center>
 <br>
 
 To implement our solution, we need to create three different parts:
-1. <b>App:</b> Displays the wait times of and map to different restaurants in the UCSD area. 
-2. <b>Server:</b> Store restaurant info and calculate changing wait times as new data comes in.
-3. <b>Psuedo-Cash Register:</b> Interface for ordering food and sending out total wait times for each order to the server. 
+
+
+<ol>
+  <li><b>App:</b> Displays the wait times of and map to different restaurants in the UCSD area. </li>
+  <li><b>Server:</b> Store restaurant info and calculate changing wait times as new data comes in.</li>
+  <li><b>Psuedo-Cash Register:</b> Interface for viewing and deleting food orders from the server. </li>
+</ol>  
 
 The App will have to request wait time and restaurant data from the server using RESTful API requests. The Register will have to modify data in the server by supplying wait times at specific times so the server can process and update the data.
 
@@ -50,7 +66,8 @@ For an in-depth explanation of the code, visit:
 
 <center>
 
- [Explanation](https://amccully.github.io/MeHungi-2/Explanation.html) 
+  <a href="https://amccully.github.io/MeHungi-2/Explanation.html">https://amccully.github.io/MeHungi-2/Explanation.html</a>
+
 </center>
 
 <center> <h2> Workshop: </h2> </center>
@@ -58,13 +75,48 @@ For an in-depth explanation of the code, visit:
 For an overview on our group's techincal workshop, visit:
 
 <center>
+ 
+<a href="https://amccully.github.io/MeHungi-2/Workshop.html">https://amccully.github.io/MeHungi-2/Workshop.html</a>
 
-[Workshop](https://amccully.github.io/MeHungi-2/Workshop.html) 
+<center> <h2> Resources: </h2> </center>
+
+<br/>
+
+<br/>
 
 <center> <h2> Meet the Team! </h2> </center>
 
-| Eric Shults | Aaron McCully |
-| ----- | ----- |
-| ![image](Pics/Gigachad.jpg) | ![image](Pics/PatrickBateman.jpg) |
-| Backend Python Development | Frontend Swift Development |
+<style>
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+
+<div class="row">
+  <div class="column" style="background-color;">
+    <h2>Eric Shults</h2>
+    <p><img src="Pics/GigaChad.jpg" alt="GigaChad"   class="center" height=150></p>
+    Backend Python Development
+  </div>
+  <div class="column" style="background-color;">
+    <h2>Aaron McCully</h2>
+    <p><img src="Pics/PatrickBateman.jpg" alt="Patrick Bateman"   class="center" height=150></p>
+    Frontend Swift Development
+  </div>
+</div>
 
