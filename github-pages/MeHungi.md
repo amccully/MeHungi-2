@@ -4,10 +4,10 @@
          background-color: "black";
       }
    </style>
-   <h1>HTML Articles</h1>
+   
 </head>
 
-<center> <h1> <b> ECE 196 Project</h1> </b> </center>
+<center> <h1> <b> ECE 196 Project </b> </h1> </center>
 
 <center> <h2> General Problem / Project Description </h2> </center>
 <br/>
@@ -29,9 +29,15 @@ To implement our solution, we need to create three different parts:
 
 
 <ol>
-  <li><b>App:</b> Displays the wait times of and map to different restaurants in the UCSD area. </li>
-  <li><b>Server:</b> Store restaurant info and calculate changing wait times as new data comes in.</li>
-  <li><b>Psuedo-Cash Register:</b> Interface for viewing and deleting food orders from the server. </li>
+  <li>
+    <b>App:</b> Displays the wait times of and map to different restaurants in the UCSD area. 
+  </li>
+  <li>
+    <b>Server:</b> Store restaurant info and calculate changing wait times as new data comes in.
+  </li>
+  <li>
+    <b>Psuedo-Cash Register:</b> Interface for viewing and deleting food orders from the server. 
+  </li>
 </ol>  
 
 The App will have to request wait time and restaurant data from the server using RESTful API requests. The Register will have to modify data in the server by supplying wait times at specific times so the server can process and update the data.
@@ -45,7 +51,7 @@ The App will have to request wait time and restaurant data from the server using
 
 <center> <h2> Video: </h2> </center>
 
-<center> <video width="400" height="240" controls>
+<center> <video width="800" height="480" controls>
   <source src="ECE196Project.mp4" type="video/mp4">
 </video> </center>
 
@@ -110,7 +116,7 @@ For an overview on our group's techincal workshop, visit:
 <div class="row">
   <div class="column" style="background-color;">
     <h2>Eric Shults</h2>
-    <p><img src="Pics/GigaChad.jpg" alt="GigaChad"   class="center" height=150></p>
+    <p><img src="Pics/GigaChad.jpg" alt="Gigachad"   class="center" height=150></p>
     Backend Python Development
   </div>
   <div class="column" style="background-color;">
