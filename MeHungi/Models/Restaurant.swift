@@ -169,6 +169,9 @@ class Restaurant: Identifiable, Comparable, Decodable {
         if (leftDist <= 0.1) {
             return (rightDist <= 0.1) ? lhs.waitTime < rhs.waitTime : leftDist < rightDist
         }
+        if (rightDist <= 0.1) {
+            return (leftDist < rightDist)
+        }
 
         leftDist *= 4
         rightDist *= 4
