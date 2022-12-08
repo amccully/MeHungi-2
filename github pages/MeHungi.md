@@ -44,7 +44,22 @@ Technical Workshop Page
 4+ Resources (be descriptive)
 
 <center> <h2> Explanation: </h2> </center>
-For a more in-depth explanation of the code, visit: [Image]() 
+For an in-depth explanation of the code, visit: 
+
+<br/>
+
+<center>
+
+ [Explanation](https://amccully.github.io/MeHungi-2/Explanation.html) 
+</center>
+
+<center> <h2> Workshop: </h2> </center>
+
+For an overview on our group's techincal workshop, visit:
+
+<center>
+
+[Workshop](https://amccully.github.io/MeHungi-2/Workshop.html) 
 
 <center> <h2> Meet the Team! </h2> </center>
 
