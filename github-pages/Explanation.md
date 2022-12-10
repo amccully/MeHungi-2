@@ -24,8 +24,10 @@ Wait... What is convenience?
 We spent considerable time trying to decide what convenience could look like as a predefined standard. We came up with a sorting method that utilizes both wait time and distance away.
 
 Our approach:
-![Image](convenienceFlowChart.png)
+<center> <img src="Pics/convenienceFlowChart.png" alt="drawing"/> </center>
+For further clarification, when we say floor, we are referring to the function in mathematics. This takes any number and rounds it down. As an example, 1.67 would become 1.
 
+<br>
 <center><h3>Restaurant Information Page/Popup<h3></center>
 
 This pages displays more personalized info for the restaurant that has been selected. The relevant info includes the name, open hours, whether it's open, the wait time, and the distance from the user, as well as some description of the restaurant.

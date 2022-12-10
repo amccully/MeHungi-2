@@ -135,7 +135,7 @@ struct OrderView : View {
         orderData.lat = restaurant.latitude
         let order = ["restName" : restaurant.name, "currTime":hours*60 + mins, "items":userOrderList, "orderID": orderId, "numInLine": restaurant.numInLine!] as [String : Any]
 
-        let fullURL = URL(string: "http://mehungi-env.eba-pvcaw4ay.us-west-1.elasticbeanstalk.com/restaurant/" + restaurant.id + "/orders")!
+        let fullURL = URL(string: "http://127.0.0.1:5000/restaurant/" + restaurant.id + "/orders")!
 
         var request = URLRequest(url: fullURL)
         request.httpMethod = "PUT"

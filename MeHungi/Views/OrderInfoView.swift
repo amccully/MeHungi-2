@@ -113,7 +113,7 @@ func checkOrderIsReady() async -> Bool {
     // code here for making request to see if order is ready
     // return TRUE when order is ready
     
-    let url: URL = URL(string: "http://mehungi-env.eba-pvcaw4ay.us-west-1.elasticbeanstalk.com/restaurant/" + OrderData.orderData.restID + "/orders/" + OrderData.orderData.orderId)!
+    let url: URL = URL(string: "http://127.0.0.1:5000/restaurant/" + OrderData.orderData.restID + "/orders/" + OrderData.orderData.orderId)!
     
     var toReturn: Bool = false
     
