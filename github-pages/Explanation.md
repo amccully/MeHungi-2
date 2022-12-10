@@ -11,13 +11,20 @@ This acts as the hub for the all of the restaurants at UCSD. It displays the res
 
 ![Image](display.png)
 
-On this page there is a search bar that will let you look for particular restaurant names eliminating the rest from the list. There is also a settings button that let's you choose the order you display each restaurant button. 
+On this page there is a search bar that will let you look for particular restaurant names, eliminating the rest from the list. There is also a settings button that let's you choose the order that the restaurants are displayed in. 
 
 ![Image](settings_popup.png)
 
-* Wait time is only looking at the same wait time that is displayed
-* Distance is only looking at the same distance that is displayed 
-* Convenience is ______________________
+There are a few ways that you can sort the restaurants by
+* wait time
+* distance away
+* convenience...
+
+Wait... What is convenience?
+We spent considerable time trying to decide what convenience could look like as a predefined standard. We came up with a sorting method that utilizes both wait time and distance away.
+
+Our approach:
+![Image](convenienceFlowChart.png)
 
 <center><h3>Restaurant Information Page/Popup<h3></center>
 
