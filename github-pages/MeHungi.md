@@ -1,11 +1,9 @@
-<head>
-   <style>
+
+<style>
       body {
          background-color: "black";
       }
    </style>
-   
-</head>
 
 <center> <h1> <b> ECE 196 Project </b> </h1> </center>
 
@@ -72,7 +70,7 @@ For an in-depth explanation of the code, visit:
 
 <center>
 
-  <a href="https://amccully.github.io/MeHungi-2/Explanation.html">https://amccully.github.io/MeHungi-2/Explanation.html</a>
+  <a href="https://amccully.github.io/MeHungi-2/github-pages/Explanation.html">https://amccully.github.io/MeHungi-2/Explanation.html</a>
 
 </center>
 
@@ -82,7 +80,7 @@ For an overview on our group's techincal workshop, visit:
 
 <center>
  
-<a href="https://amccully.github.io/MeHungi-2/Workshop.html">https://amccully.github.io/MeHungi-2/Workshop.html</a>
+<a href="https://amccully.github.io/MeHungi-2/github-pages/Workshop.html">https://amccully.github.io/MeHungi-2/github-pages/Workshop.html</a>
 
 <center> <h2> Resources: </h2> </center>
 
@@ -116,7 +114,7 @@ For an overview on our group's techincal workshop, visit:
 <div class="row">
   <div class="column" style="background-color;">
     <h2>Eric Shults</h2>
-    <p><img src="Pics/GigaChad.jpg" alt="Gigachad"   class="center" height=150></p>
+    <p><img src="Pics/Gigachad.jpg" alt="Gigachad"   class="center" height=150></p>
     Backend Python Development
   </div>
   <div class="column" style="background-color;">

@@ -92,8 +92,35 @@ We were unable to find large datasets of wait time info to train a machine learn
 
 Instead, we decided to create large amounts of starting data so the machine learning algroithm could learn from something initially while we actually collected information from users through the app/terminal. To at least approximate real life, a few variables were created that would be modified depending on the restaurant, time of day, day of the week, and number of orders in line currently. These variables were then input into a python method that randomly generated a number with probabilities matching a gaussian distribution. This method took in desired mean and desired standard deviation of the gaussian. I wanted a guassian instead of straight random function because it's unlikely that the wait time will every go above a certain point for each restaurant. This way, though not perfect better simulates real wait times.
 
+Essentially, there is a function that takes in a restaurant as an argument, randomly generates the time of day, day of the week, and number of orders. It does some number crunching and with all of those randomly generated variables + the argument, returns a list with all of those values in a specific order. We then create a data frame (essentially a python excel sheet) using the pandas library and run a for loop with that function that creates a list and iterate tens of thousands of times. When the datafram is populated with a sufficent number of rows of data, we export it as a csv file so the machine learning can later use it without having to call this very slow function.
+
+<center> <img src="Pics/Data_Creation_Flowchart.png" alt="Flowchart" width="200"/> </center>
+
+<br/>
+
 <center><h3>Machine Learning<h3></center>
  <br/>
+
+To understand this, you need to understand the basics of decision trees. A decision tree is essentially like a binary search tree where instead of searching for specific elements inside of them, you are being asked true/false questions as you traverse down the tree and whatever the leaf of the tree is, will be the output of your question. It is sort of like a flowchart for computers. Here's a simple example:
+
+<center> <img src="Pics/Decision_Tree.jpg" alt="Decision Tree" width="350"/> </center>
+
+Since we specicifically have some numeric inputs and want a numeric output, we won't use a decision tree but a regression tree. Regression trees deal with the value of something (i.e. numeric outputs) and classification trees deal more with saying what something might be (often string or boolean).
+
+We wanted our machine learning algorithm to be fairly accurate, and usually the best way of doing that is by making your software learn slowly. Making several regression trees in a row will make things more accurate, but naturally machine learning will often make assumptions that don't end up being accurate and thus just appending trees means a good tree predictionhas the same weight as a bad one. The Gradient Boosting algorithm is one algroithm that slowly learns by creating trees of different weights based on their accuracy. The algorithm will continually make more and more trees with varying weights until a set max number of trees is met or our error stops being significantly reduced. The actual Gradient Boosting Algorithm is more complicated and this is a fairly simplified version. 
+
+<center> <img src="Pics/Gradient_Boosting.png" alt="Terminal Orders List" width="400"/> </center>
+<center>(This is not an image i made, I found it <a href="https://medium.com/analytics-vidhya/what-is-gradient-boosting-how-is-it-different-from-ada-boost-2d5ff5767cb2">here</a>) </center>
+
+<br/>
+
+In our implementation, we import several methods and classes from the scikit learn python library (GradientBoostingRegressor, TrainTestSplit, R2_Score, MeanSquaredError, and GridSearchCV). We also once again use the pandas library to use dataframes as our inputs to the GradientBoostingRegressor. We start by reading from the CSV file we created in the previous section, then splitting the inputs and outputs into two separate variables. We then use both KFold and cross val score functions and iterated through different potential heights of decision trees and compare the results of the error. Whichever has the best score, will become our selected height for our model when the GradientBoostingRegressor is generating the random tree forrest. There is a way to optomize further by using grid search and having it return the configuration that will optimize our tree the most. The issue with this is that you have to manually input all the possible variations and that the function is O(n^2) so with 10000+ entries, it would take an incredibly long time to finish. Instead we just mannually tried a bunch of values and checked the error ourselves before setting the GBR paramaters.
+ 
+Next we split the input and output data into training and test data. As it sounds, training data is what the GBR model learns from and test data is what we use to check if it's a good fit. This split is done randomly and is 20-80 as we've chosen. We then contruct a GradientBoostingRegressor object with member variables n_estimators=3500, learning_rate=0.05, max_depth=4, num_iter_w/out_change=25. We then input the training input and output data into the fit method on our GBR object. Now whevener we want to, we can input the same types of variables into a predict method of our GBR and it will give us the predicted output you would expect through the machine learning. Instead of recalculating this after every API request (would be very slow), we chose to keep this model within scope as long as the server is running. 
+
+Once the first API request for a restaurant is given, the GBR will be created and stay withing the scope of the server's restaurant class where it can input what it needs to find the wait time which is needed in the API request. After the GBR is made, every subsequent API request asking for wait time will be much faster.
+
+<br/>
 
 ## Terminal Overview:
 
