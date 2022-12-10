@@ -166,13 +166,13 @@ class Restaurant: Identifiable, Comparable, Decodable {
         var leftDist = lhs.distanceAway
         var rightDist = rhs.distanceAway
 
-        if (leftDist <= 0.1) {
-            return (rightDist <= 0.1) ? lhs.waitTime < rhs.waitTime : leftDist < rightDist
+        if (leftDist <= 0.1 && rightDist <= 0.1) {
+            return lhs.waitTime < rhs.waitTime
         }
-        if (rightDist <= 0.1) {
+        else if (leftDist <= 0.1 || rightDist <= 0.1) {
             return (leftDist < rightDist)
         }
-
+        
         leftDist *= 4
         rightDist *= 4
 
