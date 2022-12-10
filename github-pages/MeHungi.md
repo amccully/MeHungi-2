@@ -18,7 +18,9 @@ UCSD has attempted to remedy this by the implentation of Triton2Go, but practica
 <img src="Pics/LongLine.jpg" alt="Long Line"   class="center">
 </p>
 
-
+<center>For more info on the project, visit 
+<a href="">this presentation link</a>.
+</center>
 <br/>
 <center> <h2> App-Server-Terminal Relationship </h2> </center>
 <br>

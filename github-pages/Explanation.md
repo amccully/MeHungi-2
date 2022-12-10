@@ -3,17 +3,19 @@
 
 
 ## App Overview:
-<br/><br/>
+<br/>
 
-<center><h3>Restaurant Display Tab<h3></center>
+<center><h3>Restaurant Display Tab</h3></center>
 
 This acts as the hub for the all of the restaurants at UCSD. It displays the restaurant name, expected wait time, and distance from user as a clickable button that stretches across the screen. 
 
-![Image](display.png)
+<center> <img src="Pics/display.png" alt="display"/> </center>
+
 
 On this page there is a search bar that will let you look for particular restaurant names, eliminating the rest from the list. There is also a settings button that let's you choose the order that the restaurants are displayed in. 
 
-![Image](settings_popup.png)
+<center> <img src="Pics/settings_popup.png" alt="popup"/> </center>
+
 
 There are a few ways that you can sort the restaurants by
 * wait time
