@@ -27,6 +27,8 @@ struct ContentView: View {
     //@State public var searchType = "Convenience"
     //var searchTypes = ["Convenience", "Wait Time", "Distance Away"]
     
+    @State var displayed: [Restaurant] = []
+    
     var body: some View {
         TabView {
             NavigationView {
@@ -37,6 +39,7 @@ struct ContentView: View {
                                 .foregroundColor(.secondary)
                             // change to allow user to choose what they search by (name, wait time, finish by, etc)
                             TextField("Search...", text: $search)
+                            
                             Button(action: {
                                 //showingSheet.toggle()
                                 showingOptions.toggle()
@@ -49,15 +52,16 @@ struct ContentView: View {
                                 ForEach(UserInfo.searchTypes, id: \.self) { type in
                                     Button(type) {
                                         UserInfo.searchType = type
+                                        let filtered = search != "" ? model.restaurants.values.sorted().filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants.values.sorted()
+                                        let filteredSpecial = UserInfo.searchType == UserInfo.searchTypes[1] ? filtered.sorted(by: { $0.waitTime < $1.waitTime }) : filtered.sorted(by: { $0.distanceAway < $1.distanceAway })
+                                        displayed = UserInfo.searchType == UserInfo.searchTypes[0] ? filtered : filteredSpecial
                                     }
                                 }
                             }
                         }
                     }
                     Section {
-                        let filtered = search != "" ? model.restaurants.values.sorted().filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants.values.sorted()
-                        let filteredSpecial = UserInfo.searchType == UserInfo.searchTypes[1] ? filtered.sorted(by: { $0.waitTime < $1.waitTime }) : filtered.sorted(by: { $0.distanceAway < $1.distanceAway })
-                        ForEach(UserInfo.searchType == UserInfo.searchTypes[0] ? filtered : filteredSpecial) { restaurant in
+                        ForEach(displayed) { restaurant in
                             NavigationLink(destination: RestaurantDetailView(id: restaurant.id).environmentObject(model)) {
                                 
                                 HStack {
@@ -106,7 +110,13 @@ struct ContentView: View {
                     }
                 }
                 .animation(.default, value: search)
+                .animation(.default, value: displayed)
                 .navigationTitle("MeHungi")
+                .onChange(of: search) { newValue in
+                    let filtered = search != "" ? model.restaurants.values.sorted().filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants.values.sorted()
+                    let filteredSpecial = UserInfo.searchType == UserInfo.searchTypes[1] ? filtered.sorted(by: { $0.waitTime < $1.waitTime }) : filtered.sorted(by: { $0.distanceAway < $1.distanceAway })
+                    displayed = UserInfo.searchType == UserInfo.searchTypes[0] ? filtered : filteredSpecial
+                }
                 .task {
                     model.locationManager.checkIfLocationServicesIsEnabled()
                     await loadData()
@@ -137,43 +147,45 @@ struct ContentView: View {
     
     func loadData() async {
 
-//        model.restaurants = [
-//            "001": Restaurant(id: "001", name: "Subway", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 0, closeHour: 2, closeMinute: 00, latitude: 32.881398208652115, longitude: -117.23520934672317, waitTime: 28, menuItems: ["Food 1", "Food 2", "Food 3", "Food 4", "Food 5"], numInLine: 8, money: 1),
-//            "002": Restaurant(id: "002", name: "Panda Express", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 9, openMinute: 50, closeHour: 22, closeMinute: 30, latitude: 32.884638, longitude: -117.239104, waitTime: 5, menuItems: ["Food 1", "Food 2", "Food 3", "Food 4", "Food 5"], numInLine: 8, money: 1),
-//            "003": Restaurant(id: "003", name: "Burger King", description: "This is a test for the view. *Insert name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 30, closeHour: 1, closeMinute: 0, latitude: 32.8809679784332, longitude: -117.23547474701675, waitTime: 8, menuItems: ["Food 1", "Food 2", "Food 3", "Food 4", "Food 5"], numInLine: 3, money: 1),
-//            "004": Restaurant(id: "004", name: "Triton Grill", description: "Located in Muir College on campus. We feature made-to-order sushi, an expansive salad and deli bar, grill and cantina specials, as well as, a decadent dessert station.", openHour: 7, openMinute: 0, closeHour: 1, closeMinute: 0, latitude: 32.88076184401626, longitude: -117.2430254489795, waitTime: 8, menuItems: ["Food 1", "Food 2", "Food 3", "Food 4", "Food 5"], numInLine: 12, money: 2),
-//            "005": Restaurant(id: "005", name: "Lemongrass", description: "Located in Muir College on campus. We feature made-to-order sushi, an expansive salad and deli bar, grill and cantina specials, as well as, a decadent dessert station.", openHour: 7, openMinute: 0, closeHour: 1, closeMinute: 0, latitude: 32.8819619, longitude: -117.24311, waitTime: 5, menuItems: ["Food 1", "Food 2", "Food 3", "Food 4", "Food 5"], numInLine: 12, money: 2)
-//        ]
+        model.restaurants = [
+            "001": Restaurant(id: "001", name: "Subway", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 0, closeHour: 2, closeMinute: 00, latitude: 32.881398208652115, longitude: -117.23520934672317, waitTime: 28, menuItems: ["Food 1", "Food 2", "Food 3", "Food 4", "Food 5"], numInLine: 8, money: 1),
+            "002": Restaurant(id: "002", name: "Panda Express", description: "This is a test for the view. *Insert Name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 9, openMinute: 50, closeHour: 22, closeMinute: 30, latitude: 32.884638, longitude: -117.239104, waitTime: 5, menuItems: ["Food 1", "Food 2", "Food 3", "Food 4", "Food 5"], numInLine: 8, money: 1),
+            "003": Restaurant(id: "003", name: "Burger King", description: "This is a test for the view. *Insert name* makes garbage food that tastes absolutely amazing. Hands-down the best fastfood joint you can go to!", openHour: 6, openMinute: 30, closeHour: 1, closeMinute: 0, latitude: 32.8809679784332, longitude: -117.23547474701675, waitTime: 8, menuItems: ["Food 1", "Food 2", "Food 3", "Food 4", "Food 5"], numInLine: 3, money: 1),
+            "004": Restaurant(id: "004", name: "Triton Grill", description: "Located in Muir College on campus. We feature made-to-order sushi, an expansive salad and deli bar, grill and cantina specials, as well as, a decadent dessert station.", openHour: 7, openMinute: 0, closeHour: 1, closeMinute: 0, latitude: 32.88076184401626, longitude: -117.2430254489795, waitTime: 8, menuItems: ["Food 1", "Food 2", "Food 3", "Food 4", "Food 5"], numInLine: 12, money: 2),
+            "005": Restaurant(id: "005", name: "Lemongrass", description: "Located in Muir College on campus. We feature made-to-order sushi, an expansive salad and deli bar, grill and cantina specials, as well as, a decadent dessert station.", openHour: 7, openMinute: 0, closeHour: 1, closeMinute: 0, latitude: 32.8819619, longitude: -117.24311, waitTime: 5, menuItems: ["Food 1", "Food 2", "Food 3", "Food 4", "Food 5"], numInLine: 12, money: 2)
+        ]
 
         // start point of possibly fucked code
-        let url: URL = URL(string: "http://127.0.0.1:5000/IDs")!
-        var list_ids: [String] = []
-        do {
-            let (data, response) = try await URLSession.shared.data(from: url)
-
-            guard let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200 else {
-                throw RestaurantError.HTTPRequestError
-
-            }
-            guard let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200 else {
-                throw RestaurantError.HTTPRequestError
-
-            }
-
-            let dic_ids = try JSONDecoder().decode([String:[String]].self, from: data)
-            list_ids = dic_ids["ids"]!
-            for id in list_ids {
-                model.restaurants[id] = try await Restaurant(id: id, model: model)
-            }
-
-        }
-        catch {
-            print("WHOOOPS")
-            print("Error is \(error)")
-            model.restaurants = [:]
-        }
+//        let url: URL = URL(string: "http://mehungi-env.eba-pvcaw4ay.us-west-1.elasticbeanstalk.com/IDs")!
+//        var list_ids: [String] = []
+//        do {
+//            let (data, response) = try await URLSession.shared.data(from: url)
+//
+//            guard let httpResponse = response as? HTTPURLResponse,
+//                  httpResponse.statusCode == 200 else {
+//                throw RestaurantError.HTTPRequestError
+//
+//            }
+//            guard let httpResponse = response as? HTTPURLResponse,
+//                  httpResponse.statusCode == 200 else {
+//                throw RestaurantError.HTTPRequestError
+//
+//            }
+//
+//            let dic_ids = try JSONDecoder().decode([String:[String]].self, from: data)
+//            list_ids = dic_ids["ids"]!
+//            for id in list_ids {
+//                model.restaurants[id] = try await Restaurant(id: id, model: model)
+//            }
+//
+//            displayed = model.restaurants.values.sorted()
+//
+//        }
+//        catch {
+//            print("WHOOOPS")
+//            print("Error is \(error)")
+//            model.restaurants = [:]
+//        }
         // end point
         
         // getting user coordinates as a CLLocation

@@ -111,7 +111,7 @@ class Restaurant: Identifiable, Comparable, Decodable {
     
     init(id: String, model: ModelData) async throws {
             self.id = id
-            let url: URL = URL(string: "http://127.0.0.1:5000/restaurant/" + id)!
+            let url: URL = URL(string: "http://mehungi-env.eba-pvcaw4ay.us-west-1.elasticbeanstalk.com/restaurant/" + id)!
         
         
             let (data, response) = try await URLSession.shared.data(from: url)
