@@ -27,6 +27,8 @@ struct ContentView: View {
     //@State public var searchType = "Convenience"
     //var searchTypes = ["Convenience", "Wait Time", "Distance Away"]
     
+    @State var displayed: [Restaurant] = []
+    
     var body: some View {
         TabView {
             NavigationView {
@@ -37,6 +39,7 @@ struct ContentView: View {
                                 .foregroundColor(.secondary)
                             // change to allow user to choose what they search by (name, wait time, finish by, etc)
                             TextField("Search...", text: $search)
+                            
                             Button(action: {
                                 //showingSheet.toggle()
                                 showingOptions.toggle()
@@ -49,15 +52,16 @@ struct ContentView: View {
                                 ForEach(UserInfo.searchTypes, id: \.self) { type in
                                     Button(type) {
                                         UserInfo.searchType = type
+                                        let filtered = search != "" ? model.restaurants.values.sorted().filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants.values.sorted()
+                                        let filteredSpecial = UserInfo.searchType == UserInfo.searchTypes[1] ? filtered.sorted(by: { $0.waitTime < $1.waitTime }) : filtered.sorted(by: { $0.distanceAway < $1.distanceAway })
+                                        displayed = UserInfo.searchType == UserInfo.searchTypes[0] ? filtered : filteredSpecial
                                     }
                                 }
                             }
                         }
                     }
                     Section {
-                        let filtered = search != "" ? model.restaurants.values.sorted().filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants.values.sorted()
-                        let filteredSpecial = UserInfo.searchType == UserInfo.searchTypes[1] ? filtered.sorted(by: { $0.waitTime < $1.waitTime }) : filtered.sorted(by: { $0.distanceAway < $1.distanceAway })
-                        ForEach(UserInfo.searchType == UserInfo.searchTypes[0] ? filtered : filteredSpecial) { restaurant in
+                        ForEach(displayed) { restaurant in
                             NavigationLink(destination: RestaurantDetailView(id: restaurant.id).environmentObject(model)) {
                                 
                                 HStack {
@@ -106,7 +110,13 @@ struct ContentView: View {
                     }
                 }
                 .animation(.default, value: search)
+                .animation(.default, value: displayed)
                 .navigationTitle("MeHungi")
+                .onChange(of: search) { newValue in
+                    let filtered = search != "" ? model.restaurants.values.sorted().filter { restaurant in restaurant.name.lowercased().contains(search.lowercased())} : model.restaurants.values.sorted()
+                    let filteredSpecial = UserInfo.searchType == UserInfo.searchTypes[1] ? filtered.sorted(by: { $0.waitTime < $1.waitTime }) : filtered.sorted(by: { $0.distanceAway < $1.distanceAway })
+                    displayed = UserInfo.searchType == UserInfo.searchTypes[0] ? filtered : filteredSpecial
+                }
                 .task {
                     model.locationManager.checkIfLocationServicesIsEnabled()
                     await loadData()
@@ -167,6 +177,8 @@ struct ContentView: View {
             for id in list_ids {
                 model.restaurants[id] = try await Restaurant(id: id, model: model)
             }
+
+            displayed = model.restaurants.values.sorted()
 
         }
         catch {

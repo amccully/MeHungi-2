@@ -131,6 +131,8 @@ struct OrderView : View {
         let orderId = UUID().uuidString
         orderData.orderId = orderId
         orderData.restID = restaurant.id
+        orderData.long = restaurant.longitude
+        orderData.lat = restaurant.latitude
         let order = ["restName" : restaurant.name, "currTime":hours*60 + mins, "items":userOrderList, "orderID": orderId, "numInLine": restaurant.numInLine!] as [String : Any]
 
         let fullURL = URL(string: "http://127.0.0.1:5000/restaurant/" + restaurant.id + "/orders")!
@@ -169,7 +171,8 @@ struct OrderView : View {
             hours+=1
             calc-=60
         }
-        orderData.estimatedFinishTime = "\(hours % 12 == 0 ? 12 : hours % 12):\(String(format: "%02d", calc))"
+        // might need proofing? check cases
+        orderData.estimatedFinishTime = "\(hours % 12 == 0 ? 12 : hours % 12):\(String(format: "%02d", calc)) \(hours > 11 ? "PM" : "AM")"
         clearOrder()
     }
 }

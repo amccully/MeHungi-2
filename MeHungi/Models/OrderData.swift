@@ -16,4 +16,6 @@ class OrderData: ObservableObject {
     @Published var estimatedFinishTime = ""
     @Published var orderId = ""
     @Published var restID = ""
+    @Published var long = 0.0
+    @Published var lat = 0.0
 }

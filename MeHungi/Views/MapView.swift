@@ -135,15 +135,17 @@ struct MapView: View {
 
         var body: some View {
             VStack(spacing: 0) {
-//                Text("Testing!")
-//                    .padding(8)
-//                    .background(RoundedRectangle(cornerRadius: 8).fill(.thinMaterial))
-//                    .withAnimation(Animation.easeIn(duration: 0.5))
+                // make names have a red border that traces the text (similar to apple maps)
                 Text(restaurant.name)
-                    .foregroundColor(Color(UIColor.systemIndigo))
+                    .foregroundColor(.white)
+                    .padding(2)
+                    .background(
+                        RoundedRectangle(cornerRadius: 5)
+                            .foregroundColor(.red)
+                    )
                 Image(systemName: "mappin.circle.fill")
                     .font(.title)
-                    .foregroundColor(Color(UIColor.systemIndigo))
+                    .foregroundColor(.red)
             }
             .onTapGesture {
                 showingSheet.toggle()
