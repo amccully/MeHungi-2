@@ -9,12 +9,12 @@
 
 This acts as the hub for the all of the restaurants at UCSD. It displays the restaurant name, expected wait time, and distance from user as a clickable button that stretches across the screen. 
 
-<center> <img src="Pics/display.png" alt="display"/> </center>
+<center> <img src="Pics/display.png" alt="display" width=200/> </center>
 
 
 On this page there is a search bar that will let you look for particular restaurant names, eliminating the rest from the list. There is also a settings button that let's you choose the order that the restaurants are displayed in. 
 
-<center> <img src="Pics/settings_popup.png" alt="popup"/> </center>
+<center> <img src="Pics/settings_popup.png" alt="popup" width=200/> </center>
 
 
 There are a few ways that you can sort the restaurants by
@@ -139,10 +139,10 @@ The third part of our project is simulating the restaurants receiving and deleti
 
 The way we formatted the terminal was for it to ask the user for which restaurant they wanted to access, if they gave a restaurant that matched the available restaurants in our collection, we would use the uuid of that restaurant to do a GET API request and receive all of the available orders at that specific restaurant.
 
-<center> <img src="Pics/Terminal_Orders_List.png" alt="Terminal Orders List" width="200"/> </center>
+<center> <img src="Pics/Terminal_Orders_List.png" alt="Terminal Orders List" width="500"/> </center>
 
 <br/>
 
 Next, the terminal asks which order number we want to mark as complete. If you select a valid order, it will send a delete request to the server where it stores the deleted order information to use for machine learning and then removes the specific order from the member variable of the restaurant which is a list containing all of the orders. The terminal ends by saying it's been deleted and doing another get request to show the order is gone from the server.
 
-<center> <img src="Pics/Terminal_Delete.png" alt="Terminal Delete" width="200"/> </center>
+<center> <img src="Pics/Terminal_Delete.png" alt="Terminal Delete" width="500"/> </center>
