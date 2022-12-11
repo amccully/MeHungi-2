@@ -104,8 +104,7 @@ We thought it best that our app did not contain all of the restaurant info becau
 <br/>
 We decided that when the app boots up or refreshes, it will request information about UCSD restaurants in two stages. First, it will request all of the unique UUIDs for each restaurant and then use those UUIDs to ask for specific restaurant JSON files one after another. This made it much easier to debug and see if the restaurants had valid info. If we just requested all of the restaurants at once, the app would still be able to do it, but each pages would be much larger and harder to read from our end. 
 
-<center> <img src="Pics/API_Requests_Flowchart.png" alt="API Requests Flowchart" width="200"/> </center>
-
+<br/>
 
 <center><h3>Flask Endpoints</h3></center>
  <br/>
@@ -139,7 +138,7 @@ Instead, we decided to create large amounts of starting data so the machine lear
 
 Essentially, there is a function that takes in a restaurant as an argument, randomly generates the time of day, day of the week, and number of orders. It does some number crunching and with all of those randomly generated variables + the argument, returns a list with all of those values in a specific order. We then create a data frame (essentially a python excel sheet) using the pandas library and run a for loop with that function that creates a list and iterate tens of thousands of times. When the datafram is populated with a sufficent number of rows of data, we export it as a csv file so the machine learning can later use it without having to call this very slow function.
 
-<center> <img src="Pics/Data_Creation_Flowchart.png" alt="Flowchart" width="200"/> </center>
+<center> <img src="Pics/Data_Creation_Flowchart.jpg" alt="Flowchart" width="450"/> </center>
 
 <br/>
 
