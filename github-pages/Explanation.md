@@ -9,7 +9,7 @@
 
 This acts as the hub for the all of the restaurants at UCSD. It displays the restaurant name, expected wait time, and distance from user as a clickable button that stretches across the screen. 
 
-<center> <img src="Pics/display.png" alt="display" width=200/> </center>
+<center> <img src="Pics/Display.png" alt="display" width=200/> </center>
 
 
 On this page there is a search bar that will let you look for particular restaurant names, eliminating the rest from the list. There is also a settings button that let's you choose the order that the restaurants are displayed in. 
@@ -94,7 +94,13 @@ As you can see,
 
 Here is a snippet of what one of our endpoints looks like, too:
 
-<center> <img src="Pics/Our_Flask_Snippet.png" alt="Our Flask Snippet" width="200"/> </center>
+<center> <img src="Pics/Endpoints1.jpg" alt="Our Flask Snippet" width="450"/> </center>
+<center> <img src="Pics/Endpoints2.jpg" alt="Our Flask Snippet" width="450"/> </center>
+<center> <img src="Pics/Endpoints3.jpg" alt="Our Flask Snippet" width="450"/> </center>
+<center> <img src="Pics/Endpoints4.jpg" alt="Our Flask Snippet" width="450"/> </center>
+<center> <img src="Pics/Endpoints5.jpg" alt="Our Flask Snippet" width="450"/> </center>
+
+We don't want to request all the info at once as that's more costly/will be slower, and we don't need to spend the time and space parsing the info in the app when we don't need it at that time. 
 
 <center><h3>Data Generator</h3></center>
  <br/>
