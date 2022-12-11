@@ -48,7 +48,7 @@ This workshop acts as an overview to many of the introductory topics needed to u
 
 <h2> Learning Component:</h2>
 <br/>
-The learning component will be lecture-style, going over various important prereqs you need to understand before the
+The learning component will be lecture-style, going over various important prereqs you need to understand before the demo.
 
 <br/>
 <h3>Servers and Clients:</h3>

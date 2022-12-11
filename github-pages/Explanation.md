@@ -121,11 +121,11 @@ As you can see, this is very bareboned but this is what a very basic server with
 
 Here is a snippet of what one of our endpoints looks like, too:
 
-<center> <img src="Pics/Endpoints1.jpg" alt="Our Flask Snippet" width="450"/> </center>
-<center> <img src="Pics/Endpoints2.jpg" alt="Our Flask Snippet" width="450"/> </center>
-<center> <img src="Pics/Endpoints3.jpg" alt="Our Flask Snippet" width="450"/> </center>
-<center> <img src="Pics/Endpoints4.jpg" alt="Our Flask Snippet" width="450"/> </center>
-<center> <img src="Pics/Endpoints5.jpg" alt="Our Flask Snippet" width="450"/> </center>
+<center> <img src="Pics/Endpoints1.jpg" alt="Our Flask Snippet"/> </center>
+<center> <img src="Pics/Endpoints2.jpg" alt="Our Flask Snippet"/> </center>
+<center> <img src="Pics/Endpoints3.jpg" alt="Our Flask Snippet"/> </center>
+<center> <img src="Pics/Endpoints4.jpg" alt="Our Flask Snippet"/> </center>
+<center> <img src="Pics/Endpoints5.jpg" alt="Our Flask Snippet"/> </center>
 
 The bareboned example was just one resource and endpoint, but we don't want to request all the info at once as that's more costly/will be slower, and we don't need to spend the time and space parsing the info in the app when we don't need it at that time. Instead we split our server so that it would have a few different endpoints that would serve different api requests for specific parts of the app. If we need restaurant info, we do an get request at the /restaurant endpoint as defined in this file's internal Restaurant class, if we wanted order info, we would request from the orders endpoint, etc.
 
