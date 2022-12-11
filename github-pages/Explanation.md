@@ -87,10 +87,9 @@ Since we used Python, the Flask library was used to create the endpoints and def
 
 <br/>
 
-<center> <img src="Pics/Basic_Flask.png" alt="Basic Flask" width="200"/> </center>
+<center> <img src="Pics/Basic_Flask.jpg" alt="Basic Flask" width="450"/> </center>
 
-<br/>
-As you can see,
+As you can see, this is very bareboned but this is what a very basic server with almost no functionality would looklike. We create a class with methods that are the RESTful API request names. Based on what you want your server to do, you'll modify the body of these methods, their arguments, etc. so that they best fit you client.
 
 Here is a snippet of what one of our endpoints looks like, too:
 
@@ -100,7 +99,7 @@ Here is a snippet of what one of our endpoints looks like, too:
 <center> <img src="Pics/Endpoints4.jpg" alt="Our Flask Snippet" width="450"/> </center>
 <center> <img src="Pics/Endpoints5.jpg" alt="Our Flask Snippet" width="450"/> </center>
 
-We don't want to request all the info at once as that's more costly/will be slower, and we don't need to spend the time and space parsing the info in the app when we don't need it at that time. 
+The bareboned example was just one resource and endpoint, but we don't want to request all the info at once as that's more costly/will be slower, and we don't need to spend the time and space parsing the info in the app when we don't need it at that time. Instead we split our server so that it would have a few different endpoints that would serve different api requests for specific parts of the app. If we need restaurant info, we do an get request at the /restaurant endpoint as defined in this file's internal Restaurant class, if we wanted order info, we would request from the orders endpoint, etc.
 
 <center><h3>Data Generator</h3></center>
  <br/>
