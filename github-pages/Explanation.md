@@ -29,6 +29,19 @@ Our approach:
 <center> <img src="Pics/convenienceFlowChart.png" alt="drawing"/> </center>
 For further clarification, when we say floor, we are referring to the function in mathematics. This takes any number and rounds it down. As an example, 1.67 would become 1.
 
+<br/>
+<center><h3>Map Tab</h3></center>
+
+A list is nice, but we thought it was important for users to be able to see these locations from a maps perspective as well. This tab displays the user's location as well as the location of restaurants at UCSD. This tab also contains a search bar, which restricts which restaurants the user will see on the map view.
+
+<center> <img src="Pics/Map_Tab.png" alt="Map_Tab" width="200"/> </center>
+
+The map view can be somewhat overwhelming though, and with so many options, the user might want to go straight to the ideal locations. The next and previous buttons on the bottom of the tab allow for the user to navigate between the restaurants by convenience, as defined earlier. Futhermore, the buttons will only take the user to locations which match the search bar restrictions.
+
+<center> <img src="Pics/Map_Tab_Arrows.png" alt="Map_Tab_Arrows" width="200"/> </center>
+
+Clicking on the restaurant's red icon will bring up the restaurant's information page.
+
 <br>
 <center><h3>Restaurant Information Page/Popup</h3></center>
 
@@ -46,6 +59,11 @@ This page acts as a form for ordering. Whenever someone clicks on one of the but
 
 <center> <img src="Pics/Order_Form.png" alt="Order Form" width="200"/> </center>
 
+Special cases:
+* no items in order
+* an order has already been placed
+* the location is closed
+
 If someone clicks the send order button without actually adding any orders, this popup will appear.
 
 <center> <img src="Pics/No_Order_Error.png" alt="No_Order_Error" width="200"/> </center>
@@ -54,14 +72,25 @@ If someone clicks the send order button when they have an order still active, th
 
 <center> <img src="Pics/Order_Already_Exists_Error.png" alt="Order_Already_Exists_Error" width="200"/> </center>
 
-<br/>
-<center><h3>Map Tab</h3></center>
+Lastly someone clicks the send order button when the location they are trying to order from is closed, this popup will appear.
+
+<center> <img src="Pics/Restaurant_Closed_Popup.png" alt="Restaurant_Closed_Popup" width="200"/> </center>
 
 
 <br/>
 <center><h3>Order Display Tab</h3></center>
 
+The order tab is the third and final tab that the user can access. If the user has yet to order anything, and decides to go to the order tab, this page will be shown.
 
+<center> <img src="Pics/Order_Tab_Default.png" alt="Order_Tab_Default" width="200"/> </center>
+
+This tab becomes useful once a user has placed their order through the order form screen shown earlier. Once that has been done, the order tab will display relevant information, including the estimated finish/pickup time, the name of the restaurant, and the items you ordered
+
+<center> <img src="Pics/Order_Tab_Waiting.png" alt="Order_Tab_Waiting" width="200"/> </center>
+
+Once the restaurant has completed your order, the order tab will update itself to notify you of its completion. This screen also includes the same "Get Direction" button as the restaurant information view.
+
+<center> <img src="Pics/Order_Tab_Finished.png" alt="Order_Tab_Finished" width="200"/> </center>
 
 <br/>
 
