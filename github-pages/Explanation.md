@@ -115,7 +115,7 @@ Since we used Python, the Flask library was used to create the endpoints and def
 
 <br/>
 
-<center> <img src="Pics/Basic_Flask.jpg" alt="Basic Flask" width="450"/> </center>
+<center> <img src="Pics/Basic_Flask.jpg" alt="Basic Flask"/> </center>
 
 As you can see, this is very bareboned but this is what a very basic server with almost no functionality would looklike. We create a class with methods that are the RESTful API request names. Based on what you want your server to do, you'll modify the body of these methods, their arguments, etc. so that they best fit you client.
 
@@ -138,7 +138,7 @@ Instead, we decided to create large amounts of starting data so the machine lear
 
 Essentially, there is a function that takes in a restaurant as an argument, randomly generates the time of day, day of the week, and number of orders. It does some number crunching and with all of those randomly generated variables + the argument, returns a list with all of those values in a specific order. We then create a data frame (essentially a python excel sheet) using the pandas library and run a for loop with that function that creates a list and iterate tens of thousands of times. When the datafram is populated with a sufficent number of rows of data, we export it as a csv file so the machine learning can later use it without having to call this very slow function.
 
-<center> <img src="Pics/Data_Creation_Flowchart.jpg" alt="Flowchart" width="450"/> </center>
+<center> <img src="Pics/Data_Creation_Flowchart.jpg" alt="Flowchart"/> </center>
 
 <br/>
 
@@ -147,13 +147,13 @@ Essentially, there is a function that takes in a restaurant as an argument, rand
 
 To understand this, you need to understand the basics of decision trees. A decision tree is essentially like a binary search tree where instead of searching for specific elements inside of them, you are being asked true/false questions as you traverse down the tree and whatever the leaf of the tree is, will be the output of your question. It is sort of like a flowchart for computers. Here's a simple example:
 
-<center> <img src="Pics/Decision_Tree.jpg" alt="Decision Tree" width="350"/> </center>
+<center> <img src="Pics/Decision_Tree.jpg" alt="Decision Tree"/> </center>
 
 Since we specicifically have some numeric inputs and want a numeric output, we won't use a decision tree but a regression tree. Regression trees deal with the value of something (i.e. numeric outputs) and classification trees deal more with saying what something might be (often string or boolean).
 
 We wanted our machine learning algorithm to be fairly accurate, and usually the best way of doing that is by making your software learn slowly. Making several regression trees in a row will make things more accurate, but naturally machine learning will often make assumptions that don't end up being accurate and thus just appending trees means a good tree predictionhas the same weight as a bad one. The Gradient Boosting algorithm is one algroithm that slowly learns by creating trees of different weights based on their accuracy. The algorithm will continually make more and more trees with varying weights until a set max number of trees is met or our error stops being significantly reduced. The actual Gradient Boosting Algorithm is more complicated and this is a fairly simplified version. 
 
-<center> <img src="Pics/Gradient_Boosting.png" alt="Terminal Orders List" width="400"/> </center>
+<center> <img src="Pics/Gradient_Boosting.png" alt="Terminal Orders List" /> </center>
 <center>(This is not an image i made, I found it <a href="https://medium.com/analytics-vidhya/what-is-gradient-boosting-how-is-it-different-from-ada-boost-2d5ff5767cb2">here</a>) </center>
 
 <br/>
@@ -172,10 +172,10 @@ The third part of our project is simulating the restaurants receiving and deleti
 
 The way we formatted the terminal was for it to ask the user for which restaurant they wanted to access, if they gave a restaurant that matched the available restaurants in our collection, we would use the uuid of that restaurant to do a GET API request and receive all of the available orders at that specific restaurant.
 
-<center> <img src="Pics/Terminal_Orders_List.png" alt="Terminal Orders List" width="500"/> </center>
+<center> <img src="Pics/Terminal_Orders_List.png" alt="Terminal Orders List"/> </center>
 
 <br/>
 
 Next, the terminal asks which order number we want to mark as complete. If you select a valid order, it will send a delete request to the server where it stores the deleted order information to use for machine learning and then removes the specific order from the member variable of the restaurant which is a list containing all of the orders. The terminal ends by saying it's been deleted and doing another get request to show the order is gone from the server.
 
-<center> <img src="Pics/Terminal_Delete.png" alt="Terminal Delete" width="500"/> </center>
+<center> <img src="Pics/Terminal_Delete.png" alt="Terminal Delete"/> </center>
