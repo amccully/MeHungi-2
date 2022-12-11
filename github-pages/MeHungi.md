@@ -129,12 +129,12 @@ For an overview on our group's techincal workshop, visit:
   <div class="column" style="background-color;">
     <h2>Eric Shults</h2>
     <p><img src="Pics/Gigachad.jpg" alt="Gigachad"   class="center" height=150></p>
-    <center>Backend Python Development </center>
+    Backend Python Development 
   </div>
   <div class="column" style="background-color;">
     <h2>Aaron McCully</h2>
     <p><img src="Pics/PatrickBateman.jpg" alt="Patrick Bateman"   class="center" height=150></p>
-    <center> Frontend Swift Development </center>
+     Frontend Swift Development 
   </div>
 </div>
 
